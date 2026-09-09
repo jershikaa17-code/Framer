@@ -1,0 +1,10 @@
+node_modules
+dist
+dist-ssr
+*.local
+.DS_Store
+*.tsbuildinfo
+
+# Saved reference page snapshot (research aid, not part of the app)
+Create® — Design Studio.html
+Create® — Design Studio_files/

@@ -1,0 +1,23 @@
+.book-call {
+  background: var(--color-bg);
+  padding-bottom: clamp(56px, 8vw, 96px);
+}
+
+.book-call__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--color-white);
+  background: var(--color-accent);
+  border-radius: var(--radius-pill);
+  padding: 18px 32px;
+  transition: background-color 0.3s var(--ease-out);
+}
+
+.book-call__cta:hover {
+  background: var(--color-text);
+}

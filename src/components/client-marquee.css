@@ -1,0 +1,20 @@
+.client-marquee {
+  background: var(--color-bg-dark-2);
+  padding-block: clamp(40px, 6vw, 64px);
+}
+
+.client-marquee__tagline {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-text-faint-2);
+  margin-bottom: clamp(28px, 4vw, 44px);
+}
+
+.client-marquee__rows {
+  border-top: 1px solid var(--color-border-dark);
+  border-bottom: 1px solid var(--color-border-dark);
+  padding-block: 24px;
+}

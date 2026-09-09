@@ -1,0 +1,49 @@
+.time-loc {
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  color: var(--color-white);
+  padding-top: clamp(16px, 2vw, 24px);
+}
+
+.time-loc .eyebrow {
+  color: var(--color-text-faint-2);
+  margin-bottom: 8px;
+}
+
+.time-loc__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.time-loc__row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.time-loc__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-wider);
+  text-transform: uppercase;
+  color: var(--color-text-faint-2);
+}
+
+.time-loc__clock {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-small);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-white);
+}
+
+.time-loc__zone {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}

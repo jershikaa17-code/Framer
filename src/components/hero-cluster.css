@@ -1,0 +1,65 @@
+.hero-cluster {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
+  background: var(--color-bg-dark-2);
+}
+
+.hero-cluster__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-cluster__bg-inner {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -10%;
+  bottom: -10%;
+}
+
+.hero-cluster__bg-inner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  filter: contrast(1.08) saturate(1.15);
+}
+
+.hero-cluster__tint {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 6, 9, 0.8) 0%,
+    rgba(5, 6, 9, 0.38) 24%,
+    rgba(5, 6, 9, 0.5) 72%,
+    rgba(5, 6, 9, 0.88) 100%
+  );
+}
+
+.hero-cluster__content {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 809px) {
+  .hero-cluster {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible;
+  }
+
+  .hero-cluster__content {
+    height: auto;
+    display: block;
+  }
+
+  .hero-cluster__bg-inner img {
+    object-position: 50% 14%;
+  }
+}
