@@ -61,10 +61,13 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         YR/ {project.year}
       </motion.span>
 
-      <div className="project-card__center">
+      <motion.div
+        className="project-card__center"
+        variants={{ rest: { y: 0 }, hover: { y: -6, transition: FRAMER_SPRING } }}
+      >
         <h3>{project.title}</h3>
         <p>{project.category}</p>
-      </div>
+      </motion.div>
     </motion.a>
   )
 }
