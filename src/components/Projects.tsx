@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 import { projects } from '../data/projects'
-import { fadeUp } from '../animations/variants'
+import { fadeUp, imgHover, scrimHover } from '../animations/variants'
 import { RevealText } from '../animations/RevealText'
 import './projects.css'
 
@@ -29,12 +29,19 @@ export function Projects() {
             data-cursor-icon="arrow"
             initial="hidden"
             whileInView="show"
+            whileHover="hover"
             viewport={{ once: true, amount: 0.15 }}
             variants={fadeUp}
             transition={{ delay: i * 0.05 }}
           >
-            <img className="project-card__img" src={project.image} alt={project.title} loading="lazy" />
-            <div className="project-card__scrim" />
+            <motion.img
+              className="project-card__img"
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+              variants={imgHover}
+            />
+            <motion.div className="project-card__scrim" variants={scrimHover} />
 
             <div className="project-card__mark">{project.title.split(' ')[0]}</div>
             <div className="project-card__dashes" aria-hidden="true">

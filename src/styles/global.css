@@ -89,6 +89,21 @@ svg {
   gap: 8px;
 }
 
+.eyebrow__marker {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
+.eyebrow__line {
+  width: 20px;
+  height: 1px;
+  background: currentColor;
+  flex-shrink: 0;
+}
+
 .section {
   position: relative;
   width: 100%;

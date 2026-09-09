@@ -2,7 +2,14 @@ import { useState } from 'react'
 import { motion } from 'motion/react'
 import { pricingPlans } from '../data/pricing'
 import { RevealText } from '../animations/RevealText'
-import { fadeUp } from '../animations/variants'
+import {
+  fadeUp,
+  FRAMER_SPRING,
+  headerZoom,
+  headerEyebrow,
+  headerTitle,
+  headerSub,
+} from '../animations/variants'
 import './pricing.css'
 
 const barsIcon = (
@@ -24,12 +31,6 @@ const checkIcon = (
 const plusIcon = (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
     <path d="M12 5v14M5 12h14" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
-  </svg>
-)
-
-const closeIcon = (
-  <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
-    <path d="M6 6l12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
   </svg>
 )
 
@@ -57,21 +58,29 @@ export function Pricing() {
 
   return (
     <section className="pricing section">
-      <div className="container pricing__head">
-        <span className="eyebrow">// 00.07°</span>
-        <h2 className="pricing__title">
+      <motion.div
+        className="container pricing__head"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={headerZoom}
+      >
+        <motion.span className="eyebrow" variants={headerEyebrow}>
+          // 00.07°
+        </motion.span>
+        <motion.h2 className="pricing__title" variants={headerTitle}>
           <RevealText text="Plans built to fit your next project" />
-        </h2>
-        <p className="pricing__sub">
+        </motion.h2>
+        <motion.p className="pricing__sub" variants={headerSub}>
           —— Designed around your specs, each plan gives you clarity on scope, features, and cost
           so you can move forward with confidence.
-        </p>
+        </motion.p>
         <div className="pricing__dashes" aria-hidden="true">
           {Array.from({ length: 40 }).map((_, i) => (
             <span key={i} />
           ))}
         </div>
-      </div>
+      </motion.div>
 
       <div className="container pricing__list">
         {pricingPlans.map((plan, i) => {
@@ -88,7 +97,13 @@ export function Pricing() {
                   <span className="pricing-card__eyebrow">{plan.eyebrow}</span>
                   <span className="pricing-card__plan-name">{plan.name}</span>
                 </span>
-                <span className="pricing-card__toggle">{isOpen ? closeIcon : plusIcon}</span>
+                <motion.span
+                  className="pricing-card__toggle"
+                  animate={{ rotate: isOpen ? 45 : 0 }}
+                  transition={FRAMER_SPRING}
+                >
+                  {plusIcon}
+                </motion.span>
               </button>
 
               <div className="pricing-card__body">

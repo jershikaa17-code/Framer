@@ -1,0 +1,660 @@
+[
+  {
+    "id": "zwu46t",
+    "containerClass": "framer-t0Vi9 framer-F2ctw framer-M02zU framer-zwu46t framer-v-zwu46t",
+    "nearbyName": "Desktop - Light",
+    "textPreview": "data-framer-appear-id=\"zwu46t\" data-framer-name=\"Desktop - Light\" style=\"background-color:var(--token-af1f330a-a0cb-49fa",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1.14,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 0
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "delay": 0,
+          "duration": 0.5,
+          "ease": [
+            0.68,
+            0,
+            0.16,
+            0.97
+          ],
+          "type": "tween"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "1abmcq1",
+    "containerClass": "framer-1abmcq1",
+    "nearbyName": "Line",
+    "textPreview": "data-framer-appear-id=\"1abmcq1\" data-framer-name=\"Line\" style=\"background-color:var(--token-f04f968d-788c-4379-aedc-9383",
+    "anim": {
+      "initial": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": -100,
+        "y": 0
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "delay": 0,
+          "duration": 1,
+          "ease": [
+            0.55,
+            0.58,
+            0.34,
+            1.04
+          ],
+          "type": "tween"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "1xi9mvr",
+    "containerClass": "framer-1xi9mvr",
+    "nearbyName": "Middle",
+    "textPreview": "data-framer-appear-id=\"1xi9mvr\" data-framer-name=\"Middle\" style=\"will-change:transform;opacity:0.001;transform:scale(1.1",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1.14,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 0
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "delay": 0,
+          "duration": 0.5,
+          "ease": [
+            0.68,
+            0,
+            0.16,
+            0.97
+          ],
+          "type": "tween"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "abp03d",
+    "containerClass": "framer-abp03d",
+    "nearbyName": "Lines",
+    "textPreview": "data-framer-appear-id=\"abp03d\" data-framer-name=\"Lines\" style=\"will-change:transform;opacity:0.001;transform:translateY(",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": -20
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "bounce": 0.2,
+          "delay": 0.3,
+          "duration": 1,
+          "type": "spring"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "kh9jr0",
+    "containerClass": "framer-kh9jr0",
+    "nearbyName": null,
+    "textPreview": "data-framer-appear-id=\"kh9jr0\" data-framer-component-type=\"RichTextContainer\" style=\"--extracted-r6o4lv:var(--token-9404",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 140
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "damping": 27,
+          "delay": 0.3,
+          "mass": 0.3,
+          "stiffness": 100,
+          "type": "spring"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "1ji1tvz",
+    "containerClass": "framer-1ji1tvz",
+    "nearbyName": null,
+    "textPreview": "data-framer-appear-id=\"1ji1tvz\" data-framer-component-type=\"RichTextContainer\" style=\"--extracted-r6o4lv:var(--token-940",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 140
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "damping": 27,
+          "delay": 0.5,
+          "mass": 0.3,
+          "stiffness": 100,
+          "type": "spring"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "zwu46t",
+    "containerClass": "framer-t0Vi9 framer-F2ctw framer-M02zU framer-zwu46t framer-v-1rdcst8",
+    "nearbyName": "Phone - Light",
+    "textPreview": "data-framer-appear-id=\"zwu46t\" data-framer-name=\"Phone - Light\" style=\"background-color:var(--token-af1f330a-a0cb-49fa-a",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1.14,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 0
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "delay": 0,
+          "duration": 0.5,
+          "ease": [
+            0.68,
+            0,
+            0.16,
+            0.97
+          ],
+          "type": "tween"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "1xi9mvr",
+    "containerClass": "framer-1xi9mvr",
+    "nearbyName": "Middle",
+    "textPreview": "data-framer-appear-id=\"1xi9mvr\" data-framer-name=\"Middle\" style=\"will-change:transform;opacity:0.001;transform:scale(1.1",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1.14,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 0
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "delay": 0,
+          "duration": 0.5,
+          "ease": [
+            0.68,
+            0,
+            0.16,
+            0.97
+          ],
+          "type": "tween"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "abp03d",
+    "containerClass": "framer-abp03d",
+    "nearbyName": "Lines",
+    "textPreview": "data-framer-appear-id=\"abp03d\" data-framer-name=\"Lines\" style=\"will-change:transform;opacity:0.001;transform:translateY(",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": -20
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "bounce": 0.2,
+          "delay": 0.3,
+          "duration": 1,
+          "type": "spring"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "kh9jr0",
+    "containerClass": "framer-kh9jr0",
+    "nearbyName": null,
+    "textPreview": "data-framer-appear-id=\"kh9jr0\" data-framer-component-type=\"RichTextContainer\" style=\"--extracted-r6o4lv:var(--token-9404",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 140
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "damping": 27,
+          "delay": 0.3,
+          "mass": 0.3,
+          "stiffness": 100,
+          "type": "spring"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "1ji1tvz",
+    "containerClass": "framer-1ji1tvz",
+    "nearbyName": null,
+    "textPreview": "data-framer-appear-id=\"1ji1tvz\" data-framer-component-type=\"RichTextContainer\" style=\"--extracted-r6o4lv:var(--token-940",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 140
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "damping": 27,
+          "delay": 0.5,
+          "mass": 0.3,
+          "stiffness": 100,
+          "type": "spring"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "zwu46t",
+    "containerClass": "framer-t0Vi9 framer-F2ctw framer-M02zU framer-zwu46t framer-v-1h3q96p",
+    "nearbyName": "Tablet - Light",
+    "textPreview": "data-framer-appear-id=\"zwu46t\" data-framer-name=\"Tablet - Light\" style=\"background-color:var(--token-af1f330a-a0cb-49fa-",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1.14,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 0
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "delay": 0,
+          "duration": 0.5,
+          "ease": [
+            0.68,
+            0,
+            0.16,
+            0.97
+          ],
+          "type": "tween"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "1abmcq1",
+    "containerClass": "framer-1abmcq1",
+    "nearbyName": "Line",
+    "textPreview": "data-framer-appear-id=\"1abmcq1\" data-framer-name=\"Line\" style=\"background-color:var(--token-f04f968d-788c-4379-aedc-9383",
+    "anim": {
+      "initial": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": -100,
+        "y": 0
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "delay": 0,
+          "duration": 1,
+          "ease": [
+            0.55,
+            0.58,
+            0.34,
+            1.04
+          ],
+          "type": "tween"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "1xi9mvr",
+    "containerClass": "framer-1xi9mvr",
+    "nearbyName": "Middle",
+    "textPreview": "data-framer-appear-id=\"1xi9mvr\" data-framer-name=\"Middle\" style=\"will-change:transform;opacity:0.001;transform:scale(1.1",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1.14,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 0
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "delay": 0,
+          "duration": 0.5,
+          "ease": [
+            0.68,
+            0,
+            0.16,
+            0.97
+          ],
+          "type": "tween"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "abp03d",
+    "containerClass": "framer-abp03d",
+    "nearbyName": "Lines",
+    "textPreview": "data-framer-appear-id=\"abp03d\" data-framer-name=\"Lines\" style=\"will-change:transform;opacity:0.001;transform:translateY(",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": -20
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "bounce": 0.2,
+          "delay": 0.3,
+          "duration": 1,
+          "type": "spring"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "kh9jr0",
+    "containerClass": "framer-kh9jr0",
+    "nearbyName": null,
+    "textPreview": "data-framer-appear-id=\"kh9jr0\" data-framer-component-type=\"RichTextContainer\" style=\"--extracted-r6o4lv:var(--token-9404",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 140
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "damping": 27,
+          "delay": 0.3,
+          "mass": 0.3,
+          "stiffness": 100,
+          "type": "spring"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  },
+  {
+    "id": "1ji1tvz",
+    "containerClass": "framer-1ji1tvz",
+    "nearbyName": null,
+    "textPreview": "data-framer-appear-id=\"1ji1tvz\" data-framer-component-type=\"RichTextContainer\" style=\"--extracted-r6o4lv:var(--token-940",
+    "anim": {
+      "initial": {
+        "opacity": 0.001,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "x": 0,
+        "y": 140
+      },
+      "animate": {
+        "opacity": 1,
+        "rotate": 0,
+        "rotateX": 0,
+        "rotateY": 0,
+        "scale": 1,
+        "skewX": 0,
+        "skewY": 0,
+        "transition": {
+          "damping": 27,
+          "delay": 0.5,
+          "mass": 0.3,
+          "stiffness": 100,
+          "type": "spring"
+        },
+        "x": 0,
+        "y": 0
+      }
+    }
+  }
+]
