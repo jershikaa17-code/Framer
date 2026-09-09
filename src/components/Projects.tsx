@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 import { projects, type Project } from '../data/projects'
-import { fadeUp, imgHover, scrimHover, staggerContainer, scaleReveal } from '../animations/variants'
+import { fadeUp, imgHover, scrimHover, staggerContainer, clipReveal } from '../animations/variants'
 import { RevealText } from '../animations/RevealText'
 import './projects.css'
 
@@ -29,7 +29,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         initial="hidden"
         whileInView="show"
         viewport={{ once: true, amount: 0.3 }}
-        variants={scaleReveal}
+        variants={clipReveal}
       >
         <motion.div className="project-card__img-inner" style={{ y: imgY }}>
           <motion.img

@@ -32,11 +32,15 @@ export const scaleReveal: Variants = {
   },
 }
 
+// Image reveal: wipes up from a bottom mask while zooming down from a slight
+// overscan and fading in — the "clip-path reveal" used for content photography.
 export const clipReveal: Variants = {
-  hidden: { clipPath: 'inset(100% 0% 0% 0%)' },
+  hidden: { clipPath: 'inset(0% 0% 100% 0%)', scale: 1.12, opacity: 0.001 },
   show: {
     clipPath: 'inset(0% 0% 0% 0%)',
-    transition: { duration: 1, ease: EASE_OUT },
+    scale: 1,
+    opacity: 1,
+    transition: { duration: 1.1, ease: EASE_OUT },
   },
 }
 
