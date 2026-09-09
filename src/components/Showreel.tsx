@@ -6,7 +6,7 @@ import './showreel.css'
 
 export function Showreel() {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const [isPlaying, setIsPlaying] = useState(false)
+  const [isPlaying, setIsPlaying] = useState(true)
 
   const togglePlay = () => {
     const video = videoRef.current
@@ -40,6 +40,7 @@ export function Showreel() {
           className="showreel__video"
           src="/assets/hero.mp4"
           poster="/assets/showreel.jpg"
+          autoPlay
           muted
           loop
           playsInline

@@ -1,5 +1,6 @@
-import { motion } from 'motion/react'
-import { processStages } from '../data/stats'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'motion/react'
+import { processStages, type ProcessStage } from '../data/stats'
 import { RevealText } from '../animations/RevealText'
 import { ScrambleText } from '../animations/ScrambleText'
 import {
@@ -8,10 +9,38 @@ import {
   headerTitle,
   headerSub,
   headerLine,
+  scaleReveal,
 } from '../animations/variants'
 import './how-we-work.css'
 
 const images = ['/assets/process-building.jpg', '/assets/project-blackwell.jpg']
+
+function ProcessStageCard({ stage, image }: { stage: ProcessStage; image: string }) {
+  const stageRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: stageRef, offset: ['start end', 'end start'] })
+  const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
+
+  return (
+    <div className="process-stage" ref={stageRef}>
+      <motion.div
+        className="process-stage__image"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={scaleReveal}
+      >
+        <motion.div className="process-stage__image-inner" style={{ y: imgY }}>
+          <img src={image} alt="" loading="lazy" />
+        </motion.div>
+      </motion.div>
+      <div className="process-stage__body">
+        <span className="process-stage__index">//{stage.index}</span>
+        <h3>{stage.title}</h3>
+        <p>{stage.description}</p>
+      </div>
+    </div>
+  )
+}
 
 export function HowWeWork() {
   return (
@@ -41,16 +70,7 @@ export function HowWeWork() {
 
       <div className="container how-we-work__list">
         {processStages.map((stage, i) => (
-          <div className="process-stage" key={stage.index}>
-            <div className="process-stage__image">
-              <img src={images[i % images.length]} alt="" loading="lazy" />
-            </div>
-            <div className="process-stage__body">
-              <span className="process-stage__index">//{stage.index}</span>
-              <h3>{stage.title}</h3>
-              <p>{stage.description}</p>
-            </div>
-          </div>
+          <ProcessStageCard stage={stage} image={images[i % images.length]} key={stage.index} />
         ))}
       </div>
     </section>

@@ -37,12 +37,21 @@
 }
 
 .process-stage__image {
+  position: relative;
   aspect-ratio: 5 / 4;
   border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
-.process-stage__image img {
+.process-stage__image-inner {
+  position: absolute;
+  top: -12%;
+  bottom: -12%;
+  left: 0;
+  right: 0;
+}
+
+.process-stage__image-inner img {
   width: 100%;
   height: 100%;
   object-fit: cover;
