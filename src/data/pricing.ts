@@ -36,7 +36,7 @@ export const pricingPlans: PricingPlan[] = [
       'Feedback built into the process',
     ],
     timeline: '2-3 weeks',
-    image: '/assets/pricing-core.jpg',
+    image: 'assets/pricing-core.jpg',
   },
   {
     index: '02',
@@ -62,7 +62,7 @@ export const pricingPlans: PricingPlan[] = [
       'Faster responses when you need us most',
     ],
     timeline: '4-6 weeks',
-    image: '/assets/pricing-studio.jpg',
+    image: 'assets/pricing-studio.jpg',
   },
   {
     index: '03',
@@ -88,6 +88,6 @@ export const pricingPlans: PricingPlan[] = [
       'Long-term support beyond launch',
     ],
     timeline: '6–8 weeks',
-    image: '/assets/pricing-scale.jpg',
+    image: 'assets/pricing-scale.jpg',
   },
 ]

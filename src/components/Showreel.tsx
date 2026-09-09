@@ -38,8 +38,8 @@ export function Showreel() {
         <video
           ref={videoRef}
           className="showreel__video"
-          src="/assets/hero.mp4"
-          poster="/assets/showreel.jpg"
+          src="assets/hero.mp4"
+          poster="assets/showreel.jpg"
           autoPlay
           muted
           loop

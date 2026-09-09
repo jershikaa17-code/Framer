@@ -17,7 +17,7 @@ export function Performance() {
   return (
     <section className="performance section">
       <div className="performance__bg" aria-hidden="true">
-        <img src="/assets/performance-bg.jpg" alt="" />
+        <img src="assets/performance-bg.jpg" alt="" />
       </div>
 
       <motion.div

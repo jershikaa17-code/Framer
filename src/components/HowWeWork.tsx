@@ -13,7 +13,7 @@ import {
 } from '../animations/variants'
 import './how-we-work.css'
 
-const images = ['/assets/process-building.jpg', '/assets/project-blackwell.jpg']
+const images = ['assets/process-building.jpg', 'assets/project-blackwell.jpg']
 
 function ProcessStageCard({ stage, image }: { stage: ProcessStage; image: string }) {
   const stageRef = useRef<HTMLDivElement>(null)

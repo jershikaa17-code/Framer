@@ -21,7 +21,7 @@ export const services: Service[] = [
       'Digital-first brand systems',
       'Branded assets across campaigns and touchpoints',
     ],
-    image: '/assets/service-brand.jpg',
+    image: 'assets/service-brand.jpg',
   },
   {
     index: '02',
@@ -36,7 +36,7 @@ export const services: Service[] = [
       'Roadmaps and rollout planning',
       'Workshops and alignment sessions',
     ],
-    image: '/assets/service-strategy.png',
+    image: 'assets/service-strategy.png',
   },
   {
     index: '03',
@@ -51,7 +51,7 @@ export const services: Service[] = [
       'Iteration and validation',
       'Launch planning and support',
     ],
-    image: '/assets/service-creative.png',
+    image: 'assets/service-creative.png',
   },
   {
     index: '04',
@@ -65,7 +65,7 @@ export const services: Service[] = [
       'Integration into platforms and workflows',
       'Team enablement and training',
     ],
-    image: '/assets/service-ai.jpg',
+    image: 'assets/service-ai.jpg',
   },
   {
     index: '05',
@@ -79,7 +79,7 @@ export const services: Service[] = [
       'Link-building and authority growth',
       'Performance tracking and reporting',
     ],
-    image: '/assets/service-seo.jpg',
+    image: 'assets/service-seo.jpg',
   },
   {
     index: '06',
@@ -94,6 +94,6 @@ export const services: Service[] = [
       'Custom feature development',
       'Ongoing technical support',
     ],
-    image: '/assets/service-digital.png',
+    image: 'assets/service-digital.png',
   },
 ]
