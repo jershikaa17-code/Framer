@@ -1,6 +1,6 @@
 import { motion } from 'motion/react'
 import { projects } from '../data/projects'
-import { fadeUp, imgHover, scrimHover } from '../animations/variants'
+import { fadeUp, imgHover, scrimHover, staggerContainer } from '../animations/variants'
 import { RevealText } from '../animations/RevealText'
 import './projects.css'
 
@@ -50,12 +50,20 @@ export function Projects() {
               ))}
             </div>
 
-            <div className="project-card__stack">
+            <motion.div className="project-card__stack" variants={staggerContainer(0.05, 0.15)}>
               {project.stack.map((tech) => (
-                <span key={tech}>{tech}</span>
+                <motion.span key={tech} variants={fadeUp}>
+                  {tech}
+                </motion.span>
               ))}
-            </div>
-            <span className="project-card__year">YR/ {project.year}</span>
+            </motion.div>
+            <motion.span
+              className="project-card__year"
+              variants={fadeUp}
+              transition={{ delay: 0.15 }}
+            >
+              YR/ {project.year}
+            </motion.span>
 
             <div className="project-card__center">
               <h3>{project.title}</h3>

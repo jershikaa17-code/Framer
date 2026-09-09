@@ -26,14 +26,7 @@ export function HeroCluster() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.4, ease: EASE_OUT }}
         >
-          <video
-            src="/assets/hero.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden="true"
-          />
+          <img src="/assets/hero-portrait.png" alt="" aria-hidden="true" />
         </motion.div>
         <div className="hero-cluster__tint" />
       </div>

@@ -11,7 +11,10 @@ html {
 
 html,
 body {
-  overflow-x: hidden;
+  /* `hidden` (rather than `clip`) here disables `position: sticky` for every
+     descendant in Chromium/WebKit — any non-visible overflow on html/body
+     makes the browser lose the viewport as the sticky containing block. */
+  overflow-x: clip;
   max-width: 100%;
 }
 
