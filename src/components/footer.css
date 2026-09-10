@@ -62,22 +62,49 @@
   padding-block: clamp(48px, 8vw, 96px);
 }
 
+/* Everything below is transcribed 1:1 from a captured reference build
+   (contact-footer / footer-left / footer-right) rather than approximated —
+   exact px sizes, spacing and the two-column contact grid (Offline+Phone
+   stacked in column one, Online alone in column two). */
+.footer__brand-grid {
+  display: grid;
+  grid-template-columns: 44% 56%;
+  gap: clamp(24px, 6vw, 64px) clamp(24px, 6vw, 96px);
+}
+
+.footer__left {
+  padding-right: clamp(16px, 3vw, 35px);
+}
+
+.footer__rule {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border-strong);
+  margin-bottom: 30px;
+}
+
+.footer__rule--credit {
+  margin-top: 45px;
+  margin-bottom: 0;
+}
+
 .footer__tagline {
-  font-size: var(--fs-body-lg);
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.28;
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.04em;
   color: var(--color-text-muted);
-  max-width: 40ch;
-  margin-bottom: 4px;
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
 }
 
 .footer__wordmark {
-  font-size: var(--fs-display);
-  line-height: 0.92;
-  letter-spacing: var(--ls-tightest);
-  font-weight: var(--fw-bold);
-  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  margin-top: 43px;
+  white-space: nowrap;
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.9s var(--ease-out) 0.08s, transform 0.9s var(--ease-out) 0.08s;
@@ -99,115 +126,194 @@
   }
 }
 
+.footer__wordmark-accent,
+.footer__wordmark-studio {
+  font-size: clamp(2.6rem, 1rem + 8vw, 7rem);
+  line-height: 0.85;
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.06em;
+}
+
 .footer__wordmark-accent {
   color: var(--color-accent);
 }
 
+.footer__wordmark-studio {
+  color: var(--color-text-secondary);
+}
+
 .footer__wordmark-slash {
-  color: var(--color-text-muted);
-  font-weight: var(--fw-medium);
+  font-size: clamp(2.4rem, 0.9rem + 7.5vw, 6.5rem);
+  line-height: 0.85;
+  margin-inline: 5px 4px;
+  color: var(--color-text-secondary);
+  font-weight: var(--fw-regular);
 }
 
 .footer__about {
   display: flex;
   align-items: center;
-  gap: 14px;
-  margin-top: clamp(20px, 3vw, 32px);
+  margin-top: 27px;
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.7s var(--ease-out) 0.16s, transform 0.7s var(--ease-out) 0.16s;
 }
 
-/* Circular, per a direct screenshot of the live reference — an earlier
-   automated measurement of "footer video" picked up a hidden responsive
-   duplicate (Framer renders multiple breakpoint variants in the DOM at
-   once) instead of the one actually visible at normal viewport widths. */
+/* An ellipse (88x49 with a 50% radius), not a circle and not a sharp
+   rectangle — confirmed from the reference's own CSS. border-radius:50%
+   on a non-square box produces an ellipse matching the box's own aspect
+   ratio, which is exactly what's used here. */
 .footer__avatar {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
+  width: 88px;
+  height: 49px;
   object-fit: cover;
+  border-radius: 50%;
+  margin-right: 17px;
   flex-shrink: 0;
 }
 
 .footer__about p {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.25;
+  letter-spacing: -0.3px;
   color: var(--color-text-muted);
-  font-size: var(--fs-small);
-  max-width: 32ch;
 }
 
 .footer__copyright {
-  margin-top: clamp(28px, 4vw, 44px);
+  margin-top: 28px;
+  margin-bottom: 0;
+  font-size: 14px;
+  letter-spacing: -0.3px;
   color: var(--color-text-muted);
-  font-size: var(--fs-small);
 }
 
-.footer__brand-grid {
+.footer__credit {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: clamp(24px, 6vw, 64px) clamp(24px, 6vw, 96px);
+  gap: 24px;
+  margin-top: 18px;
+  font-size: 13px;
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-secondary);
 }
 
-/* Offline + Online sit side by side on row one; Phone drops to its own row
-   but stays left-aligned under Offline (not centered / not flex-wrapped
-   to wherever it happens to fit). The whole block also sits ~22px higher
-   than the tagline next to it — measured directly off the reference
-   (Offline heading top:258 vs tagline top:280 at the same viewport). */
 .footer__contact-grid {
   display: grid;
-  grid-template-columns: auto auto;
-  column-gap: clamp(32px, 5vw, 72px);
-  row-gap: clamp(28px, 4vw, 44px);
-  margin-top: -22px;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 35px;
+  padding-left: clamp(24px, 5vw, 82px);
 }
 
-.footer__contact-col--phone {
-  grid-column: 1;
+.footer__contact-block {
+  margin-bottom: 80px;
 }
 
-.footer__contact-col p {
+.footer__contact-block--phone {
+  margin-top: 74px;
+}
+
+.footer__label {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1;
+  font-weight: var(--fw-regular);
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--color-text-secondary);
+  margin-bottom: 28px;
+}
+
+.footer__small-rule {
+  width: 100%;
+  height: 1px;
+  background: var(--color-border-strong);
+  margin-bottom: 30px;
+}
+
+.footer__contact-block p {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.5;
+  letter-spacing: -0.5px;
   color: var(--color-text-muted);
-  font-size: 1.125rem;
-  line-height: var(--lh-relaxed);
 }
 
-.footer__contact-col--online p a {
-  font-size: 1.3rem;
-  color: var(--color-text);
-}
-
-.footer__contact-col a {
-  color: var(--color-text-muted);
+.footer__email {
+  display: block;
+  color: var(--color-accent);
+  text-decoration: none;
+  font-size: 21px;
+  line-height: 1.2;
   transition: color 0.3s var(--ease-out);
 }
 
-.footer__contact-col a:hover {
-  color: var(--color-accent);
-}
-
-.footer__contact-col--phone p a {
-  font-size: var(--fs-h3);
+.footer__email:hover {
   color: var(--color-text);
-  font-weight: var(--fw-medium);
 }
 
-@media (max-width: 809px) {
-  .footer__wordmark {
-    font-size: clamp(2.4rem, 1.6rem + 8vw, 4rem);
-  }
+.footer__phone a {
+  color: var(--color-text);
+  font-size: 48px;
+  line-height: 1;
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.04em;
+  white-space: nowrap;
+}
 
+@media (max-width: 1000px) {
   .footer__brand-grid {
-    flex-direction: column;
-    gap: clamp(32px, 6vw, 56px);
-  }
-
-  .footer__contact-grid {
     grid-template-columns: 1fr;
   }
 
-  .footer__contact-col--phone {
-    grid-column: 1;
+  .footer__contact-grid {
+    padding-left: 0;
+  }
+
+  .footer__wordmark-accent,
+  .footer__wordmark-studio {
+    font-size: 5rem;
+  }
+
+  .footer__wordmark-slash {
+    font-size: 4.7rem;
+  }
+}
+
+@media (max-width: 650px) {
+  .footer__contact-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .footer__contact-block {
+    margin-bottom: 40px;
+  }
+
+  .footer__contact-block--phone {
+    margin-top: 20px;
+  }
+
+  .footer__wordmark {
+    margin-top: 35px;
+  }
+
+  .footer__wordmark-accent,
+  .footer__wordmark-studio {
+    font-size: 3.6rem;
+    letter-spacing: -0.05em;
+  }
+
+  .footer__wordmark-slash {
+    font-size: 3.4rem;
+  }
+
+  .footer__phone a {
+    font-size: 2.25rem;
+  }
+
+  .footer__avatar {
+    width: 65px;
+    height: 40px;
   }
 }
 

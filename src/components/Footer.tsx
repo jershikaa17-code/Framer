@@ -69,14 +69,20 @@ export function Footer() {
 
       <div ref={brandRef} className={`footer__brand ${brandRevealed ? 'is-revealed' : ''}`}>
         <div className="container footer__brand-grid">
-          <div>
-            <p className="footer__tagline">Digital experiences that connect, scale and perform.</p>
+          <div className="footer__left">
+            <div className="footer__rule" />
 
-            <h2 className="footer__wordmark">
+            <p className="footer__tagline">
+              Digital experiences that connect,
+              <br />
+              scale and perform.
+            </p>
+
+            <div className="footer__wordmark">
               <span className="footer__wordmark-accent">Create</span>
               <span className="footer__wordmark-slash">\</span>
-              Studio
-            </h2>
+              <span className="footer__wordmark-studio">Studio</span>
+            </div>
 
             <div className="footer__about">
               <video
@@ -88,30 +94,53 @@ export function Footer() {
                 playsInline
                 aria-hidden="true"
               />
-              <p>A design studio trusted by startups and leading brands.</p>
+              <p>
+                A creative agency for design, strategy, marketing,
+                <br />
+                and scalable premium websites.
+              </p>
             </div>
 
             <p className="footer__copyright">© 2026 Create Studio — All work, all rights.</p>
+
+            <div className="footer__rule footer__rule--credit" />
+            <div className="footer__credit">
+              <span>React + Vite</span>
+              <span>Framer Motion</span>
+            </div>
           </div>
 
           <div className="footer__contact-grid">
-            <div className="footer__contact-col">
-              <p className="footer__heading">Offline</p>
-              <p>Create Studio LLC.</p>
-              <p>8 Sunset Blvd, Office 5</p>
-              <p>Los Angeles, CA 90026</p>
+            <div className="footer__contact-column">
+              <div className="footer__contact-block">
+                <p className="footer__label">Offline</p>
+                <div className="footer__small-rule" />
+                <p>
+                  Create Studio LLC.
+                  <br />
+                  8 Sunset Blvd, Office 5
+                  <br />
+                  Los Angeles, CA 90026
+                </p>
+              </div>
+
+              <div className="footer__contact-block footer__contact-block--phone">
+                <p className="footer__label">Phone</p>
+                <div className="footer__small-rule" />
+                <p className="footer__phone">
+                  <a href="tel:+13105550165">(310) 555-0165</a>
+                </p>
+              </div>
             </div>
-            <div className="footer__contact-col footer__contact-col--online">
-              <p className="footer__heading">Online</p>
-              <p>
-                <a href="mailto:hello@create.com">hello@create.com</a>
-              </p>
-            </div>
-            <div className="footer__contact-col footer__contact-col--phone">
-              <p className="footer__heading">Phone</p>
-              <p>
-                <a href="tel:+13105550165">(310) 555-0165</a>
-              </p>
+
+            <div className="footer__contact-column">
+              <div className="footer__contact-block">
+                <p className="footer__label">Online</p>
+                <div className="footer__small-rule" />
+                <a className="footer__email" href="mailto:hello@create.com">
+                  hello@create.com
+                </a>
+              </div>
             </div>
           </div>
         </div>
