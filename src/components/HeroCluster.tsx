@@ -20,10 +20,15 @@ export function HeroCluster() {
   // (with/without a sibling `style`-driven transform, with/without useScroll,
   // nested or not) — a CSS class toggle sidesteps that entirely and is 100%
   // reliable for a plain one-shot mount transition like this.
+  // A single requestAnimationFrame to defer the class flip (so the transition
+  // has a starting frame to animate from) is not reliable enough on its own —
+  // a backgrounded/throttled tab can delay that frame indefinitely, leaving
+  // the image stuck invisible. setTimeout fires regardless of paint/visibility
+  // scheduling, so it's used as the trigger instead.
   const [bgVisible, setBgVisible] = useState(false)
   useEffect(() => {
-    const raf = requestAnimationFrame(() => setBgVisible(true))
-    return () => cancelAnimationFrame(raf)
+    const timer = setTimeout(() => setBgVisible(true), 16)
+    return () => clearTimeout(timer)
   }, [])
 
   const { scrollYProgress } = useScroll({

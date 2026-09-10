@@ -19,15 +19,18 @@
 .process-marquee__droplet {
   position: absolute;
   transform: translate(-50%, -50%) rotate(var(--droplet-rot, 0deg));
-  /* A flat, dark, slightly irregular mark that fades out at the edge — like
-     a fine bead of water photographed on a light surface, not a glossy 3D
-     sphere. Darkest at a slightly off-center core, feathering to nothing. */
+  /* Real high-speed water-droplet photography: small droplets read as a
+     solid dark fleck, larger ones show a hollow ring (the camera's
+     reflection around the drop's curved rim) with a soft dark band and a
+     faint core, all feathering to nothing at the edge. --ring-inner (0 for
+     small dots, up to ~40% for big drops) controls how hollow it is. */
   background: radial-gradient(
-    circle at 42% 38%,
-    rgba(18, 19, 21, 0.62) 0%,
-    rgba(18, 19, 21, 0.42) 34%,
-    rgba(18, 19, 21, 0.18) 58%,
-    rgba(18, 19, 21, 0.05) 78%,
+    circle at 50% 50%,
+    rgba(18, 19, 21, 0.2) 0%,
+    transparent var(--ring-inner, 0%),
+    rgba(18, 19, 21, 0.65) calc(var(--ring-inner, 0%) + 10%),
+    rgba(18, 19, 21, 0.38) calc(var(--ring-inner, 0%) + 22%),
+    rgba(18, 19, 21, 0.1) 82%,
     transparent 100%
   );
 }
@@ -36,25 +39,26 @@
   position: relative;
   z-index: 1;
   margin-top: -100vh;
-  min-height: 320vh;
+  height: 320vh;
 }
 
-/* Pinned viewport-height window the lines travel through — same trick as
-   .process-marquee__bg, so text position tracks scroll progress through the
-   (much taller) .process-marquee__stack above rather than the page scroll. */
+/* Normal document flow, spread evenly across the full height of the tall
+   .process-marquee__stack behind it — NOT pinned. The droplet background
+   stays visually fixed (it's sticky, in the sibling above) while these four
+   lines scroll past it individually, each other's reveal, so more than one
+   can be on screen together, in reading order, just like the reference.
+   A fixed vh height (mirroring .process-marquee__stack) rather than 100% —
+   percentage heights don't resolve against a parent whose height comes only
+   from min-height. */
 .process-marquee__lines {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
+  position: relative;
+  height: 320vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .process-marquee__phrase {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  transform: translateY(-50%);
   padding-inline: var(--gutter, 24px);
   font-size: clamp(2.75rem, 7vw, 6.5rem);
   font-weight: var(--fw-black);
@@ -76,6 +80,10 @@
 
 @media (max-width: 809px) {
   .process-marquee__stack {
-    min-height: 220vh;
+    height: 220vh;
+  }
+
+  .process-marquee__lines {
+    height: 220vh;
   }
 }

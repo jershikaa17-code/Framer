@@ -107,6 +107,13 @@ svg {
   flex-shrink: 0;
 }
 
+/* The "// 00.0X°" coordinate-style markers (hero, intro, time/location,
+   projects) run smaller and tighter-tracked than the general eyebrow label. */
+.eyebrow--coord {
+  font-size: 0.64rem;
+  letter-spacing: -0.04em;
+}
+
 .section {
   position: relative;
   width: 100%;

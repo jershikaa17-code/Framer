@@ -3,14 +3,8 @@ import { motion, useScroll, useTransform } from 'motion/react'
 import { processStages, type ProcessStage } from '../data/stats'
 import { RevealText } from '../animations/RevealText'
 import { ScrambleText } from '../animations/ScrambleText'
-import {
-  headerZoom,
-  headerEyebrow,
-  headerTitle,
-  headerSub,
-  headerLine,
-  scaleReveal,
-} from '../animations/variants'
+import { useInViewOnce } from '../hooks/useInViewOnce'
+import { headerZoom, headerEyebrow, headerTitle, headerSub, headerLine } from '../animations/variants'
 import './how-we-work.css'
 
 const images = ['assets/process-building.jpg', 'assets/project-blackwell.jpg']
@@ -19,20 +13,15 @@ function ProcessStageCard({ stage, image }: { stage: ProcessStage; image: string
   const stageRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: stageRef, offset: ['start end', 'end start'] })
   const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
+  const [revealRef, revealed] = useInViewOnce<HTMLDivElement>(0.3)
 
   return (
     <div className="process-stage" ref={stageRef}>
-      <motion.div
-        className="process-stage__image"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={scaleReveal}
-      >
+      <div ref={revealRef} className={`process-stage__image ${revealed ? 'is-revealed' : ''}`}>
         <motion.div className="process-stage__image-inner" style={{ y: imgY }}>
           <img src={image} alt="" loading="lazy" />
         </motion.div>
-      </motion.div>
+      </div>
       <div className="process-stage__body">
         <span className="process-stage__index">//{stage.index}</span>
         <h3>{stage.title}</h3>

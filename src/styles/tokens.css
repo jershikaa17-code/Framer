@@ -72,11 +72,5 @@
   --dur-med: 0.6s;
   --dur-slow: 0.9s;
 
-  --nav-h: 72px;
-}
-
-@media (max-width: 809px) {
-  :root {
-    --nav-h: 60px;
-  }
+  --nav-h: 60px;
 }

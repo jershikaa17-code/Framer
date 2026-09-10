@@ -1,20 +1,15 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 import { services, type Service } from '../data/services'
-import {
-  headerZoom,
-  headerEyebrow,
-  headerTitle,
-  headerSub,
-  imgHover,
-  scaleReveal,
-} from '../animations/variants'
+import { headerZoom, headerEyebrow, headerTitle, headerSub, imgHover } from '../animations/variants'
+import { useInViewOnce } from '../hooks/useInViewOnce'
 import './services.css'
 
 function ServiceRow({ service }: { service: Service }) {
   const rowRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({ target: rowRef, offset: ['start end', 'end start'] })
   const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
+  const [revealRef, revealed] = useInViewOnce<HTMLDivElement>(0.3)
 
   return (
     <motion.div className="service-row" ref={rowRef} whileHover="hover">
@@ -26,13 +21,7 @@ function ServiceRow({ service }: { service: Service }) {
       <h3 className="service-row__title">{service.title}</h3>
 
       <div className="service-row__content">
-        <motion.div
-          className="service-row__media"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
-          variants={scaleReveal}
-        >
+        <div ref={revealRef} className={`service-row__media ${revealed ? 'is-revealed' : ''}`}>
           <motion.div className="service-row__media-inner" style={{ y: imgY }}>
             <motion.img
               src={service.image}
@@ -41,7 +30,7 @@ function ServiceRow({ service }: { service: Service }) {
               variants={imgHover}
             />
           </motion.div>
-        </motion.div>
+        </div>
         <p className="service-row__desc">{service.description}</p>
         <ul className="service-row__capabilities">
           {service.capabilities.map((cap) => (

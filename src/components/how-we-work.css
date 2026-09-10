@@ -41,6 +41,21 @@
   aspect-ratio: 5 / 4;
   border-radius: var(--radius-lg);
   overflow: hidden;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+}
+
+.process-stage__image.is-revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-stage__image {
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
 }
 
 .process-stage__image-inner {

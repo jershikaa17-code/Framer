@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { navLinks } from '../data/nav'
 import { EASE_OUT, springSnappy } from '../animations/variants'
@@ -6,17 +7,13 @@ import './navbar.css'
 
 const menuCounts: Record<string, string> = { Work: '5', Whispers: '7' }
 
+// Section anchors only exist on the homepage — prefix with the base path so
+// they still resolve correctly when clicked from a route like /whispers.
+const home = import.meta.env.BASE_URL
+
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [hovered, setHovered] = useState<string | null>(null)
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40)
-    onScroll()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? 'hidden' : ''
@@ -30,44 +27,61 @@ export function Navbar() {
   return (
     <>
       <motion.header
-        className={`navbar ${scrolled ? 'navbar--solid' : ''} ${open ? 'navbar--open' : ''}`}
+        className={`navbar ${open ? 'navbar--open' : ''}`}
         initial={{ y: -32, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.15 }}
       >
         <div className="navbar__inner container">
-          <a href="#top" className="navbar__logo" onClick={closeMenu}>
+          <Link to="/" className="navbar__logo" onClick={closeMenu}>
             Create<span className="navbar__reg">®</span>
-          </a>
+          </Link>
 
           <nav className="navbar__links" aria-label="Primary" onMouseLeave={() => setHovered(null)}>
             {navLinks
               .filter((link) => link.label !== 'Contact')
-              .map((link) => (
-                <a
-                  key={link.label}
-                  href={link.href}
-                  className="navbar__link"
-                  onMouseEnter={() => setHovered(link.label)}
-                >
-                  {link.label}
-                  {menuCounts[link.label] && (
-                    <sup className="navbar__count">{menuCounts[link.label]}</sup>
-                  )}
-                  {hovered === link.label && (
-                    <motion.span
-                      className="navbar__hover-line"
-                      layoutId="navbar-hover-line"
-                      transition={springSnappy}
-                    />
-                  )}
-                </a>
-              ))}
+              .map((link) => {
+                const isRoute = link.href.startsWith('/')
+                const content = (
+                  <>
+                    {link.label}
+                    {menuCounts[link.label] && (
+                      <sup className="navbar__count">{menuCounts[link.label]}</sup>
+                    )}
+                    {hovered === link.label && (
+                      <motion.span
+                        className="navbar__hover-line"
+                        layoutId="navbar-hover-line"
+                        transition={springSnappy}
+                      />
+                    )}
+                  </>
+                )
+                return isRoute ? (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    className="navbar__link"
+                    onMouseEnter={() => setHovered(link.label)}
+                  >
+                    {content}
+                  </Link>
+                ) : (
+                  <a
+                    key={link.label}
+                    href={`${home}${link.href}`}
+                    className="navbar__link"
+                    onMouseEnter={() => setHovered(link.label)}
+                  >
+                    {content}
+                  </a>
+                )
+              })}
           </nav>
 
           <div className="navbar__actions">
             <motion.a
-              href="#contact"
+              href={`${home}#contact`}
               className="navbar__link navbar__link--contact"
               whileHover={{ x: 3 }}
               transition={springSnappy}
@@ -105,15 +119,24 @@ export function Navbar() {
                     animate={{ y: '0%', opacity: 1 }}
                     transition={{ duration: 0.6, delay: 0.15 + i * 0.06, ease: EASE_OUT }}
                   >
-                    <motion.a
-                      href={label === 'Home' ? '#top' : `#${label.toLowerCase()}`}
-                      onClick={closeMenu}
-                      whileHover={{ x: 12 }}
-                      transition={springSnappy}
-                    >
-                      <span className="nav-overlay__index">0{i + 1}</span>
-                      {label}
-                    </motion.a>
+                    {label === 'Whispers' ? (
+                      <motion.div whileHover={{ x: 12 }} transition={springSnappy}>
+                        <Link to="/whispers" onClick={closeMenu}>
+                          <span className="nav-overlay__index">0{i + 1}</span>
+                          {label}
+                        </Link>
+                      </motion.div>
+                    ) : (
+                      <motion.a
+                        href={`${home}${label === 'Home' ? '#top' : `#${label.toLowerCase()}`}`}
+                        onClick={closeMenu}
+                        whileHover={{ x: 12 }}
+                        transition={springSnappy}
+                      >
+                        <span className="nav-overlay__index">0{i + 1}</span>
+                        {label}
+                      </motion.a>
+                    )}
                   </motion.li>
                 ))}
               </ul>

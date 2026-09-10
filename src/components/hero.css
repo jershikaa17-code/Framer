@@ -57,7 +57,10 @@
 
 .hero__stat-label {
   margin-top: 10px;
+  font-family: var(--font-mono);
   font-size: var(--fs-small);
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
   color: var(--color-text-faint-2);
   line-height: var(--lh-normal);
   max-width: 20ch;

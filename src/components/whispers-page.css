@@ -1,0 +1,141 @@
+.whispers-page {
+  padding-top: var(--nav-h);
+}
+
+.whispers-hero {
+  padding-block: clamp(32px, 6vw, 64px) clamp(24px, 4vw, 40px);
+}
+
+.whispers-hero__wordmark {
+  font-size: var(--fs-display);
+  line-height: 0.9;
+  letter-spacing: var(--ls-tightest);
+  font-weight: var(--fw-bold);
+  color: var(--color-text-secondary);
+  margin-top: 12px;
+}
+
+.whispers-hero__wordmark-inner {
+  position: relative;
+  display: inline-block;
+}
+
+.whispers-hero__dot {
+  position: absolute;
+  top: 0.1em;
+  right: -0.55em;
+  width: 0.14em;
+  height: 0.14em;
+  border-radius: 50%;
+  background: var(--color-accent);
+}
+
+.whispers-hero__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  margin-top: clamp(20px, 3vw, 36px);
+  flex-wrap: wrap;
+}
+
+.whispers-hero__tagline {
+  font-size: var(--fs-body-lg);
+  color: var(--color-text-muted);
+  max-width: 32ch;
+}
+
+.whispers-hero__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  color: var(--color-text-secondary);
+}
+
+.whispers-hero__list span {
+  color: var(--color-accent);
+  margin-right: 4px;
+}
+
+.whispers-list {
+  padding-block: clamp(24px, 4vw, 48px) clamp(64px, 8vw, 120px);
+}
+
+.whispers-list__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.whisper-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 16 / 7;
+  color: var(--color-white);
+}
+
+.whisper-card__img-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.whisper-card__img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s var(--ease-out);
+}
+
+.whisper-card:hover .whisper-card__img-wrap img {
+  transform: scale(1.04);
+}
+
+.whisper-card__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 6, 9, 0.55) 0%, rgba(5, 6, 9, 0.1) 30%, rgba(5, 6, 9, 0.65) 100%);
+}
+
+.whisper-card__meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: clamp(20px, 3vw, 32px);
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+}
+
+.whisper-card__author {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.whisper-card__author em {
+  font-style: normal;
+  color: var(--color-text-faint-2);
+}
+
+.whisper-card__title {
+  position: relative;
+  z-index: 1;
+  padding: 0 clamp(20px, 3vw, 32px) clamp(20px, 3vw, 32px);
+  margin-top: auto;
+  font-size: clamp(1.4rem, 1.1rem + 2vw, 2.5rem);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+  max-width: 24ch;
+}
+
+@media (max-width: 809px) {
+  .whisper-card {
+    aspect-ratio: 4 / 5;
+  }
+}

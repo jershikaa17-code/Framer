@@ -42,8 +42,19 @@
   border-top: 1px solid var(--color-border);
 }
 
+/* Verified on the reference: Services uses the same "stacked sticky
+   siblings" technique as elsewhere on the site (6 consecutive
+   position:sticky;top:0 panels, each ~one viewport tall) — each service
+   pins, then the next one rises up and covers it as you keep scrolling. */
 .service-row {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   padding-block: clamp(28px, 4vw, 40px);
+  background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
 }
 
@@ -99,6 +110,21 @@
   width: 290px;
   aspect-ratio: 290 / 160;
   overflow: hidden;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.2s var(--ease-out), transform 1.2s var(--ease-out);
+}
+
+.service-row__media.is-revealed {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-row__media {
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
 }
 
 .service-row__media-inner {

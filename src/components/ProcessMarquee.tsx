@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import './process-marquee.css'
 
 const phrases = ['we listen', 'we imagine', 'we create', 'beautiful things']
@@ -20,6 +20,9 @@ const DROPLETS = Array.from({ length: 110 }).map((_, i) => {
     height: size * (rand(10) < 0.5 ? 1 : squish),
     rotate: rand(11) * 360,
     radius: `${40 + rand(12) * 30}% ${40 + rand(13) * 30}% ${40 + rand(14) * 30}% ${40 + rand(15) * 30}%`,
+    // Small marks read as solid dots; only the bigger drops are large enough
+    // for the eye to register a hollow ring, so only they get a ring-inner.
+    ringInner: size > 9 ? Math.min(38, (size - 9) * 1.8) : 0,
     blur: rand(4) * 1.4,
     opacity: 0.14 + rand(5) * 0.3,
     float: 8 + rand(6) * 16,
@@ -28,53 +31,25 @@ const DROPLETS = Array.from({ length: 110 }).map((_, i) => {
   }
 })
 
-// Each line's "center" sits at an evenly-spaced point along the section's own
-// scroll progress. As progress passes that point the line is fully visible
-// and stationary; moving away from it (either direction) carries the line
-// off-screen at exactly the rate the user is scrolling — a typography
-// conveyor rather than a scripted, one-shot entrance.
-//
-// Scale is deliberately asymmetric (matches the reference: each line's own
-// exported appear-state shows it starting at scale(3-4) and settling to
-// scale(1)) — a dramatic zoom-out as a line arrives from below, then a much
-// gentler shrink as it continues past center and exits upward.
-function useLineMotion(progress: MotionValue<number>, index: number, total: number, reduceMotion: boolean) {
-  const center = (index + 0.5) / total
+// Each phrase lives in normal document flow, spaced across the tall stack
+// behind the pinned droplet background — matching the reference, where all
+// four lines can be visible at once (stacked in reading order) rather than
+// swapped one-at-a-time. Each line's own scroll progress (its own viewport
+// entrance) drives a zoom-out-and-settle reveal, then stays put once shown.
+function Line({ phrase, index, reduceMotion }: { phrase: string; index: number; reduceMotion: boolean }) {
+  const ref = useRef<HTMLParagraphElement>(null)
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start 0.88', 'start 0.32'] })
 
-  const transform = useTransform(progress, (p) => {
+  const transform = useTransform(scrollYProgress, (p) => {
     if (reduceMotion) return 'none'
-    const local = p - center
-    const travelVh = local * total * 100
-    const scale =
-      local < 0
-        ? 1 + Math.min(-local / 0.25, 1) * 2.2
-        : 1 - Math.min(local / 0.3, 1) * 0.15
-    return `translateY(${travelVh.toFixed(2)}vh) scale(${scale.toFixed(3)})`
+    const scale = 3.4 - p * 2.4
+    const travel = (1 - p) * 50
+    return `translateY(${travel.toFixed(2)}px) scale(${scale.toFixed(3)})`
   })
+  const opacity = useTransform(scrollYProgress, [0, 1], reduceMotion ? [1, 1] : [0, 1])
 
-  const opacity = useTransform(progress, (p) => {
-    const local = Math.abs(p - center)
-    const fadeWidth = reduceMotion ? 0.5 : 0.24
-    return Math.max(0, 1 - local / fadeWidth)
-  })
-
-  return { transform, opacity }
-}
-
-function Line({
-  phrase,
-  index,
-  progress,
-  reduceMotion,
-}: {
-  phrase: string
-  index: number
-  progress: MotionValue<number>
-  reduceMotion: boolean
-}) {
-  const { transform, opacity } = useLineMotion(progress, index, phrases.length, reduceMotion)
   return (
-    <p className={`process-marquee__phrase ${index === 2 ? 'is-accent' : ''}`}>
+    <p ref={ref} className={`process-marquee__phrase ${index === 2 ? 'is-accent' : ''}`}>
       <motion.span className="process-marquee__phrase-inner" style={{ transform, opacity }}>
         {phrase}
       </motion.span>
@@ -83,12 +58,10 @@ function Line({
 }
 
 export function ProcessMarquee() {
-  const sectionRef = useRef<HTMLDivElement>(null)
   const shouldReduceMotion = Boolean(useReducedMotion())
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
 
   return (
-    <section className="process-marquee section" ref={sectionRef}>
+    <section className="process-marquee section">
       <div className="process-marquee__bg">
         <div className="process-marquee__droplets" aria-hidden="true">
           {DROPLETS.map((d, i) => (
@@ -103,6 +76,7 @@ export function ProcessMarquee() {
                 borderRadius: d.radius,
                 filter: `blur(${d.blur}px)`,
                 ['--droplet-rot' as string]: `${d.rotate}deg`,
+                ['--ring-inner' as string]: `${d.ringInner}%`,
               }}
               animate={{
                 y: [0, -d.float, 0],
@@ -122,13 +96,7 @@ export function ProcessMarquee() {
       <div className="process-marquee__stack">
         <div className="process-marquee__lines">
           {phrases.map((phrase, i) => (
-            <Line
-              key={phrase}
-              phrase={phrase}
-              index={i}
-              progress={scrollYProgress}
-              reduceMotion={shouldReduceMotion}
-            />
+            <Line key={phrase} phrase={phrase} index={i} reduceMotion={shouldReduceMotion} />
           ))}
         </div>
       </div>

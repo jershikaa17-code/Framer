@@ -1,36 +1,23 @@
+import { Route, Routes } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
-import { HeroCluster } from './components/HeroCluster'
-import { ProcessMarquee } from './components/ProcessMarquee'
-import { Projects } from './components/Projects'
-import { Performance } from './components/Performance'
-import { ClientMarquee } from './components/ClientMarquee'
-import { Services } from './components/Services'
-import { HowWeWork } from './components/HowWeWork'
-import { Pricing } from './components/Pricing'
-import { Testimonial } from './components/Testimonial'
-import { BookCall } from './components/BookCall'
-import { Newsletter } from './components/Newsletter'
 import { Footer } from './components/Footer'
 import { CustomCursor } from './components/CustomCursor'
+import { ScrollToTop } from './components/ScrollToTop'
+import { HomePage } from './pages/HomePage'
+import { WhispersPage } from './pages/WhispersPage'
+import { WhisperArticlePage } from './pages/WhisperArticlePage'
 
 function App() {
   return (
     <>
       <CustomCursor />
+      <ScrollToTop />
       <Navbar />
-      <main>
-        <HeroCluster />
-        <ProcessMarquee />
-        <Projects />
-        <Performance />
-        <ClientMarquee />
-        <Services />
-        <HowWeWork />
-        <Pricing />
-        <Testimonial />
-        <BookCall />
-        <Newsletter />
-      </main>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/whispers" element={<WhispersPage />} />
+        <Route path="/whispers/:slug" element={<WhisperArticlePage />} />
+      </Routes>
       <Footer />
     </>
   )

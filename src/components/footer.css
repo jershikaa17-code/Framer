@@ -53,6 +53,146 @@
   font-size: var(--fs-small);
 }
 
+/* Only this closing block (brand statement + the copyright bar right after
+   it) is the slightly darker grey in the reference — the link grid above
+   stays on the lighter --color-bg-soft that the whole .footer starts with. */
+.footer__brand {
+  background: var(--color-bg-alt);
+  border-top: 1px solid var(--color-border);
+  padding-block: clamp(48px, 8vw, 96px);
+}
+
+.footer__tagline {
+  font-size: var(--fs-body-lg);
+  color: var(--color-text-muted);
+  max-width: 40ch;
+  margin-bottom: 4px;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+}
+
+.footer__wordmark {
+  font-size: var(--fs-display);
+  line-height: 0.92;
+  letter-spacing: var(--ls-tightest);
+  font-weight: var(--fw-bold);
+  color: var(--color-text);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.9s var(--ease-out) 0.08s, transform 0.9s var(--ease-out) 0.08s;
+}
+
+.footer__brand.is-revealed .footer__tagline,
+.footer__brand.is-revealed .footer__wordmark,
+.footer__brand.is-revealed .footer__about {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer__tagline,
+  .footer__wordmark,
+  .footer__about {
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
+}
+
+.footer__wordmark-accent {
+  color: var(--color-accent);
+}
+
+.footer__wordmark-slash {
+  color: var(--color-text-muted);
+  font-weight: var(--fw-medium);
+}
+
+.footer__about {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(20px, 3vw, 32px);
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.7s var(--ease-out) 0.16s, transform 0.7s var(--ease-out) 0.16s;
+}
+
+/* Circular, per a direct screenshot of the live reference — an earlier
+   automated measurement of "footer video" picked up a hidden responsive
+   duplicate (Framer renders multiple breakpoint variants in the DOM at
+   once) instead of the one actually visible at normal viewport widths. */
+.footer__avatar {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.footer__about p {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+  max-width: 32ch;
+}
+
+.footer__brand-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: clamp(24px, 6vw, 64px) clamp(24px, 6vw, 96px);
+}
+
+/* Offline + Online sit side by side on row one; Phone drops to its own row
+   but stays left-aligned under Offline (not centered / not flex-wrapped
+   to wherever it happens to fit) — matches the reference exactly. */
+.footer__contact-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: clamp(32px, 5vw, 72px);
+  row-gap: clamp(28px, 4vw, 44px);
+}
+
+.footer__contact-col--phone {
+  grid-column: 1;
+}
+
+.footer__contact-col p {
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+  line-height: var(--lh-relaxed);
+}
+
+.footer__contact-col a {
+  color: var(--color-text-muted);
+  transition: color 0.3s var(--ease-out);
+}
+
+.footer__contact-col a:hover {
+  color: var(--color-accent);
+}
+
+.footer__contact-col--phone p a {
+  font-size: var(--fs-h3);
+  color: var(--color-text);
+  font-weight: var(--fw-medium);
+}
+
+@media (max-width: 809px) {
+  .footer__wordmark {
+    font-size: clamp(2.4rem, 1.6rem + 8vw, 4rem);
+  }
+
+  .footer__brand-grid {
+    flex-direction: column;
+    gap: clamp(32px, 6vw, 56px);
+  }
+
+  .footer__contact-grid {
+    flex-wrap: wrap;
+  }
+}
+
 .footer__bottom {
   display: flex;
   align-items: center;
@@ -60,6 +200,7 @@
   flex-wrap: wrap;
   gap: 12px;
   padding-block: 24px;
+  background: var(--color-bg-alt);
   border-top: 1px solid var(--color-border);
   color: var(--color-text-muted);
   font-size: var(--fs-small);
