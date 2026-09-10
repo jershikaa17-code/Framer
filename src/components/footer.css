@@ -136,6 +136,12 @@
   max-width: 32ch;
 }
 
+.footer__copyright {
+  margin-top: clamp(28px, 4vw, 44px);
+  color: var(--color-text-muted);
+  font-size: var(--fs-small);
+}
+
 .footer__brand-grid {
   display: flex;
   flex-wrap: wrap;
@@ -145,12 +151,15 @@
 
 /* Offline + Online sit side by side on row one; Phone drops to its own row
    but stays left-aligned under Offline (not centered / not flex-wrapped
-   to wherever it happens to fit) — matches the reference exactly. */
+   to wherever it happens to fit). The whole block also sits ~22px higher
+   than the tagline next to it — measured directly off the reference
+   (Offline heading top:258 vs tagline top:280 at the same viewport). */
 .footer__contact-grid {
   display: grid;
   grid-template-columns: auto auto;
   column-gap: clamp(32px, 5vw, 72px);
   row-gap: clamp(28px, 4vw, 44px);
+  margin-top: -22px;
 }
 
 .footer__contact-col--phone {
@@ -159,8 +168,13 @@
 
 .footer__contact-col p {
   color: var(--color-text-muted);
-  font-size: var(--fs-small);
+  font-size: 1.125rem;
   line-height: var(--lh-relaxed);
+}
+
+.footer__contact-col--online p a {
+  font-size: 1.3rem;
+  color: var(--color-text);
 }
 
 .footer__contact-col a {
@@ -189,21 +203,12 @@
   }
 
   .footer__contact-grid {
-    flex-wrap: wrap;
+    grid-template-columns: 1fr;
   }
-}
 
-.footer__bottom {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding-block: 24px;
-  background: var(--color-bg-alt);
-  border-top: 1px solid var(--color-border);
-  color: var(--color-text-muted);
-  font-size: var(--fs-small);
+  .footer__contact-col--phone {
+    grid-column: 1;
+  }
 }
 
 @media (max-width: 809px) {

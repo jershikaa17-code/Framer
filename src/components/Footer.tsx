@@ -90,6 +90,8 @@ export function Footer() {
               />
               <p>A design studio trusted by startups and leading brands.</p>
             </div>
+
+            <p className="footer__copyright">© 2026 Create Studio — All work, all rights.</p>
           </div>
 
           <div className="footer__contact-grid">
@@ -99,7 +101,7 @@ export function Footer() {
               <p>8 Sunset Blvd, Office 5</p>
               <p>Los Angeles, CA 90026</p>
             </div>
-            <div className="footer__contact-col">
+            <div className="footer__contact-col footer__contact-col--online">
               <p className="footer__heading">Online</p>
               <p>
                 <a href="mailto:hello@create.com">hello@create.com</a>
@@ -113,11 +115,6 @@ export function Footer() {
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="container footer__bottom">
-        <p>© 2026 Create Studio — All work, all rights.</p>
-        <p>Built with React, Vite & Framer Motion</p>
       </div>
     </footer>
   )
