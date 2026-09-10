@@ -1,6 +1,5 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
-import { EASE_OUT } from '../animations/variants'
+import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import './process-marquee.css'
 
 const phrases = ['we listen', 'we imagine', 'we create', 'beautiful things']
@@ -23,16 +22,56 @@ const DROPLETS = Array.from({ length: 70 }).map((_, i) => {
   }
 })
 
+// Each line's "center" sits at an evenly-spaced point along the section's own
+// scroll progress. As progress passes that point the line is fully visible
+// and stationary; moving away from it (either direction) carries the line
+// off-screen at exactly the rate the user is scrolling — a typography
+// conveyor rather than a scripted, one-shot entrance.
+function useLineMotion(progress: MotionValue<number>, index: number, total: number, reduceMotion: boolean) {
+  const center = (index + 0.5) / total
+
+  const transform = useTransform(progress, (p) => {
+    if (reduceMotion) return 'none'
+    const local = p - center
+    const travelVh = local * total * 100
+    const scale = 1 - Math.min(Math.abs(local), 0.3) * 0.12
+    return `translateY(${travelVh.toFixed(2)}vh) scale(${scale.toFixed(3)})`
+  })
+
+  const opacity = useTransform(progress, (p) => {
+    const local = Math.abs(p - center)
+    const fadeWidth = reduceMotion ? 0.5 : 0.24
+    return Math.max(0, 1 - local / fadeWidth)
+  })
+
+  return { transform, opacity }
+}
+
+function Line({
+  phrase,
+  index,
+  progress,
+  reduceMotion,
+}: {
+  phrase: string
+  index: number
+  progress: MotionValue<number>
+  reduceMotion: boolean
+}) {
+  const { transform, opacity } = useLineMotion(progress, index, phrases.length, reduceMotion)
+  return (
+    <p className={`process-marquee__phrase ${index === 2 ? 'is-accent' : ''}`}>
+      <motion.span className="process-marquee__phrase-inner" style={{ transform, opacity }}>
+        {phrase}
+      </motion.span>
+    </p>
+  )
+}
+
 export function ProcessMarquee() {
   const sectionRef = useRef<HTMLDivElement>(null)
+  const shouldReduceMotion = Boolean(useReducedMotion())
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] })
-
-  // alternating parallax depths so the phrases drift past each other while pinned
-  const y0 = useTransform(scrollYProgress, [0, 1], [-30, 30])
-  const y1 = useTransform(scrollYProgress, [0, 1], [30, -30])
-  const y2 = useTransform(scrollYProgress, [0, 1], [-46, 46])
-  const y3 = useTransform(scrollYProgress, [0, 1], [46, -46])
-  const parallaxYs = [y0, y1, y2, y3]
 
   return (
     <section className="process-marquee section" ref={sectionRef}>
@@ -65,19 +104,17 @@ export function ProcessMarquee() {
       </div>
 
       <div className="process-marquee__stack">
-        {phrases.map((phrase, i) => (
-          <motion.div key={phrase} style={{ y: parallaxYs[i] }}>
-            <motion.p
-              className={`process-marquee__phrase ${i === 2 ? 'is-accent' : ''}`}
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.6 }}
-              transition={{ duration: 0.8, ease: EASE_OUT }}
-            >
-              {phrase}
-            </motion.p>
-          </motion.div>
-        ))}
+        <div className="process-marquee__lines">
+          {phrases.map((phrase, i) => (
+            <Line
+              key={phrase}
+              phrase={phrase}
+              index={i}
+              progress={scrollYProgress}
+              reduceMotion={shouldReduceMotion}
+            />
+          ))}
+        </div>
       </div>
     </section>
   )

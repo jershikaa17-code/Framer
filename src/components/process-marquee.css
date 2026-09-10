@@ -20,14 +20,24 @@
   position: absolute;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  background: radial-gradient(
-    circle at 32% 26%,
-    rgba(255, 255, 255, 0.95),
-    rgba(20, 20, 20, 0.14) 55%,
-    rgba(20, 20, 20, 0.04) 75%,
-    transparent 82%
-  );
-  box-shadow: inset -2px -3px 4px rgba(0, 0, 0, 0.08);
+  /* Layered like a real bead of water: a small bright specular highlight
+     where light catches the top of the bead, a soft shadow on the opposite
+     side, and a darker "meniscus" ring where the curved edge bends light
+     before it fades into the surface it's sitting on. */
+  background:
+    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.4) 10%, transparent 26%),
+    radial-gradient(circle at 70% 76%, rgba(15, 16, 18, 0.24) 0%, transparent 42%),
+    radial-gradient(
+      circle at 50% 50%,
+      rgba(15, 16, 18, 0.05) 58%,
+      rgba(15, 16, 18, 0.2) 76%,
+      rgba(15, 16, 18, 0.07) 88%,
+      transparent 97%
+    );
+  box-shadow:
+    inset -3px -4px 5px rgba(0, 0, 0, 0.14),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.55),
+    0 3px 6px rgba(0, 0, 0, 0.07);
 }
 
 .process-marquee__stack {
@@ -35,13 +45,25 @@
   z-index: 1;
   margin-top: -100vh;
   min-height: 320vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  padding-block: 12vh;
+}
+
+/* Pinned viewport-height window the lines travel through — same trick as
+   .process-marquee__bg, so text position tracks scroll progress through the
+   (much taller) .process-marquee__stack above rather than the page scroll. */
+.process-marquee__lines {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
 }
 
 .process-marquee__phrase {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  padding-inline: var(--gutter, 24px);
   font-size: clamp(2.75rem, 7vw, 6.5rem);
   font-weight: var(--fw-black);
   letter-spacing: var(--ls-tight);
@@ -49,6 +71,11 @@
   color: var(--color-text);
   line-height: 1.05;
   text-align: center;
+}
+
+.process-marquee__phrase-inner {
+  display: block;
+  will-change: transform, opacity;
 }
 
 .process-marquee__phrase.is-accent {

@@ -17,6 +17,28 @@
   right: 0;
   top: -10%;
   bottom: -10%;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero-cluster__bg-inner.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-cluster__bg-inner {
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
+}
+
+.hero-cluster__bg-parallax,
+.hero-cluster__bg-vanish,
+.hero-cluster__bg-drift {
+  position: absolute;
+  inset: 0;
 }
 
 .hero-cluster__bg-inner img {

@@ -11,6 +11,10 @@ interface RevealTextProps {
   stagger?: number
   once?: boolean
   amount?: number
+  /** Opt-in cinematic touch: words sharpen in from a slight blur. Off by default
+   * so existing callers (Performance, Pricing, HowWeWork, etc.) look unchanged. */
+  blur?: boolean
+  duration?: number
 }
 
 export function RevealText({
@@ -21,6 +25,8 @@ export function RevealText({
   stagger = 0.045,
   once = true,
   amount = 0.6,
+  blur = false,
+  duration = 0.85,
 }: RevealTextProps) {
   const words = text.split(' ')
   const Tag = motion[as] as typeof motion.span
@@ -42,8 +48,12 @@ export function RevealText({
             <motion.span
               className="reveal-text__word"
               variants={{
-                hidden: { y: '110%' },
-                show: { y: '0%', transition: { duration: 0.85, ease: EASE_OUT } },
+                hidden: blur ? { y: '110%', filter: 'blur(8px)' } : { y: '110%' },
+                show: {
+                  y: '0%',
+                  ...(blur ? { filter: 'blur(0px)' } : null),
+                  transition: { duration, ease: EASE_OUT },
+                },
               }}
             >
               {word}

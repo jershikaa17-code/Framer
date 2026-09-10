@@ -1,7 +1,14 @@
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 import { projects, type Project } from '../data/projects'
-import { fadeUp, imgHover, scrimHover, staggerContainer, clipReveal } from '../animations/variants'
+import {
+  fadeUp,
+  imgHover,
+  scrimHover,
+  staggerContainer,
+  clipReveal,
+  FRAMER_SPRING,
+} from '../animations/variants'
 import { RevealText } from '../animations/RevealText'
 import './projects.css'
 
