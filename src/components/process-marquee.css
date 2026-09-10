@@ -18,26 +18,18 @@
 
 .process-marquee__droplet {
   position: absolute;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  /* Layered like a real bead of water: a small bright specular highlight
-     where light catches the top of the bead, a soft shadow on the opposite
-     side, and a darker "meniscus" ring where the curved edge bends light
-     before it fades into the surface it's sitting on. */
-  background:
-    radial-gradient(circle at 30% 24%, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0.4) 10%, transparent 26%),
-    radial-gradient(circle at 70% 76%, rgba(15, 16, 18, 0.24) 0%, transparent 42%),
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(15, 16, 18, 0.05) 58%,
-      rgba(15, 16, 18, 0.2) 76%,
-      rgba(15, 16, 18, 0.07) 88%,
-      transparent 97%
-    );
-  box-shadow:
-    inset -3px -4px 5px rgba(0, 0, 0, 0.14),
-    inset 2px 2px 3px rgba(255, 255, 255, 0.55),
-    0 3px 6px rgba(0, 0, 0, 0.07);
+  transform: translate(-50%, -50%) rotate(var(--droplet-rot, 0deg));
+  /* A flat, dark, slightly irregular mark that fades out at the edge — like
+     a fine bead of water photographed on a light surface, not a glossy 3D
+     sphere. Darkest at a slightly off-center core, feathering to nothing. */
+  background: radial-gradient(
+    circle at 42% 38%,
+    rgba(18, 19, 21, 0.62) 0%,
+    rgba(18, 19, 21, 0.42) 34%,
+    rgba(18, 19, 21, 0.18) 58%,
+    rgba(18, 19, 21, 0.05) 78%,
+    transparent 100%
+  );
 }
 
 .process-marquee__stack {

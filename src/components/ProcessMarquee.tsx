@@ -4,19 +4,25 @@ import './process-marquee.css'
 
 const phrases = ['we listen', 'we imagine', 'we create', 'beautiful things']
 
-const DROPLETS = Array.from({ length: 70 }).map((_, i) => {
+const DROPLETS = Array.from({ length: 110 }).map((_, i) => {
   const rand = (n: number) => {
     const x = Math.sin(i * 12.9898 + n * 78.233) * 43758.5453
     return x - Math.floor(x)
   }
-  const size = 5 + rand(1) * 32
+  // Skewed toward small marks (most fine, a few larger) rather than an even
+  // spread — closer to how real scattered water droplets read at a glance.
+  const size = 3 + rand(1) * rand(1) * 30
+  const squish = 0.55 + rand(9) * 0.45 // some marks read as slightly elongated, not perfect circles
   return {
     left: rand(2) * 100,
     top: rand(3) * 100,
     size,
-    blur: rand(4) * 2.2,
-    opacity: 0.1 + rand(5) * 0.24,
-    float: 10 + rand(6) * 22,
+    height: size * (rand(10) < 0.5 ? 1 : squish),
+    rotate: rand(11) * 360,
+    radius: `${40 + rand(12) * 30}% ${40 + rand(13) * 30}% ${40 + rand(14) * 30}% ${40 + rand(15) * 30}%`,
+    blur: rand(4) * 1.4,
+    opacity: 0.14 + rand(5) * 0.3,
+    float: 8 + rand(6) * 16,
     duration: 4 + rand(7) * 5,
     delay: rand(8) * 4,
   }
@@ -27,6 +33,11 @@ const DROPLETS = Array.from({ length: 70 }).map((_, i) => {
 // and stationary; moving away from it (either direction) carries the line
 // off-screen at exactly the rate the user is scrolling — a typography
 // conveyor rather than a scripted, one-shot entrance.
+//
+// Scale is deliberately asymmetric (matches the reference: each line's own
+// exported appear-state shows it starting at scale(3-4) and settling to
+// scale(1)) — a dramatic zoom-out as a line arrives from below, then a much
+// gentler shrink as it continues past center and exits upward.
 function useLineMotion(progress: MotionValue<number>, index: number, total: number, reduceMotion: boolean) {
   const center = (index + 0.5) / total
 
@@ -34,7 +45,10 @@ function useLineMotion(progress: MotionValue<number>, index: number, total: numb
     if (reduceMotion) return 'none'
     const local = p - center
     const travelVh = local * total * 100
-    const scale = 1 - Math.min(Math.abs(local), 0.3) * 0.12
+    const scale =
+      local < 0
+        ? 1 + Math.min(-local / 0.25, 1) * 2.2
+        : 1 - Math.min(local / 0.3, 1) * 0.15
     return `translateY(${travelVh.toFixed(2)}vh) scale(${scale.toFixed(3)})`
   })
 
@@ -85,8 +99,10 @@ export function ProcessMarquee() {
                 left: `${d.left}%`,
                 top: `${d.top}%`,
                 width: d.size,
-                height: d.size,
+                height: d.height,
+                borderRadius: d.radius,
                 filter: `blur(${d.blur}px)`,
+                ['--droplet-rot' as string]: `${d.rotate}deg`,
               }}
               animate={{
                 y: [0, -d.float, 0],
