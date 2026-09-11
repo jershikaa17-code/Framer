@@ -1,0 +1,119 @@
+.achievements {
+  background: var(--color-bg-dark-2);
+  color: var(--color-white);
+  padding-block: clamp(64px, 9vw, 120px);
+}
+
+.achievements__grid {
+  display: grid;
+  grid-template-columns: 1fr 0.9fr;
+  gap: clamp(32px, 6vw, 80px);
+  align-items: center;
+}
+
+.achievements__title {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-text-faint-2);
+  margin-top: 14px;
+}
+
+.achievements__sub {
+  margin-top: 22px;
+  max-width: 46ch;
+  color: var(--color-text-faint-2);
+  font-size: var(--fs-body-lg);
+}
+
+.achievements__sub--muted {
+  color: var(--color-text-muted);
+  font-size: var(--fs-body);
+}
+
+.achievements__showreel {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: clamp(28px, 4vw, 44px);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-medium);
+  color: var(--color-white);
+}
+
+.achievements__showreel-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  color: var(--color-white);
+  transition: transform 0.3s var(--ease-out);
+}
+
+.achievements__showreel:hover .achievements__showreel-icon {
+  transform: translateX(3px);
+}
+
+.achievements__stats {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 44px);
+}
+
+.achievement-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.achievement-stat__value {
+  font-size: clamp(3rem, 2rem + 5vw, 5.5rem);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.achievement-stat__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--color-text-faint-2);
+}
+
+.achievement-stat__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.achievement-stat__bar-fill {
+  flex: 1;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--color-text-muted) 0,
+    var(--color-text-muted) 3px,
+    transparent 3px,
+    transparent 6px
+  );
+}
+
+.achievement-stat__bar-index {
+  font-family: var(--font-mono);
+  font-size: var(--fs-nano);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .achievements__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -23,7 +23,19 @@ export function WhisperArticlePage() {
         </div>
 
         <div className="whisper-article__cover">
-          <img src={`${import.meta.env.BASE_URL}${article.cover}`} alt={article.title} />
+          {article.coverVideo ? (
+            <video
+              src={`${import.meta.env.BASE_URL}${article.coverVideo}`}
+              poster={`${import.meta.env.BASE_URL}${article.cover}`}
+              autoPlay
+              loop
+              muted
+              playsInline
+              aria-label={article.title}
+            />
+          ) : (
+            <img src={`${import.meta.env.BASE_URL}${article.cover}`} alt={article.title} />
+          )}
         </div>
 
         <div className="whisper-article__intro">

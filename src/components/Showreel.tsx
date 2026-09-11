@@ -21,7 +21,7 @@ export function Showreel() {
   }
 
   return (
-    <section className="showreel">
+    <section className="showreel" id="showreel">
       <div className="showreel__head">
         <ScrambleText as="span" className="eyebrow" text="Showreel" />
         <span className="showreel__rule" />

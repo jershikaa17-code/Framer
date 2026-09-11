@@ -1,12 +1,13 @@
+import { Link } from 'react-router-dom'
 import { useInViewOnce } from '../hooks/useInViewOnce'
 import './footer.css'
 
 const navigate = [
-  { label: 'Home', href: '#top' },
-  { label: 'Work', href: '#work' },
-  { label: 'Studio', href: '#studio' },
-  { label: 'Whispers', href: '#whispers' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: '/' },
+  { label: 'Work', href: '/work' },
+  { label: 'Studio', href: '/studio' },
+  { label: 'Whispers', href: '/whispers' },
+  { label: 'Contact', href: '/contact' },
 ]
 
 const links = ['Terms of service', 'Privacy policy', 'Disclaimer', '404', 'More templates']
@@ -30,7 +31,7 @@ export function Footer() {
           <ul>
             {navigate.map((item) => (
               <li key={item.label}>
-                <a href={item.href}>{item.label}</a>
+                <Link to={item.href}>{item.label}</Link>
               </li>
             ))}
           </ul>

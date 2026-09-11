@@ -1,4 +1,5 @@
 import { useRef } from 'react'
+import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'motion/react'
 import { projects, type Project } from '../data/projects'
 import { fadeUp, imgHover, scrimHover, staggerContainer, FRAMER_SPRING } from '../animations/variants'
@@ -6,7 +7,9 @@ import { RevealText } from '../animations/RevealText'
 import { useInViewOnce } from '../hooks/useInViewOnce'
 import './projects.css'
 
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+const MotionLink = motion.create(Link)
+
+export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const cardRef = useRef<HTMLAnchorElement>(null)
   const { scrollYProgress } = useScroll({ target: cardRef, offset: ['start end', 'end start'] })
   const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
@@ -16,9 +19,9 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [, revealed] = useInViewOnce(0.15, cardRef)
 
   return (
-    <motion.a
+    <MotionLink
       ref={cardRef}
-      href="#work"
+      to="/work"
       className="project-card"
       data-cursor="View case study"
       data-cursor-icon="arrow"
@@ -67,7 +70,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         <h3>{project.title}</h3>
         <p>{project.category}</p>
       </motion.div>
-    </motion.a>
+    </MotionLink>
   )
 }
 
@@ -81,9 +84,9 @@ export function Projects() {
             <RevealText text="Selected work" />
           </h2>
         </div>
-        <a href="#work" className="projects__more">
+        <Link to="/work" className="projects__more">
           2017–2025 · More projects →
-        </a>
+        </Link>
       </div>
 
       <div className="projects__list">

@@ -11,6 +11,11 @@ export interface WhisperArticle {
   date: string
   excerpt: string
   cover: string
+  /** Optional video cover — used in place of the static `cover` image when a
+   * post calls for motion (e.g. the automotive piece, matching its own
+   * "cinematic videos replaced photo grids" point). `cover` still doubles as
+   * the video's poster frame and as the thumbnail on article listing cards. */
+  coverVideo?: string
   leadIn: string
   body: WhisperSection[]
 }
@@ -178,6 +183,7 @@ export const whispers: WhisperArticle[] = [
     excerpt:
       'Exploring how carmakers use interactive tools, storytelling, and configurators to create digital experiences as compelling as test drives.',
     cover: 'assets/whispers/automotive.jpg',
+    coverVideo: 'assets/hero.mp4',
     leadIn:
       'An automotive brand asked us to build a digital showroom. The challenge was giving customers an online experience that could rival the thrill of being behind the wheel.',
     body: automotiveBody,

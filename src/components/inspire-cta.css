@@ -1,0 +1,148 @@
+.inspire-cta {
+  background: var(--color-bg-soft);
+  padding-block: clamp(56px, 8vw, 100px);
+  border-top: 1px solid var(--color-border);
+}
+
+.inspire-cta__grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: clamp(32px, 6vw, 80px);
+  align-items: start;
+}
+
+.inspire-cta__years {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-text);
+}
+
+.inspire-cta__stats-sub {
+  margin-top: 14px;
+  max-width: 34ch;
+  color: var(--color-text-muted);
+  font-size: var(--fs-body-lg);
+}
+
+.inspire-cta__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(24px, 3vw, 40px);
+  margin-top: clamp(32px, 5vw, 56px);
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.inspire-cta__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 130px;
+}
+
+.inspire-cta__stat-value {
+  font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-accent);
+  font-variant-numeric: tabular-nums;
+}
+
+.inspire-cta__stat-label {
+  font-size: var(--fs-small);
+  color: var(--color-text-muted);
+}
+
+.inspire-cta__range {
+  display: inline-block;
+  margin-top: 24px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-wide);
+  color: var(--color-text-faint);
+}
+
+.inspire-cta__quote {
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: clamp(28px, 4vw, 48px);
+}
+
+.inspire-cta__quote-title {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-tight);
+  max-width: 18ch;
+}
+
+.inspire-cta__quote-text {
+  margin-top: 20px;
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-relaxed);
+  color: var(--color-text-secondary);
+  max-width: 46ch;
+}
+
+.inspire-cta__person {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.inspire-cta__person img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.inspire-cta__person-name {
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text);
+}
+
+.inspire-cta__person-role {
+  font-size: var(--fs-nano);
+  color: var(--color-text-muted);
+}
+
+.inspire-cta__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+  letter-spacing: var(--ls-wide);
+  color: var(--color-accent);
+  background: var(--color-accent-dim);
+  border-radius: var(--radius-pill);
+  padding: 16px 28px;
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+}
+
+.inspire-cta__link:hover {
+  background: var(--color-accent);
+  color: var(--color-white);
+}
+
+@media (max-width: 900px) {
+  .inspire-cta__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .inspire-cta__row {
+    gap: 24px;
+  }
+  .inspire-cta__stat {
+    min-width: 40%;
+  }
+}

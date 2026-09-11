@@ -159,15 +159,11 @@
   transition: opacity 0.7s var(--ease-out) 0.16s, transform 0.7s var(--ease-out) 0.16s;
 }
 
-/* An ellipse (88x49 with a 50% radius), not a circle and not a sharp
-   rectangle — confirmed from the reference's own CSS. border-radius:50%
-   on a non-square box produces an ellipse matching the box's own aspect
-   ratio, which is exactly what's used here. */
 .footer__avatar {
   width: 88px;
-  height: 49px;
+  height: 42px;
   object-fit: cover;
-  border-radius: 50%;
+  border-radius: 21px;
   margin-right: 17px;
   flex-shrink: 0;
 }
@@ -312,8 +308,9 @@
   }
 
   .footer__avatar {
-    width: 65px;
-    height: 40px;
+    width: 68px;
+    height: 32px;
+    border-radius: 16px;
   }
 }
 

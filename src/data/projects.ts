@@ -5,6 +5,8 @@ export interface Project {
   stack: string[]
   year: string
   image: string
+  releaseDate: string
+  tags: string[]
 }
 
 export const projects: Project[] = [
@@ -15,6 +17,8 @@ export const projects: Project[] = [
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Cloudflare CDN'],
     year: '2025',
     image: 'assets/project-aurelis.jpg',
+    releaseDate: 'August 21, 2025',
+    tags: ['Brand & Identity', 'Responsive Web Design', 'Strategy'],
   },
   {
     index: '02',
@@ -23,6 +27,8 @@ export const projects: Project[] = [
     stack: ['React', 'WebGL', 'Node.js', 'AWS Lambda', 'OpenAI Embeddings'],
     year: '2025',
     image: 'assets/project-blackwell.jpg',
+    releaseDate: 'June 25, 2025',
+    tags: ['Digital Campaigns', 'Development', 'AI Systems'],
   },
   {
     index: '03',
@@ -31,5 +37,17 @@ export const projects: Project[] = [
     stack: ['Framer', 'Next.js', 'GSAP', 'WebGL', 'Meta Ads integration'],
     year: '2025',
     image: 'assets/project-aspen.jpg',
+    releaseDate: 'June 19, 2025',
+    tags: ['UI/UX Design', 'Animation & Motion', 'Digital Campaigns'],
+  },
+  {
+    index: '04',
+    title: 'Monolith Architecture',
+    category: 'Architecture studio rebrand and digital platform',
+    stack: ['Next.js', 'Three.js', 'Sanity CMS', 'Framer Motion', 'Vercel'],
+    year: '2024',
+    image: 'assets/process-building.jpg',
+    releaseDate: 'March 14, 2024',
+    tags: ['Brand & Identity', 'UI/UX Design', 'Content'],
   },
 ]
