@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from 'motion/react'
 import { RevealText } from '../animations/RevealText'
+import { CharReveal } from '../animations/CharReveal'
 import { Counter } from '../animations/Counter'
 import { EASE_OUT } from '../animations/variants'
 import './hero.css'
@@ -7,32 +8,19 @@ import './hero.css'
 export function Hero() {
   const shouldReduceMotion = Boolean(useReducedMotion())
 
-  const eyebrowInitial = shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }
-  const eyebrowAnimate = shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }
-
   const statInitial = shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 24 }
   const statAnimate = shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }
 
   return (
     <section id="top" className="hero" data-cursor="Let's create">
       <div className="hero__top container">
-        <motion.span
-          className="eyebrow eyebrow--coord hero__coord"
-          initial={eyebrowInitial}
-          animate={eyebrowAnimate}
-          transition={{ duration: 0.6, ease: EASE_OUT }}
-        >
+        <span className="eyebrow eyebrow--coord hero__coord">
           <span className="eyebrow__line" aria-hidden="true" />
-          // 00.01°
-        </motion.span>
-        <motion.span
-          className="eyebrow eyebrow--coord hero__coord hero__coord--right"
-          initial={eyebrowInitial}
-          animate={eyebrowAnimate}
-          transition={{ duration: 0.6, ease: EASE_OUT, delay: 0.08 }}
-        >
-          34.05°N 118.24°W — LOS ANGELES
-        </motion.span>
+          <CharReveal text="// 00.01°" />
+        </span>
+        <span className="eyebrow eyebrow--coord hero__coord hero__coord--right">
+          <CharReveal text="34.05°N 118.24°W — LOS ANGELES" delay={0.08} />
+        </span>
       </div>
 
       <div className="container hero__main">

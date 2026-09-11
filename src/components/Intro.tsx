@@ -1,4 +1,5 @@
 import { motion } from 'motion/react'
+import { CharReveal } from '../animations/CharReveal'
 import { fadeUp } from '../animations/variants'
 import './intro.css'
 
@@ -6,7 +7,9 @@ export function Intro() {
   return (
     <section className="intro section" id="studio">
       <div className="container intro__inner">
-        <span className="eyebrow">// 00.02°</span>
+        <span className="eyebrow">
+          <CharReveal text="// 00.02°" />
+        </span>
 
         <motion.h2
           className="intro__wordmark"

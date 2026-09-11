@@ -6,6 +6,7 @@ import { ClientMarquee } from '../components/ClientMarquee'
 import { Services } from '../components/Services'
 import { ServicesOverview } from '../components/ServicesOverview'
 import { HowWeWork } from '../components/HowWeWork'
+import { TrustGrid } from '../components/TrustGrid'
 import { Pricing } from '../components/Pricing'
 import { Testimonial } from '../components/Testimonial'
 
@@ -20,6 +21,7 @@ export function HomePage() {
       <Services />
       <ServicesOverview />
       <HowWeWork />
+      <TrustGrid />
       <Pricing />
       <Testimonial />
     </main>

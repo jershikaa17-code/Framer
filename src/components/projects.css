@@ -38,19 +38,15 @@
   flex-direction: column;
 }
 
-/* Each project card pins for a full viewport of scroll, then the next card
-   — later in DOM order, so painted on top — rises up from the bottom edge
-   and covers it. This is the same "stacked sticky siblings" technique used
-   elsewhere in the site: no custom cover logic, just position: sticky; top: 0
-   on consecutive full-height blocks. Project photos are already opaque
-   full-bleed images, so the cover reads cleanly with no transparency tricks
-   needed (unlike text-over-shared-background cases). */
+/* Each card is a normal in-flow block — NOT position: sticky — so cards
+   never pin and get covered by the next one; each just reveals in place as
+   it scrolls into view (fade-up entrance, image clip-path wipe, parallax
+   on the photo) and then stays put, same as everywhere else on the site. */
 .project-card {
-  position: sticky;
-  top: 0;
+  position: relative;
   display: block;
   width: 100%;
-  height: 100vh;
+  height: min(78vh, 640px);
   overflow: hidden;
   color: var(--color-white);
   background: var(--color-bg-dark-2);

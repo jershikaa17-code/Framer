@@ -10,7 +10,12 @@ const navigate = [
   { label: 'Contact', href: '/contact' },
 ]
 
-const links = ['Terms of service', 'Privacy policy', 'Disclaimer', '404', 'More templates']
+const links = [
+  { label: 'Terms of service', href: '/terms' },
+  { label: 'Privacy policy', href: '/privacy' },
+  { label: 'Disclaimer', href: '/disclaimer' },
+  { label: '404', href: '/404' },
+]
 
 const social = [
   { label: 'X', full: 'X' },
@@ -41,8 +46,8 @@ export function Footer() {
           <p className="footer__heading">Links</p>
           <ul>
             {links.map((item) => (
-              <li key={item}>
-                <a href="#">{item}</a>
+              <li key={item.label}>
+                <Link to={item.href}>{item.label}</Link>
               </li>
             ))}
           </ul>

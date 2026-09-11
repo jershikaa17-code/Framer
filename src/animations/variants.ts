@@ -108,6 +108,17 @@ export const statFade: Variants = {
   },
 }
 
+// A handful of additional eases pulled from the same compiled bundle,
+// used by CharReveal and other per-character/small-label reveals. Framer
+// re-uses these across many different elements rather than inventing a new
+// curve per component, so most reveals on the reference site resolve to one
+// of this small set (plus headerZoom/headerLine/statFade's curves above).
+export const EASE_REVEAL = [0.55, 0.58, 0.34, 1.04] as const // same curve as headerLine — the most common "settle in" ease site-wide
+export const EASE_ENTER = [0.68, 0, 0.2, 0.89] as const
+export const EASE_SOFT = [0.29, 0.84, 0.56, 1] as const
+export const EASE_SNAP = [0.02, 0.79, 0.56, 1] as const
+export const EASE_GLIDE = [0.32, 0.43, 0.22, 1] as const
+
 export const springSnappy = { type: 'spring', stiffness: 400, damping: 28 } as const
 export const springSoft = { type: 'spring', stiffness: 220, damping: 24 } as const
 

@@ -1,5 +1,6 @@
 import { motion } from 'motion/react'
 import { useLiveClock } from '../hooks/useLiveClock'
+import { CharReveal } from '../animations/CharReveal'
 import { fadeUp } from '../animations/variants'
 import './time-location.css'
 
@@ -15,7 +16,9 @@ export function TimeLocation() {
         viewport={{ once: true, amount: 0.6 }}
         variants={fadeUp}
       >
-        <span className="eyebrow">// 00.03°</span>
+        <span className="eyebrow">
+          <CharReveal text="// 00.03°" />
+        </span>
         <p className="time-loc__row">
           <span className="time-loc__label">Our time</span>
           <span className="time-loc__clock">{time}</span>

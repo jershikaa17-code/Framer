@@ -11,39 +11,28 @@
   background: var(--color-bg-alt);
 }
 
-.process-marquee__droplets {
+.process-marquee__rain {
   position: absolute;
   inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* The footage reads as fairly dark rain-on-glass; lifting it slightly and
+     desaturating a touch keeps it from looking like a plain black rectangle
+     behind the light-grey section, while the scrim below still does the
+     real work of keeping the phrase text readable on top of it. */
+  filter: brightness(1.15) saturate(0.9);
 }
 
-.process-marquee__droplet {
+.process-marquee__scrim {
   position: absolute;
-  transform: translate(-50%, -50%) rotate(var(--droplet-rot, 0deg));
-  /* Real high-speed water-droplet photography: small droplets read as a
-     solid dark fleck, larger ones show a hollow ring (the camera's
-     reflection around the drop's curved rim) with a soft dark band and a
-     faint core, all feathering to nothing at the edge. --ring-inner (0 for
-     small dots, up to ~40% for big drops) controls how hollow it is.
-     A small off-centre catch-light (--hl-x/--hl-y) sits on top, the way a
-     backlit droplet shows a tight specular reflection rather than an even
-     glow — every drop's highlight lands somewhere slightly different so
-     the field doesn't read as identical stamped sprites. */
-  background:
-    radial-gradient(
-      circle closest-side at var(--hl-x, 30%) var(--hl-y, 25%),
-      rgba(255, 255, 255, var(--hl-strength, 0.7)) 0%,
-      rgba(255, 255, 255, calc(var(--hl-strength, 0.7) * 0.35)) 45%,
-      transparent 100%
-    ),
-    radial-gradient(
-      circle at 50% 50%,
-      rgba(var(--ink, 18, 19, 21), 0.2) 0%,
-      transparent var(--ring-inner, 0%),
-      rgba(var(--ink, 18, 19, 21), 0.65) calc(var(--ring-inner, 0%) + 10%),
-      rgba(var(--ink, 18, 19, 21), 0.38) calc(var(--ring-inner, 0%) + 22%),
-      rgba(var(--ink, 18, 19, 21), 0.1) 82%,
-      transparent 100%
-    );
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(242, 242, 242, 0.55) 0%,
+    rgba(242, 242, 242, 0.3) 40%,
+    rgba(242, 242, 242, 0.55) 100%
+  );
 }
 
 .process-marquee__stack {
@@ -53,11 +42,13 @@
   height: 320vh;
 }
 
-/* Normal document flow, spread evenly across the full height of the tall
-   .process-marquee__stack behind it — NOT pinned. The droplet background
-   stays visually fixed (it's sticky, in the sibling above) while these four
-   lines scroll past it individually, each other's reveal, so more than one
-   can be on screen together, in reading order, just like the reference.
+/* Spread evenly across the full height of the tall .process-marquee__stack
+   behind it — this still paces WHEN each line's scroll-entrance happens.
+   The rain background stays visually fixed (it's sticky, in the sibling
+   above); each line below is ALSO sticky (see .process-marquee__phrase),
+   at its own lower `top`, so once it reaches its slot it locks there rather
+   than scrolling on past — all four accumulate on screen together, stacked
+   in reading order, instead of each one scrolling the last one away.
    A fixed vh height (mirroring .process-marquee__stack) rather than 100% —
    percentage heights don't resolve against a parent whose height comes only
    from min-height. */
@@ -70,6 +61,7 @@
 }
 
 .process-marquee__phrase {
+  position: sticky;
   padding-inline: var(--gutter, 24px);
   font-size: clamp(2.75rem, 7vw, 6.5rem);
   font-weight: var(--fw-black);
@@ -80,63 +72,43 @@
   text-align: center;
 }
 
+/* Each line locks progressively lower than the one before it, so the stack
+   reads top-to-bottom in the same order the phrases appear. */
+.process-marquee__phrase:nth-child(1) {
+  top: 12vh;
+}
+.process-marquee__phrase:nth-child(2) {
+  top: 29vh;
+}
+.process-marquee__phrase:nth-child(3) {
+  top: 46vh;
+}
+.process-marquee__phrase:nth-child(4) {
+  top: 63vh;
+}
+
 .process-marquee__phrase-inner {
   display: block;
+  opacity: 0;
+  transform: scale(3.4) translateY(50px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
   will-change: transform, opacity;
+}
+
+.process-marquee__phrase.is-revealed .process-marquee__phrase-inner {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .process-marquee__phrase-inner {
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
 }
 
 .process-marquee__phrase.is-accent {
   color: var(--color-accent);
-}
-
-/* Foreground glass layer: nested inside the already-pinned .process-marquee__bg
-   (not a flow sibling of it) so it shares that proven sticky window for free,
-   painted after the soft background droplets so it reads slightly in front
-   of them. It stays behind the phrase text (.process-marquee__stack is a
-   later sibling of .process-marquee__bg, so it always paints on top) —
-   pulling it above the text as well would mean re-deriving __bg's own
-   sticky-pin duration by hand via a negative margin, which is exactly what
-   corrupted the section's document flow (and dragged the next section up
-   underneath the hero text) the first time this was tried. */
-.process-marquee__glass {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  overflow: hidden;
-}
-
-.process-marquee__glass-drop {
-  position: absolute;
-  transform: translate(-50%, -50%);
-  backdrop-filter: blur(5px) saturate(1.2) brightness(1.04);
-  -webkit-backdrop-filter: blur(5px) saturate(1.2) brightness(1.04);
-  /* A real droplet on glass: a bright specular catch-light where the light
-     source reflects, a soft darker pool on the opposite side (the way the
-     drop's curvature bends light away from the eye there), a faint top
-     sheen, and a translucent body tint. backdrop-filter still does real
-     optical work here — it blurs/brightens whatever's directly behind each
-     drop in this layer (the field of soft background droplets), giving the
-     foreground ones an actual frosted-glass thickness rather than a flat
-     sticker, on top of the gradient work below. */
-  background:
-    radial-gradient(
-      ellipse 16% 20% at var(--hl-x, 28%) var(--hl-y, 24%),
-      rgba(255, 255, 255, 0.95) 0%,
-      rgba(255, 255, 255, 0.4) 60%,
-      transparent 100%
-    ),
-    radial-gradient(
-      ellipse 34% 38% at var(--shade-x, 70%) var(--shade-y, 72%),
-      rgba(8, 10, 14, 0.22) 0%,
-      transparent 100%
-    ),
-    linear-gradient(155deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0) 40%),
-    rgba(255, 255, 255, 0.02);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, 0.28),
-    inset 0 -6px 10px -6px rgba(8, 10, 14, 0.35),
-    0 6px 14px -8px rgba(8, 10, 14, 0.28);
 }
 
 @media (max-width: 809px) {
@@ -148,14 +120,16 @@
     height: 220vh;
   }
 
-  .process-marquee__glass-drop {
-    backdrop-filter: blur(3.5px) saturate(1.15) brightness(1.03);
-    -webkit-backdrop-filter: blur(3.5px) saturate(1.15) brightness(1.03);
+  .process-marquee__phrase:nth-child(1) {
+    top: 8vh;
   }
-
-  /* Keep the foreground drop count light on small screens — backdrop-filter
-     is the most expensive part of this effect per element. */
-  .process-marquee__glass-drop:nth-of-type(n + 9) {
-    display: none;
+  .process-marquee__phrase:nth-child(2) {
+    top: 22vh;
+  }
+  .process-marquee__phrase:nth-child(3) {
+    top: 36vh;
+  }
+  .process-marquee__phrase:nth-child(4) {
+    top: 50vh;
   }
 }

@@ -68,12 +68,19 @@
   margin-top: clamp(40px, 6vw, 64px);
 }
 
+.work-page__item {
+  margin-bottom: clamp(32px, 5vw, 56px);
+}
+
+.work-page__item:last-child {
+  margin-bottom: 0;
+}
+
 .work-page__release {
   display: flex;
   align-items: baseline;
   gap: 10px;
-  padding: 18px var(--gutter);
-  background: var(--color-bg);
+  padding: 0 var(--gutter) 18px;
   font-family: var(--font-mono);
   font-size: var(--fs-micro);
   text-transform: uppercase;

@@ -4,6 +4,7 @@ import { motion, useScroll, useTransform } from 'motion/react'
 import { projects, type Project } from '../data/projects'
 import { fadeUp, imgHover, scrimHover, staggerContainer, FRAMER_SPRING } from '../animations/variants'
 import { RevealText } from '../animations/RevealText'
+import { CharReveal } from '../animations/CharReveal'
 import { useInViewOnce } from '../hooks/useInViewOnce'
 import './projects.css'
 
@@ -21,7 +22,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   return (
     <MotionLink
       ref={cardRef}
-      to="/work"
+      to={`/work/${project.slug}`}
       className="project-card"
       data-cursor="View case study"
       data-cursor-icon="arrow"
@@ -79,7 +80,9 @@ export function Projects() {
     <section className="projects section" id="work">
       <div className="container projects__head">
         <div>
-          <span className="eyebrow">// 00.05°</span>
+          <span className="eyebrow">
+            <CharReveal text="// 00.05°" />
+          </span>
           <h2 className="projects__title">
             <RevealText text="Selected work" />
           </h2>
