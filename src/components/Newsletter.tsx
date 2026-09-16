@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import { RevealText } from '../animations/RevealText'
 import './newsletter.css'
 
@@ -10,6 +10,8 @@ export function Newsletter() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const { scrollYProgress } = useScroll()
+  const newsletterY = useTransform(scrollYProgress, [0, 1], [0, 120])
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -22,7 +24,7 @@ export function Newsletter() {
   }
 
   return (
-    <section className="newsletter section">
+    <motion.section className="newsletter section" style={{ y: newsletterY }}>
       <div className="container newsletter__inner">
         <div className="newsletter__left">
           <div className="newsletter__heading-row">
@@ -92,6 +94,6 @@ export function Newsletter() {
           </p>
         </div>
       </div>
-    </section>
+    </motion.section>
   )
 }

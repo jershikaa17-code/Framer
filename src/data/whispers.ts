@@ -16,6 +16,9 @@ export interface WhisperArticle {
    * "cinematic videos replaced photo grids" point). `cover` still doubles as
    * the video's poster frame and as the thumbnail on article listing cards. */
   coverVideo?: string
+  /** Optional supporting image shown beside the intro text on the article
+   * page (not every article has one on the reference site). */
+  bodyImage?: string
   leadIn: string
   body: WhisperSection[]
 }
@@ -97,6 +100,7 @@ export const whispers: WhisperArticle[] = [
     excerpt:
       'Why architecture firms must move beyond static galleries and build digital platforms that capture ambition and authority.',
     cover: 'assets/whispers/architecture-digital-age.jpg',
+    bodyImage: 'assets/whispers/architecture-body.avif',
     leadIn:
       'An architecture studio wanted its online presence to feel as ambitious as its buildings. The challenge was to move beyond static portfolios and reflect authority and vision.',
     body: [

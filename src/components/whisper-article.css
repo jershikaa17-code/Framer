@@ -56,8 +56,14 @@
   border-bottom: 1px solid var(--color-border);
 }
 
-.whisper-article__lead {
+.whisper-article__intro-text {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.whisper-article__lead {
   font-size: var(--fs-h3);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-tight);
@@ -65,9 +71,21 @@
 }
 
 .whisper-article__excerpt {
-  flex: 1;
   color: var(--color-text-muted);
   max-width: 42ch;
+}
+
+.whisper-article__intro-img-wrap {
+  flex: 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 7 / 6;
+}
+
+.whisper-article__intro-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .whisper-article__body {

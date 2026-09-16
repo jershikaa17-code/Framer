@@ -47,27 +47,42 @@
 
 .navbar__link {
   position: relative;
+  display: inline-flex;
+  align-items: flex-start;
   font-family: var(--font-mono);
   font-size: 1rem;
   line-height: 1.5rem;
   letter-spacing: -0.05em;
   text-transform: uppercase;
   padding: 6px 2px;
-  opacity: 0.86;
-  transition: opacity 0.3s var(--ease-out);
 }
 
-.navbar__link:hover {
-  opacity: 1;
+.navbar__link-roll {
+  display: inline-block;
+  height: 1.5rem;
+  overflow: hidden;
 }
 
-.navbar__hover-line {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 1px;
-  background: currentColor;
+.navbar__link-text {
+  display: block;
+  line-height: 1.5rem;
+  transition: transform 0.4s var(--ease-out);
+}
+
+.navbar__link-text--base {
+  color: var(--color-white);
+}
+
+.navbar__link-text--hover {
+  color: var(--color-accent);
+}
+
+.navbar__link:hover .navbar__link-text--base {
+  transform: translateY(-100%);
+}
+
+.navbar__link:hover .navbar__link-text--hover {
+  transform: translateY(-100%);
 }
 
 .navbar__count {
@@ -84,7 +99,7 @@
   z-index: 2;
 }
 
-.navbar__link--contact {
+.navbar__link--contact .navbar__link-text--base {
   color: var(--color-accent);
 }
 

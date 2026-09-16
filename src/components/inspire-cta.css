@@ -1,113 +1,161 @@
 .inspire-cta {
+  position: relative;
+  overflow: hidden;
   background: var(--color-bg-soft);
   padding-block: clamp(56px, 8vw, 100px);
   border-top: 1px solid var(--color-border);
+  /* Enters as a thin vertical line at center, then wipes open to full width. */
+  clip-path: inset(0 50% 0 50%);
+  transition: clip-path 1s var(--ease-out);
+}
+
+.inspire-cta.is-revealed {
+  clip-path: inset(0 0% 0 0%);
+}
+
+.inspire-cta__bg-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.inspire-cta__bg-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: rgba(250, 250, 250, 0.4);
 }
 
 .inspire-cta__grid {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
   gap: clamp(32px, 6vw, 80px);
   align-items: start;
 }
 
+.inspire-cta__stats {
+  position: relative;
+}
+
 .inspire-cta__years {
-  font-size: var(--fs-h1);
+  font-size: clamp(3rem, 1.8rem + 5vw, 5rem);
   font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-tight);
-  color: var(--color-text);
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: var(--color-text-muted);
 }
 
 .inspire-cta__stats-sub {
   margin-top: 14px;
   max-width: 34ch;
   color: var(--color-text-muted);
-  font-size: var(--fs-body-lg);
+  font-size: clamp(1.05rem, 0.95rem + 0.6vw, 1.3125rem);
+  font-weight: var(--fw-regular);
+  line-height: 1.35;
+  letter-spacing: -0.025em;
 }
 
 .inspire-cta__row {
   display: flex;
-  flex-wrap: wrap;
-  gap: clamp(24px, 3vw, 40px);
+  flex-direction: column;
+  gap: 14px;
   margin-top: clamp(32px, 5vw, 56px);
   padding-top: 24px;
   border-top: 1px solid var(--color-border-strong);
 }
 
 .inspire-cta__stat {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  min-width: 130px;
-}
-
-.inspire-cta__stat-value {
-  font-size: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
-  font-weight: var(--fw-semibold);
-  letter-spacing: var(--ls-tight);
-  color: var(--color-accent);
+  font-size: 1.3rem;
+  font-weight: var(--fw-regular);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
   font-variant-numeric: tabular-nums;
 }
 
-.inspire-cta__stat-label {
-  font-size: var(--fs-small);
-  color: var(--color-text-muted);
+.inspire-cta__stat-plus {
+  color: var(--color-accent);
+  margin-right: 8px;
+}
+
+.inspire-cta__stat-value {
+  color: var(--color-accent);
+  margin-right: 4px;
 }
 
 .inspire-cta__range {
-  display: inline-block;
-  margin-top: 24px;
-  font-family: var(--font-mono);
-  font-size: var(--fs-micro);
-  letter-spacing: var(--ls-wide);
-  color: var(--color-text-faint);
-}
-
-.inspire-cta__quote {
-  background: var(--color-bg);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: clamp(28px, 4vw, 48px);
+  display: block;
+  margin-top: clamp(16px, 3vw, 32px);
+  padding-top: clamp(16px, 3vw, 32px);
+  border-top: 1px solid rgba(255, 255, 255, 0.75);
+  font-size: clamp(2.5rem, 1.5rem + 5vw, 4.5rem);
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.85);
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.75);
 }
 
 .inspire-cta__quote-title {
-  font-size: var(--fs-h3);
-  font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-tight);
-  max-width: 18ch;
+  font-size: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+  color: var(--color-text-muted);
+  max-width: 14ch;
+}
+
+.inspire-cta__quote-title em {
+  font-style: normal;
+  color: var(--color-accent);
+}
+
+.inspire-cta__testimonial {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: clamp(24px, 4vw, 40px);
+}
+
+.inspire-cta__portrait-img {
+  display: block;
+  width: 130px;
+  height: 169px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.inspire-cta__testimonial-text {
+  max-width: 34ch;
 }
 
 .inspire-cta__quote-text {
-  margin-top: 20px;
-  font-size: var(--fs-body-lg);
-  line-height: var(--lh-relaxed);
+  font-size: 1.25rem;
+  font-weight: var(--fw-regular);
+  font-style: italic;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
   color: var(--color-text-secondary);
-  max-width: 46ch;
-}
-
-.inspire-cta__person {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-top: 28px;
-}
-
-.inspire-cta__person img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
 }
 
 .inspire-cta__person-name {
-  font-size: var(--fs-small);
+  margin-top: 14px;
+  font-size: 1rem;
   font-weight: var(--fw-semibold);
+  line-height: 1.2;
   color: var(--color-text);
 }
 
 .inspire-cta__person-role {
-  font-size: var(--fs-nano);
+  font-size: 0.875rem;
+  font-weight: var(--fw-regular);
+  line-height: 1.2;
   color: var(--color-text-muted);
 }
 
@@ -117,19 +165,20 @@
   gap: 10px;
   margin-top: 32px;
   font-family: var(--font-mono);
-  font-size: var(--fs-small);
+  font-size: 0.9375rem;
+  font-weight: var(--fw-medium);
+  line-height: 1;
   text-transform: uppercase;
-  letter-spacing: var(--ls-wide);
-  color: var(--color-accent);
-  background: var(--color-accent-dim);
+  letter-spacing: 0.03em;
+  color: var(--color-white);
+  background: var(--color-accent);
   border-radius: var(--radius-pill);
   padding: 16px 28px;
-  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+  transition: background-color 0.3s var(--ease-out);
 }
 
 .inspire-cta__link:hover {
-  background: var(--color-accent);
-  color: var(--color-white);
+  background: var(--color-text);
 }
 
 @media (max-width: 900px) {
@@ -139,10 +188,7 @@
 }
 
 @media (max-width: 560px) {
-  .inspire-cta__row {
-    gap: 24px;
-  }
-  .inspire-cta__stat {
-    min-width: 40%;
+  .inspire-cta__testimonial {
+    align-items: flex-start;
   }
 }

@@ -17,7 +17,6 @@ const overlayLinks = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
-  const [hovered, setHovered] = useState<string | null>(null)
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? 'hidden' : ''
@@ -41,37 +40,33 @@ export function Navbar() {
             Create<span className="navbar__reg">®</span>
           </Link>
 
-          <nav className="navbar__links" aria-label="Primary" onMouseLeave={() => setHovered(null)}>
+          <nav className="navbar__links" aria-label="Primary">
             {navLinks
               .filter((link) => link.label !== 'Contact')
               .map((link) => (
-                <Link
-                  key={link.label}
-                  to={link.href}
-                  className="navbar__link"
-                  onMouseEnter={() => setHovered(link.label)}
-                >
-                  {link.label}
+                <Link key={link.label} to={link.href} className="navbar__link">
+                  <span className="navbar__link-roll">
+                    <span className="navbar__link-text navbar__link-text--base">{link.label}</span>
+                    <span className="navbar__link-text navbar__link-text--hover" aria-hidden="true">
+                      {link.label}
+                    </span>
+                  </span>
                   {menuCounts[link.label] && (
                     <sup className="navbar__count">{menuCounts[link.label]}</sup>
-                  )}
-                  {hovered === link.label && (
-                    <motion.span
-                      className="navbar__hover-line"
-                      layoutId="navbar-hover-line"
-                      transition={springSnappy}
-                    />
                   )}
                 </Link>
               ))}
           </nav>
 
           <div className="navbar__actions">
-            <motion.div whileHover={{ x: 3 }} transition={springSnappy}>
-              <Link to="/contact" className="navbar__link navbar__link--contact">
-                Contact
-              </Link>
-            </motion.div>
+            <Link to="/contact" className="navbar__link navbar__link--contact">
+              <span className="navbar__link-roll">
+                <span className="navbar__link-text navbar__link-text--base">Contact</span>
+                <span className="navbar__link-text navbar__link-text--hover" aria-hidden="true">
+                  Contact
+                </span>
+              </span>
+            </Link>
             <button
               className="navbar__burger"
               aria-label={open ? 'Close menu' : 'Open menu'}

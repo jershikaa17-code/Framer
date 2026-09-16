@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom'
 import './book-call.css'
 
 const arrow = (
@@ -13,6 +14,12 @@ const arrow = (
 )
 
 export function BookCall() {
+  const { pathname } = useLocation()
+  // The Whispers page already has its own "Book an intro call" CTA inside
+  // InspireCTA, right above where this band would render — skip the
+  // duplicate there.
+  if (pathname === '/whispers') return null
+
   return (
     <section className="book-call section" id="contact">
       <div className="container">

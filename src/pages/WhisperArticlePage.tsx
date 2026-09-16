@@ -39,8 +39,15 @@ export function WhisperArticlePage() {
         </div>
 
         <div className="whisper-article__intro">
-          <p className="whisper-article__lead">{article.leadIn}</p>
-          <p className="whisper-article__excerpt">{article.excerpt}</p>
+          <div className="whisper-article__intro-text">
+            <p className="whisper-article__lead">{article.leadIn}</p>
+            <p className="whisper-article__excerpt">{article.excerpt}</p>
+          </div>
+          {article.bodyImage && (
+            <div className="whisper-article__intro-img-wrap">
+              <img src={`${import.meta.env.BASE_URL}${article.bodyImage}`} alt="" />
+            </div>
+          )}
         </div>
 
         <div className="whisper-article__body">

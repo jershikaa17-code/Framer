@@ -54,24 +54,30 @@ export function ContactPage() {
       <section className="contact-page__intro section">
         <div className="container contact-page__grid">
           <motion.div
+            className="contact-page__hero"
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
             variants={headerZoom}
           >
-            <motion.div variants={headerEyebrow}>
-              <span className="eyebrow">
-                <span className="eyebrow__marker" aria-hidden="true" />
-                <motion.span className="eyebrow__line" variants={headerLine} aria-hidden="true" />
-                <ScrambleText as="span" text="Contact" />
-              </span>
-            </motion.div>
-            <motion.h1 className="contact-page__title" variants={headerTitle}>
-              <RevealText text="Thinking about your next move?" />
-            </motion.h1>
-            <motion.p className="contact-page__sub" variants={headerSub}>
-              —— Let&rsquo;s discuss how Create® can help make it real.
-            </motion.p>
+            <img className="contact-page__hero-img" src="assets/contact-hero.avif" alt="" />
+            <div className="contact-page__hero-scrim" />
+
+            <div className="contact-page__hero-content">
+              <motion.div variants={headerEyebrow}>
+                <span className="eyebrow">
+                  <span className="eyebrow__marker" aria-hidden="true" />
+                  <motion.span className="eyebrow__line" variants={headerLine} aria-hidden="true" />
+                  <ScrambleText as="span" text="Contact" />
+                </span>
+              </motion.div>
+              <motion.h1 className="contact-page__title" variants={headerTitle}>
+                <RevealText text="Thinking about your next move?" />
+              </motion.h1>
+              <motion.p className="contact-page__sub" variants={headerSub}>
+                —— Let&rsquo;s discuss how Create® can help make it real.
+              </motion.p>
+            </div>
           </motion.div>
 
           <motion.div

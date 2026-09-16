@@ -4,6 +4,8 @@ import { motion } from 'motion/react'
 import { whispers } from '../data/whispers'
 import { RevealText } from '../animations/RevealText'
 import { InspireCTA } from '../components/InspireCTA'
+import { useFitText } from '../hooks/useFitText'
+import { useInViewOnce } from '../hooks/useInViewOnce'
 import { fadeUp, fadeLeft, fadeRight, staggerContainer } from '../animations/variants'
 import '../components/whispers-page.css'
 
@@ -15,18 +17,6 @@ const intro = [
 
 const [featuredArticle, ...gridArticles] = whispers
 
-const tagIcon = (
-  <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
-    <path
-      d="M12.6 3H19a2 2 0 0 1 2 2v6.4a2 2 0 0 1-.59 1.42l-8.4 8.4a2 2 0 0 1-2.82 0l-6.4-6.4a2 2 0 0 1 0-2.82l8.4-8.4A2 2 0 0 1 12.6 3Z"
-      stroke="currentColor"
-      strokeWidth="1.6"
-      strokeLinejoin="round"
-    />
-    <circle cx="15.5" cy="8.5" r="1.4" fill="currentColor" />
-  </svg>
-)
-
 const searchIcon = (
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
     <circle cx="10.5" cy="10.5" r="6.5" stroke="currentColor" strokeWidth="1.6" />
@@ -36,6 +26,8 @@ const searchIcon = (
 
 export function WhispersPage() {
   const [query, setQuery] = useState('')
+  const { ref: wordmarkRef, fontSize: wordmarkSize } = useFitText<HTMLSpanElement>()
+  const [wordmarkTextRef, wordmarkRevealed] = useInViewOnce<HTMLSpanElement>(0.3)
 
   const filteredArticles = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -47,10 +39,22 @@ export function WhispersPage() {
     <main className="whispers-page">
       <section className="whispers-hero section">
         <div className="container">
-          <span className="eyebrow eyebrow--coord">// 00.07°</span>
+          <div className="whispers-hero__dash-row" aria-hidden="true">
+            <span className="whispers-hero__dash" />
+            <span className="whispers-hero__dash-line" />
+          </div>
           <h1 className="whispers-hero__wordmark">
-            <span className="whispers-hero__wordmark-inner">
-              <RevealText text="whispers" />
+            <span
+              className="whispers-hero__wordmark-inner"
+              ref={wordmarkRef}
+              style={wordmarkSize ? { fontSize: wordmarkSize } : undefined}
+            >
+              <span
+                ref={wordmarkTextRef}
+                className={`whispers-hero__wordmark-text ${wordmarkRevealed ? 'is-revealed' : ''}`}
+              >
+                whispers
+              </span>
               <span className="whispers-hero__dot" aria-hidden="true" />
             </span>
           </h1>
@@ -100,10 +104,8 @@ export function WhispersPage() {
                 <span className="whispers-featured__date">{featuredArticle.date}</span>
               </div>
 
-              <div className="whispers-featured__body">
-                <h2 className="whispers-featured__title">{featuredArticle.title}</h2>
-                <p className="whispers-featured__excerpt">{featuredArticle.excerpt}</p>
-              </div>
+              <h2 className="whispers-featured__title">{featuredArticle.title}</h2>
+              <p className="whispers-featured__excerpt">{featuredArticle.excerpt}</p>
             </Link>
           </motion.div>
         </div>
@@ -120,7 +122,7 @@ export function WhispersPage() {
           >
             <RevealText text="From small sparks to big ideas." />
             <span className="whispers-list__tag" aria-hidden="true">
-              {tagIcon}
+              <img src={`${import.meta.env.BASE_URL}assets/whispers/tag-icon.svg`} alt="" width={20} height={20} />
             </span>
           </motion.h2>
 

@@ -1,7 +1,9 @@
+import { useRef } from 'react'
 import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
-import { RevealText } from '../animations/RevealText'
 import { Counter } from '../animations/Counter'
+import { useBlobVideoUrl } from '../hooks/useBlobVideoUrl'
+import { useInViewOnce } from '../hooks/useInViewOnce'
 import { fadeUp, fadeLeft, fadeRight } from '../animations/variants'
 import './inspire-cta.css'
 
@@ -18,8 +20,23 @@ const arrow = (
 )
 
 export function InspireCTA() {
+  const quoteVideoUrl = useBlobVideoUrl(`${import.meta.env.BASE_URL}assets/inspire-portrait-bg.mp4`)
+  // The section itself is clip-path-collapsed to zero width in its hidden
+  // state (for the center-out reveal), so it never registers as intersecting
+  // on its own — watch an unclipped sentinel placed right before it instead
+  // (see useInViewOnce.ts), then apply the resulting class to the section.
+  const sentinelRef = useRef<HTMLDivElement>(null)
+  const [, sectionRevealed] = useInViewOnce<HTMLDivElement>(0.15, sentinelRef)
+
   return (
-    <section className="inspire-cta section">
+    <>
+      <div ref={sentinelRef} aria-hidden="true" style={{ height: 0 }} />
+      <section className={`inspire-cta section ${sectionRevealed ? 'is-revealed' : ''}`}>
+      {quoteVideoUrl && (
+        <video className="inspire-cta__bg-video" src={quoteVideoUrl} autoPlay muted loop playsInline />
+      )}
+      <div className="inspire-cta__bg-scrim" />
+
       <div className="container inspire-cta__grid">
         <motion.div
           className="inspire-cta__stats"
@@ -35,26 +52,29 @@ export function InspireCTA() {
             Building lasting partnerships, scaling brands, and shipping work that stands out.
           </p>
 
-          <div className="inspire-cta__row">
-            <div className="inspire-cta__stat">
+          <ul className="inspire-cta__row">
+            <li className="inspire-cta__stat">
+              <span className="inspire-cta__stat-plus" aria-hidden="true">+</span>
               <span className="inspire-cta__stat-value">
                 <Counter value={120} suffix="+" />
-              </span>
-              <span className="inspire-cta__stat-label">Projects delivered</span>
-            </div>
-            <div className="inspire-cta__stat">
+              </span>{' '}
+              projects delivered
+            </li>
+            <li className="inspire-cta__stat">
+              <span className="inspire-cta__stat-plus" aria-hidden="true">+</span>
               <span className="inspire-cta__stat-value">
                 <Counter value={99} suffix="%" />
-              </span>
-              <span className="inspire-cta__stat-label">On-time launches</span>
-            </div>
-            <div className="inspire-cta__stat">
+              </span>{' '}
+              on-time launches
+            </li>
+            <li className="inspire-cta__stat">
+              <span className="inspire-cta__stat-plus" aria-hidden="true">+</span>
               <span className="inspire-cta__stat-value">
                 <Counter value={84} suffix="%" />
-              </span>
-              <span className="inspire-cta__stat-label">Average boost in engagement</span>
-            </div>
-          </div>
+              </span>{' '}
+              average boost in engagement
+            </li>
+          </ul>
 
           <span className="inspire-cta__range">2016 — 2025</span>
         </motion.div>
@@ -67,16 +87,16 @@ export function InspireCTA() {
           variants={fadeRight}
         >
           <h3 className="inspire-cta__quote-title">
-            <RevealText text="Let us inspire your next project" />
+            Let us <em>inspire</em> your next project
           </h3>
-          <p className="inspire-cta__quote-text">
-            &ldquo;We listen first, stay transparent, and deliver what we promise. Every project
-            matters to us.&rdquo;
-          </p>
 
-          <div className="inspire-cta__person">
-            <img src="assets/portrait-tobias.jpg" alt="Tobias Neumann" />
-            <div>
+          <div className="inspire-cta__testimonial">
+            <img className="inspire-cta__portrait-img" src="assets/portrait-tobias.jpg" alt="Tobias Neumann" />
+            <div className="inspire-cta__testimonial-text">
+              <p className="inspire-cta__quote-text">
+                &ldquo;We listen first, stay transparent, and deliver what we promise. Every project
+                matters to us.&rdquo;
+              </p>
               <p className="inspire-cta__person-name">Tobias Neumann</p>
               <p className="inspire-cta__person-role">CEO of Create®</p>
             </div>
@@ -89,6 +109,7 @@ export function InspireCTA() {
           </motion.div>
         </motion.div>
       </div>
-    </section>
+      </section>
+    </>
   )
 }
