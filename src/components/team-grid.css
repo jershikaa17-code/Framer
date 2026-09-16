@@ -63,6 +63,34 @@
   transform: scale(1.04);
 }
 
+.team-card__kpi {
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  background: rgba(5, 6, 9, 0.55);
+  backdrop-filter: blur(6px);
+}
+
+.team-card__kpi-value {
+  font-size: var(--fs-h3);
+  font-weight: var(--fw-semibold);
+  color: var(--color-white);
+  font-variant-numeric: tabular-nums;
+}
+
+.team-card__kpi-label {
+  font-size: var(--fs-nano);
+  color: var(--color-text-faint-2);
+  line-height: var(--lh-normal);
+}
+
 .team-card__body {
   display: flex;
   flex-direction: column;

@@ -7,9 +7,10 @@ interface CounterProps {
   suffix?: string
   duration?: number
   className?: string
+  decimals?: number
 }
 
-export function Counter({ value, suffix = '', duration = 1.6, className = '' }: CounterProps) {
+export function Counter({ value, suffix = '', duration = 1.6, className = '', decimals = 0 }: CounterProps) {
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true, amount: 0.6 })
   const [display, setDisplay] = useState(0)
@@ -19,10 +20,10 @@ export function Counter({ value, suffix = '', duration = 1.6, className = '' }: 
     const controls = animate(0, value, {
       duration,
       ease: EASE_OUT,
-      onUpdate: (latest) => setDisplay(Math.round(latest)),
+      onUpdate: (latest) => setDisplay(Number(latest.toFixed(decimals))),
     })
     return () => controls.stop()
-  }, [isInView, value, duration])
+  }, [isInView, value, duration, decimals])
 
   return (
     <motion.span

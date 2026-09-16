@@ -1,9 +1,69 @@
-.hero {
+/* Tall scroll-spacer so `.hero` can stay pinned (position: sticky) while the
+   scroll-linked transforms below play out — the headline/`let's create`
+   swap, then the Intro/TimeLocation/CTA chapters, each fading in turn over
+   the same fixed image before finally releasing into Showreel. The 5200px
+   here must stay >= CTA_RANGE's last value in Hero.tsx. */
+.hero-pin {
   position: relative;
-  flex: 0 0 auto;
+  height: calc(100vh + 5200px);
+}
+
+.hero {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 640px;
   display: flex;
   flex-direction: column;
+  overflow: hidden; /* fallback for browsers without overflow: clip */
+  overflow: clip;
   color: var(--color-white);
+}
+
+/* The hero's own copy of the portrait — pinned together with `.hero` so it
+   never drifts out of sync with it. This is the only `<img>` of this asset
+   in the app; Intro/TimeLocation/CTA render as chapters over this same
+   fixed photo instead of their own separate backgrounds. */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.5s cubic-bezier(0.16, 1, 0.3, 1), transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hero__bg.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.hero__bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+  filter: contrast(1.08) saturate(1.15);
+}
+
+.hero__tint {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 6, 9, 0.8) 0%,
+    rgba(5, 6, 9, 0.38) 24%,
+    rgba(5, 6, 9, 0.5) 72%,
+    rgba(5, 6, 9, 0.88) 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__bg {
+    transform: none;
+    transition: opacity 0.4s ease;
+  }
 }
 
 .hero__top,
@@ -33,12 +93,21 @@
   padding-top: clamp(12px, 2vh, 24px);
 }
 
+/* Headline's own clipping mask — the reference clips this text through a
+   dedicated ~192px mask, separately from the hero's own overflow:clip. */
+.hero__headline-mask {
+  height: 192px;
+  overflow: hidden;
+  overflow: clip;
+}
+
 .hero__headline {
   font-size: var(--fs-hero);
   font-weight: var(--fw-medium);
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
   max-width: 20ch;
+  margin-left: 250px;
 }
 
 .hero__stat {
@@ -67,17 +136,79 @@
   margin-left: auto;
 }
 
+/* Scroll-linked second headline — rises from below the fold. No opacity/
+   fade/whileInView: visibility comes entirely from being positioned below
+   the hero's own clip boundary until scroll translates it upward. */
+.hero__lets-create-wrap {
+  position: absolute;
+  bottom: -500px;
+  left: 50%;
+  width: max-content;
+  margin: 0;
+  z-index: 1;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.hero__lets-create {
+  display: block;
+  white-space: pre;
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  font-size: 121px;
+  letter-spacing: -0.07em;
+  line-height: 1.2;
+  transform: scale(0.8);
+  transform-origin: center;
+}
+
+/* Intro/TimeLocation/CTA render inside `.hero` as full-frame chapters —
+   opacity/y are scroll-linked in Hero.tsx (INTRO_RANGE/TIME_RANGE/
+   CTA_RANGE), stacked on top of each other since only one is ever opaque
+   at a time. `pointer-events: none` keeps a hidden chapter's content
+   (mainly CTA's links) from intercepting clicks meant for whichever
+   chapter is actually visible; CTA re-enables its own via inline style
+   (`ctaPointer`) only while its opacity is up. */
+.hero__chapter {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  pointer-events: none;
+}
+
 @media (max-width: 1199px) {
   .hero__headline {
     max-width: 14ch;
+    margin-left: 120px;
+  }
+
+  .hero__lets-create {
+    font-size: 88px;
   }
 }
 
 @media (max-width: 809px) {
+  /* Reference drops the pinned scroll transition on mobile — no extra
+     scroll runway, headline stays put, `let's create` doesn't render. */
+  .hero-pin {
+    height: auto;
+  }
+
   .hero {
+    position: relative;
     flex: none;
     min-height: auto;
     padding-bottom: 24px;
+    overflow: visible;
+  }
+
+  .hero__bg img {
+    object-position: 50% 14%;
   }
 
   .hero__top {
@@ -98,8 +229,19 @@
     padding-bottom: 40px;
   }
 
+  .hero__headline-mask {
+    height: auto;
+    overflow: visible;
+  }
+
   .hero__headline {
     max-width: 100%;
+    margin-left: 0;
+    transform: none !important;
+  }
+
+  .hero__lets-create-wrap {
+    display: none;
   }
 
   .hero__stat {
@@ -108,5 +250,33 @@
 
   .hero__stat-label {
     margin-left: 0;
+  }
+
+  /* No pin/scroll runway on mobile, so the chapters just render as normal
+     stacked sections after the hero's own content, in document order. */
+  .hero__chapter {
+    position: static !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    display: block;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pin {
+    height: auto;
+  }
+
+  .hero {
+    position: relative;
+  }
+
+  .hero__chapter {
+    position: static !important;
+    opacity: 1 !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    display: block;
   }
 }

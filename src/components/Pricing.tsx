@@ -53,6 +53,12 @@ const arrowIcon = (
   </svg>
 )
 
+function nextAvailability() {
+  const d = new Date()
+  d.setDate(d.getDate() + ((1 + 7 - d.getDay()) % 7 || 7))
+  return d.toLocaleDateString('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+}
+
 export function Pricing() {
   const [openIndex, setOpenIndex] = useState(0)
 
@@ -69,7 +75,7 @@ export function Pricing() {
           // 00.07°
         </motion.span>
         <motion.h2 className="pricing__title" variants={headerTitle}>
-          <RevealText text="Plans built to fit your next project" />
+          <RevealText text="Pick a plan that grows with you and keeps creative costs predictable." />
         </motion.h2>
         <motion.p className="pricing__sub" variants={headerSub}>
           —— Designed around your specs, each plan gives you clarity on scope, features, and cost
@@ -79,6 +85,32 @@ export function Pricing() {
           {Array.from({ length: 40 }).map((_, i) => (
             <span key={i} />
           ))}
+        </div>
+      </motion.div>
+
+      <motion.div
+        className="container pricing__long-run"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={fadeUp}
+      >
+        <div className="pricing__long-run-copy">
+          <h3>Built for the long run, With You Beyond Launch</h3>
+          <ul>
+            <li>Ongoing support</li>
+            <li>Long-term partnership</li>
+            <li>Future-ready builds</li>
+          </ul>
+        </div>
+        <div className="pricing__long-run-book">
+          <p>Quick intro call, no strings attached. Let&rsquo;s chat or just say hello.</p>
+          <p className="pricing__long-run-availability">
+            Next Availability: from {nextAvailability()}.
+          </p>
+          <a href="#contact" className="pricing__long-run-cta">
+            Book now {arrowIcon}
+          </a>
         </div>
       </motion.div>
 

@@ -1,5 +1,5 @@
 import { motion } from 'motion/react'
-import { fadeUp, staggerContainer, springSnappy } from '../animations/variants'
+import { springSnappy } from '../animations/variants'
 import './cta-area.css'
 
 const arrow = (
@@ -14,20 +14,15 @@ const arrow = (
   </svg>
 )
 
+// Rendered as a scroll-linked chapter inside Hero.tsx's pinned frame now —
+// see the note in Intro.tsx. The `cta-pill` hover/tap springs stay, since
+// those are interaction feedback, unrelated to scroll-triggered entrance.
 export function CTAArea() {
   return (
-    <motion.section
-      className="cta-area section"
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.6 }}
-      variants={staggerContainer(0.08)}
-    >
+    <section className="cta-area section">
       <div className="container cta-area__inner">
-        <motion.span className="eyebrow" variants={fadeUp}>
-          // 00.04°
-        </motion.span>
-        <motion.div className="cta-area__row" variants={fadeUp}>
+        <span className="eyebrow">// 00.04°</span>
+        <div className="cta-area__row">
           <motion.a
             href="#work"
             className="cta-pill"
@@ -46,8 +41,8 @@ export function CTAArea() {
           >
             Let's chat {arrow}
           </motion.a>
-        </motion.div>
+        </div>
       </div>
-    </motion.section>
+    </section>
   )
 }

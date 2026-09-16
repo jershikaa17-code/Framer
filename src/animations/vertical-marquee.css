@@ -1,0 +1,17 @@
+.vertical-marquee {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+}
+
+.vertical-marquee__track {
+  display: flex;
+  flex-direction: column;
+}
+
+.vertical-marquee__set {
+  display: flex;
+  flex-direction: column;
+}

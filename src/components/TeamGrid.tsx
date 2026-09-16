@@ -51,6 +51,12 @@ export function TeamGrid() {
             <span className="team-card__index">// {String(i + 1).padStart(2, '0')}</span>
             <div className="team-card__img-wrap">
               <img src={member.image} alt={member.name} loading="lazy" />
+              {member.kpi && (
+                <div className="team-card__kpi">
+                  <span className="team-card__kpi-value">{member.kpi.value}</span>
+                  <span className="team-card__kpi-label">{member.kpi.label}</span>
+                </div>
+              )}
             </div>
             <div className="team-card__body">
               <p className="team-card__name">{member.name}</p>

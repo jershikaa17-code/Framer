@@ -1,21 +1,15 @@
-import { motion } from 'motion/react'
 import { useLiveClock } from '../hooks/useLiveClock'
 import { CharReveal } from '../animations/CharReveal'
-import { fadeUp } from '../animations/variants'
 import './time-location.css'
 
+// Rendered as a scroll-linked chapter inside Hero.tsx's pinned frame now —
+// see the note in Intro.tsx.
 export function TimeLocation() {
   const time = useLiveClock()
 
   return (
     <section className="time-loc section">
-      <motion.div
-        className="container time-loc__inner"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.6 }}
-        variants={fadeUp}
-      >
+      <div className="container time-loc__inner">
         <span className="eyebrow">
           <CharReveal text="// 00.03°" />
         </span>
@@ -24,7 +18,7 @@ export function TimeLocation() {
           <span className="time-loc__clock">{time}</span>
         </p>
         <p className="time-loc__zone">UTC−8 · Los Angeles</p>
-      </motion.div>
+      </div>
     </section>
   )
 }

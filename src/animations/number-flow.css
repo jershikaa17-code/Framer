@@ -1,0 +1,18 @@
+.number-flow {
+  display: inline-flex;
+  flex-direction: row-reverse;
+  will-change: transform, opacity;
+}
+
+.number-flow__slot {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 1.1em;
+  line-height: 1.1em;
+}
+
+.number-flow__digit {
+  display: inline-block;
+  will-change: transform, opacity;
+}

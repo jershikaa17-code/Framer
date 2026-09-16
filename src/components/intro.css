@@ -23,6 +23,7 @@
   font-weight: var(--fw-bold);
   color: var(--color-white);
   margin-top: 4px;
+  margin-left: 24px;
 }
 
 .intro__wordmark-accent {
@@ -56,6 +57,10 @@
 }
 
 @media (max-width: 809px) {
+  .intro__wordmark {
+    margin-left: 0;
+  }
+
   .intro__statements {
     max-width: 100%;
   }
