@@ -1,11 +1,11 @@
 .newsletter {
   position: relative;
   z-index: 2;
-  margin-top: clamp(-64px, -4vw, -20px);
+  margin-top: clamp(-260px, -22vw, -140px);
   background: var(--color-bg-soft);
   padding-block: clamp(64px, 9vw, 100px);
   overflow: clip;
-  will-change: transform;
+  will-change: clip-path;
 }
 
 .newsletter__inner {

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import { RevealText } from '../animations/RevealText'
@@ -10,8 +10,21 @@ export function Newsletter() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [submitted, setSubmitted] = useState(false)
-  const { scrollYProgress } = useScroll()
-  const newsletterY = useTransform(scrollYProgress, [0, 1], [0, 120])
+
+  // The section sits with a large negative margin so it structurally
+  // overlaps the section before it, then a clip-path wipe tied to its own
+  // scroll-into-view progress reveals it from the bottom up — so it looks
+  // like a physical layer rising to cover what's behind it, rather than
+  // just fading or popping in. No position:sticky/fixed anywhere: once the
+  // wipe finishes (its own top edge reaching the viewport top), it's fully
+  // revealed and simply continues in normal document flow.
+  const sectionRef = useRef<HTMLElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start end', 'start start'],
+  })
+  const clipTop = useTransform(scrollYProgress, [0, 1], ['100%', '0%'])
+  const clipPath = useTransform(clipTop, (v) => `inset(${v} 0% 0% 0%)`)
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault()
@@ -24,7 +37,7 @@ export function Newsletter() {
   }
 
   return (
-    <motion.section className="newsletter section" style={{ y: newsletterY }}>
+    <motion.section ref={sectionRef} className="newsletter section" style={{ clipPath }}>
       <div className="container newsletter__inner">
         <div className="newsletter__left">
           <div className="newsletter__heading-row">
