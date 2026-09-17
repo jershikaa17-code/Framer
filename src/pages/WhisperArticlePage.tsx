@@ -1,6 +1,5 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
-import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
-import { useRef } from 'react'
+import { motion } from 'motion/react'
 import { getWhisperBySlug, whispers } from '../data/whispers'
 import { fadeUp, staggerContainer } from '../animations/variants'
 import '../components/whisper-article.css'
@@ -8,13 +7,6 @@ import '../components/whisper-article.css'
 export function WhisperArticlePage() {
   const { slug } = useParams()
   const article = getWhisperBySlug(slug)
-  const introRef = useRef<HTMLDivElement>(null)
-  const shouldReduceMotion = useReducedMotion()
-  const { scrollYProgress: introProgress } = useScroll({
-    target: introRef,
-    offset: ['start end', 'start start'],
-  })
-  const introY = useTransform(introProgress, [0, 1], [0, shouldReduceMotion ? 0 : -120])
 
   if (!article) return <Navigate to="/whispers" replace />
 
@@ -50,13 +42,10 @@ export function WhisperArticlePage() {
               )}
             </div>
           </div>
-        <motion.div
-          ref={introRef}
-          className="container whisper-article__intro"
-          style={{ y: introY }}
-        >
+        </div>
+
+        <div className="container whisper-article__intro">
           <p className="whisper-article__lead">{article.leadIn}</p>
-        </motion.div>
         </div>
 
         {article.bodyImage && (

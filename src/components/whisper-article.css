@@ -174,8 +174,7 @@
 .whisper-article__intro {
   position: relative;
   z-index: 1;
-  margin-top: clamp(-56px, -4vw, -32px);
-  overflow: clip;
+  margin-top: calc(-100svh + var(--nav-h));
   background: #f1f1f1;
   padding-top: clamp(48px, 6.5vw, 80px);
   padding-bottom: clamp(48px, 6.5vw, 80px);
@@ -191,10 +190,7 @@
 }
 
 .whisper-article__intro-img-wrap {
-  position: relative;
-  z-index: 2;
   width: 100vw;
-  margin-top: calc(-100svh + var(--nav-h));
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
   overflow: hidden;
@@ -389,7 +385,7 @@
     grid-template-columns: 1fr;
   }
 
-  .whisper-article__intro-img-wrap {
+  .whisper-article__intro {
     margin-top: 0;
   }
 
