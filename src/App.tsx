@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { BookCall } from './components/BookCall'
@@ -16,6 +16,9 @@ import { LegalPage } from './pages/LegalPage'
 import { NotFoundPage } from './pages/NotFoundPage'
 
 function App() {
+  const location = useLocation()
+  const isWhisperArticle = location.pathname.startsWith('/whispers/')
+
   return (
     <>
       <CustomCursor />
@@ -33,7 +36,7 @@ function App() {
         <Route path="/:slug" element={<LegalPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-      <BookCall />
+      {!isWhisperArticle && <BookCall />}
       <Newsletter />
       <Footer />
     </>

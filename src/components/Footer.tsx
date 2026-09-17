@@ -93,7 +93,7 @@ export function Footer() {
             <div className="footer__about">
               <video
                 className="footer__avatar"
-                src="assets/footer-avatar.mp4"
+                src={`${import.meta.env.BASE_URL}assets/footer-avatar.mp4`}
                 autoPlay
                 loop
                 muted
