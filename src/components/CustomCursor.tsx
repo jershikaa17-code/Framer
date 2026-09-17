@@ -6,7 +6,7 @@ type CursorIcon = 'arrow' | 'play' | 'none'
 const arrowIcon = (
   <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
     <path
-      d="M7 17 17 7M17 7H9M17 7v8"
+      d="M4 12h15M13 6l6 6-6 6"
       stroke="currentColor"
       strokeWidth="1.6"
       strokeLinecap="round"

@@ -420,7 +420,13 @@ section.whispers-hero {
 
 @media (max-width: 809px) {
   .whisper-card {
-    aspect-ratio: 4 / 5;
+    aspect-ratio: auto;
+    height: 500px;
+    border-radius: 12px;
+  }
+
+  .whisper-card__meta {
+    padding: 24px;
   }
 
   .whispers-featured__sticky {

@@ -34,6 +34,13 @@ export function WhisperArticlePage() {
   const isArchitectureArticle = article.slug === 'architecture-in-the-digital-age'
   const isDesigningTrustArticle = article.slug === 'designing-trust-why-digital-brands-win-with-simplicity'
   const isDigitalIdentitiesArticle = article.slug === 'digital-identities-across-cultures'
+  const isAutomotiveArticle = article.slug === 'how-automotive-brands-win-online'
+  const digitalIdentitiesBodyImage =
+    'https://framerusercontent.com/images/MUes6djVoELSBp8bZJXuvaLqWo.jpg?width=5895&height=3930'
+  const automotiveBodyImage =
+    'https://framerusercontent.com/images/vlC5cynwnkTMOgb6eRbfiesKQGI.png?width=1984&height=2400'
+  const assetUrl = (asset: string) =>
+    asset.startsWith('http') ? asset : `${import.meta.env.BASE_URL}${asset}`
   const articleDate = new Intl.DateTimeFormat('en-US', {
     weekday: 'long',
     month: 'long',
@@ -67,7 +74,7 @@ export function WhisperArticlePage() {
                   aria-label={article.title}
                 />
               ) : (
-                <img src={`${import.meta.env.BASE_URL}${article.cover}`} alt={article.title} />
+                <img src={assetUrl(article.cover)} alt={article.title} />
               )}
             </div>
           </div>
@@ -80,11 +87,17 @@ export function WhisperArticlePage() {
           <p className="whisper-article__lead">{article.leadIn}</p>
         </div>
 
-        {(article.bodyImage || isDesigningTrustArticle || isDigitalIdentitiesArticle) && (
+        {(article.bodyImage || isDesigningTrustArticle || isDigitalIdentitiesArticle || isAutomotiveArticle) && (
           <div className="whisper-article__intro-img-wrap">
             <img
-              src={`${import.meta.env.BASE_URL}${article.bodyImage || article.cover}`}
-              alt={isDesigningTrustArticle || isDigitalIdentitiesArticle ? article.title : ''}
+              src={
+                isDigitalIdentitiesArticle || isAutomotiveArticle
+                  ? isAutomotiveArticle
+                    ? automotiveBodyImage
+                    : digitalIdentitiesBodyImage
+                  : assetUrl(article.bodyImage || article.cover)
+              }
+              alt={isDesigningTrustArticle || isDigitalIdentitiesArticle || isAutomotiveArticle ? article.title : ''}
             />
           </div>
         )}
@@ -114,6 +127,8 @@ export function WhisperArticlePage() {
             </a>
           </div>
         )}
+
+        {isAutomotiveArticle && <div className="whisper-article__reference-band" aria-hidden="true" />}
 
         <div className="container whisper-article__content">
           <div className="whisper-article__excerpt-col">
@@ -156,7 +171,12 @@ export function WhisperArticlePage() {
         >
           {related.map((item) => (
             <motion.div key={item.slug} variants={fadeUp}>
-              <Link to={`/whispers/${item.slug}`} className="whisper-related-card">
+              <Link
+                to={`/whispers/${item.slug}`}
+                className="whisper-related-card"
+                data-cursor="Read article"
+                data-cursor-icon="arrow"
+              >
                 <div className="whisper-related-card__img-wrap">
                   <img
                     src={`${import.meta.env.BASE_URL}${item.cover}`}

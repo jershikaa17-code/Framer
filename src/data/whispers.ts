@@ -187,8 +187,7 @@ export const whispers: WhisperArticle[] = [
     date: 'Dec 7, 2025',
     excerpt:
       'Exploring how carmakers use interactive tools, storytelling, and configurators to create digital experiences as compelling as test drives.',
-    cover: 'assets/whispers/automotive.jpg',
-    coverVideo: 'assets/hero.mp4',
+    cover: 'https://framerusercontent.com/images/OKAPNp5NBx92XHoAfb2IJe5GaE.jpg?width=1548&height=1800',
     leadIn:
       'An automotive brand asked us to build a digital showroom. The challenge was giving customers an online experience that could rival the thrill of being behind the wheel.',
     body: automotiveBody,
