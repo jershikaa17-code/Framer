@@ -35,10 +35,16 @@ export function WhisperArticlePage() {
   const isDesigningTrustArticle = article.slug === 'designing-trust-why-digital-brands-win-with-simplicity'
   const isDigitalIdentitiesArticle = article.slug === 'digital-identities-across-cultures'
   const isAutomotiveArticle = article.slug === 'how-automotive-brands-win-online'
+  const isEMobilityArticle = article.slug === 'the-future-of-e-mobility-marketing-from-lindholm'
+  const isHospitalityArticle = article.slug === 'why-hospitality-brands-need-digital-experiences-that-feel-like-destinations'
   const digitalIdentitiesBodyImage =
     'https://framerusercontent.com/images/MUes6djVoELSBp8bZJXuvaLqWo.jpg?width=5895&height=3930'
   const automotiveBodyImage =
     'https://framerusercontent.com/images/vlC5cynwnkTMOgb6eRbfiesKQGI.png?width=1984&height=2400'
+  const eMobilityBodyImage =
+    'https://framerusercontent.com/images/PdhWepXgamFlmYY1CPxHUdAyG5M.jpeg?width=2000&height=1333'
+  const hospitalityBodyImage =
+    'https://framerusercontent.com/images/2HCkRpGrDF2tktEvNZgmnnFRc.png?width=1600&height=2400'
   const assetUrl = (asset: string) =>
     asset.startsWith('http') ? asset : `${import.meta.env.BASE_URL}${asset}`
   const articleDate = new Intl.DateTimeFormat('en-US', {
@@ -87,17 +93,21 @@ export function WhisperArticlePage() {
           <p className="whisper-article__lead">{article.leadIn}</p>
         </div>
 
-        {(article.bodyImage || isDesigningTrustArticle || isDigitalIdentitiesArticle || isAutomotiveArticle) && (
+        {(article.bodyImage || isDesigningTrustArticle || isDigitalIdentitiesArticle || isAutomotiveArticle || isEMobilityArticle || isHospitalityArticle) && (
           <div className="whisper-article__intro-img-wrap">
             <img
               src={
-                isDigitalIdentitiesArticle || isAutomotiveArticle
+                isDigitalIdentitiesArticle || isAutomotiveArticle || isEMobilityArticle || isHospitalityArticle
                   ? isAutomotiveArticle
                     ? automotiveBodyImage
-                    : digitalIdentitiesBodyImage
+                    : isEMobilityArticle
+                      ? eMobilityBodyImage
+                      : isHospitalityArticle
+                        ? hospitalityBodyImage
+                        : digitalIdentitiesBodyImage
                   : assetUrl(article.bodyImage || article.cover)
               }
-              alt={isDesigningTrustArticle || isDigitalIdentitiesArticle || isAutomotiveArticle ? article.title : ''}
+              alt={isDesigningTrustArticle || isDigitalIdentitiesArticle || isAutomotiveArticle || isEMobilityArticle || isHospitalityArticle ? article.title : ''}
             />
           </div>
         )}
@@ -128,6 +138,10 @@ export function WhisperArticlePage() {
           </div>
         )}
 
+        {isEMobilityArticle && <div className="whisper-article__reference-band" aria-hidden="true" />}
+
+        {isHospitalityArticle && <div className="whisper-article__reference-band" aria-hidden="true" />}
+
         {isAutomotiveArticle && <div className="whisper-article__reference-band" aria-hidden="true" />}
 
         <div className="container whisper-article__content">
@@ -148,7 +162,7 @@ export function WhisperArticlePage() {
         </div>
       </article>
 
-      {!isArchitectureArticle && !isDesigningTrustArticle && !isDigitalIdentitiesArticle && (
+      {!isArchitectureArticle && !isDesigningTrustArticle && !isDigitalIdentitiesArticle && !isEMobilityArticle && !isHospitalityArticle && (
         <div className="whisper-article__reference-band">
           <a className="whisper-article__template-badge" href="/contact">
             <img src={`${import.meta.env.BASE_URL}assets/hero-portrait.png`} alt="" />
