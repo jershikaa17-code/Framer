@@ -23,33 +23,33 @@ export function WhisperArticlePage() {
   return (
     <main className="whisper-article">
       <article className="whisper-article__head">
-        <div className="container whisper-article__hero">
-          <div className="whisper-article__hero-text">
-            <p className="whisper-article__date">{article.date}</p>
-            <h1 className="whisper-article__title">{article.title}</h1>
-            <div className="whisper-article__byline">
-              <span>{article.author}</span>
-              <span>{article.role}</span>
+        <div className="whisper-article__hero-stage">
+          <div className="container whisper-article__hero">
+            <div className="whisper-article__hero-text">
+              <p className="whisper-article__date">{article.date}</p>
+              <h1 className="whisper-article__title">{article.title}</h1>
+              <div className="whisper-article__byline">
+                <span>{article.author}</span>
+                <span>{article.role}</span>
+              </div>
+            </div>
+
+            <div className="whisper-article__cover">
+              {article.coverVideo ? (
+                <video
+                  src={`${import.meta.env.BASE_URL}${article.coverVideo}`}
+                  poster={`${import.meta.env.BASE_URL}${article.cover}`}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  aria-label={article.title}
+                />
+              ) : (
+                <img src={`${import.meta.env.BASE_URL}${article.cover}`} alt={article.title} />
+              )}
             </div>
           </div>
-
-          <div className="whisper-article__cover">
-            {article.coverVideo ? (
-              <video
-                src={`${import.meta.env.BASE_URL}${article.coverVideo}`}
-                poster={`${import.meta.env.BASE_URL}${article.cover}`}
-                autoPlay
-                loop
-                muted
-                playsInline
-                aria-label={article.title}
-              />
-            ) : (
-              <img src={`${import.meta.env.BASE_URL}${article.cover}`} alt={article.title} />
-            )}
-          </div>
-        </div>
-
         <motion.div
           ref={introRef}
           className="container whisper-article__intro"
@@ -57,6 +57,7 @@ export function WhisperArticlePage() {
         >
           <p className="whisper-article__lead">{article.leadIn}</p>
         </motion.div>
+        </div>
 
         {article.bodyImage && (
           <div className="whisper-article__intro-img-wrap">
