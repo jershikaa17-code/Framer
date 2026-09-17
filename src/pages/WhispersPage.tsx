@@ -37,42 +37,44 @@ export function WhispersPage() {
 
   return (
     <main className="whispers-page">
-      <section className="whispers-hero section">
-        <div className="container">
-          <div className="whispers-hero__dash-row" aria-hidden="true">
-            <span className="whispers-hero__dash" />
-            <span className="whispers-hero__dash-line" />
-          </div>
-          <h1 className="whispers-hero__wordmark">
-            <span
-              className="whispers-hero__wordmark-inner"
-              ref={wordmarkRef}
-              style={wordmarkSize ? { fontSize: wordmarkSize } : undefined}
-            >
+      <div className="whispers-hero-stage">
+        <section className="whispers-hero section">
+          <div className="container">
+            <div className="whispers-hero__dash-row" aria-hidden="true">
+              <span className="whispers-hero__dash" />
+              <span className="whispers-hero__dash-line" />
+            </div>
+            <h1 className="whispers-hero__wordmark">
               <span
-                ref={wordmarkTextRef}
-                className={`whispers-hero__wordmark-text ${wordmarkRevealed ? 'is-revealed' : ''}`}
+                className="whispers-hero__wordmark-inner"
+                ref={wordmarkRef}
+                style={wordmarkSize ? { fontSize: wordmarkSize } : undefined}
               >
-                whispers
+                <span
+                  ref={wordmarkTextRef}
+                  className={`whispers-hero__wordmark-text ${wordmarkRevealed ? 'is-revealed' : ''}`}
+                >
+                  whispers
+                </span>
+                <span className="whispers-hero__dot" aria-hidden="true" />
               </span>
-              <span className="whispers-hero__dot" aria-hidden="true" />
-            </span>
-          </h1>
+            </h1>
 
-          <div className="whispers-hero__row">
-            <p className="whispers-hero__tagline">Articles, notes on creativity, strategy and the work behind it.</p>
-            <ul className="whispers-hero__list">
-              {intro.map((item) => (
-                <li key={item}>
-                  <span aria-hidden="true">+</span> {item}
-                </li>
-              ))}
-            </ul>
+            <div className="whispers-hero__row">
+              <p className="whispers-hero__tagline">Articles, notes on creativity, strategy and the work behind it.</p>
+              <ul className="whispers-hero__list">
+                {intro.map((item) => (
+                  <li key={item}>
+                    <span aria-hidden="true">+</span> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="whispers-hero__dashes" aria-hidden="true" />
           </div>
-
-          <div className="whispers-hero__dashes" aria-hidden="true" />
-        </div>
-      </section>
+        </section>
+      </div>
 
       <section className="whispers-featured">
         <div className="container">
@@ -97,14 +99,16 @@ export function WhispersPage() {
               <div className="whispers-featured__scrim" />
 
               <div className="whispers-featured__meta">
-                <span className="whispers-featured__author">
-                  {featuredArticle.author}
-                  <em>{featuredArticle.role}</em>
-                </span>
+                <div className="whispers-featured__author-col">
+                  <span className="whispers-featured__author">
+                    {featuredArticle.author}
+                    <em>{featuredArticle.role}</em>
+                  </span>
+                  <h2 className="whispers-featured__title">{featuredArticle.title}</h2>
+                </div>
                 <span className="whispers-featured__date">{featuredArticle.date}</span>
               </div>
 
-              <h2 className="whispers-featured__title">{featuredArticle.title}</h2>
               <p className="whispers-featured__excerpt">{featuredArticle.excerpt}</p>
             </Link>
           </motion.div>
@@ -171,13 +175,17 @@ export function WhispersPage() {
                     <div className="whisper-card__scrim" />
                   </div>
                   <div className="whisper-card__meta">
-                    <span className="whisper-card__author">
-                      {article.author}
-                      <em>{article.role}</em>
-                    </span>
+                    <div className="whisper-card__author-col">
+                      <span className="whisper-card__author">
+                        {article.author}
+                        <em>{article.role}</em>
+                      </span>
+                      <h2 className="whisper-card__title">{article.title}</h2>
+                    </div>
                     <span className="whisper-card__date">{article.date}</span>
                   </div>
-                  <h2 className="whisper-card__title">{article.title}</h2>
+
+                  <p className="whisper-card__excerpt">{article.excerpt}</p>
                 </Link>
               </motion.div>
             ))}

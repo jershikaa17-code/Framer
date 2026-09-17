@@ -1,5 +1,6 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { motion } from 'motion/react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { getWhisperBySlug, whispers } from '../data/whispers'
 import { fadeUp, staggerContainer } from '../animations/variants'
 import '../components/whisper-article.css'
@@ -7,18 +8,46 @@ import '../components/whisper-article.css'
 export function WhisperArticlePage() {
   const { slug } = useParams()
   const article = getWhisperBySlug(slug)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const [revealPx, setRevealPx] = useState(0)
+
+  useLayoutEffect(() => {
+    const hero = heroRef.current
+    if (!hero) return
+
+    const desktop = window.matchMedia('(min-width: 810px)')
+    const measure = () => setRevealPx(desktop.matches ? hero.getBoundingClientRect().height : 0)
+    measure()
+
+    const observer = new ResizeObserver(measure)
+    observer.observe(hero)
+    desktop.addEventListener('change', measure)
+    return () => {
+      observer.disconnect()
+      desktop.removeEventListener('change', measure)
+    }
+  }, [slug])
 
   if (!article) return <Navigate to="/whispers" replace />
 
   const related = whispers.filter((w) => w.slug !== article.slug).slice(0, 6)
+  const isArchitectureArticle = article.slug === 'architecture-in-the-digital-age'
+  const isDesigningTrustArticle = article.slug === 'designing-trust-why-digital-brands-win-with-simplicity'
+  const isDigitalIdentitiesArticle = article.slug === 'digital-identities-across-cultures'
+  const articleDate = new Intl.DateTimeFormat('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  }).format(new Date(article.date))
 
   return (
     <main className="whisper-article">
       <article className="whisper-article__head">
-        <div className="whisper-article__hero-stage">
-          <div className="container whisper-article__hero">
+        <div className="whisper-article__hero-stage" style={{ height: revealPx ? revealPx * 2 : undefined }}>
+          <div ref={heroRef} className="container whisper-article__hero">
             <div className="whisper-article__hero-text">
-              <p className="whisper-article__date">{article.date}</p>
+              <p className="whisper-article__date">{articleDate}</p>
               <h1 className="whisper-article__title">{article.title}</h1>
               <div className="whisper-article__byline">
                 <span>{article.author}</span>
@@ -44,13 +73,45 @@ export function WhisperArticlePage() {
           </div>
         </div>
 
-        <div className="container whisper-article__intro">
+        <div
+          className="container whisper-article__intro"
+          style={{ marginTop: revealPx ? -revealPx : undefined }}
+        >
           <p className="whisper-article__lead">{article.leadIn}</p>
         </div>
 
-        {article.bodyImage && (
+        {(article.bodyImage || isDesigningTrustArticle || isDigitalIdentitiesArticle) && (
           <div className="whisper-article__intro-img-wrap">
-            <img src={`${import.meta.env.BASE_URL}${article.bodyImage}`} alt="" />
+            <img
+              src={`${import.meta.env.BASE_URL}${article.bodyImage || article.cover}`}
+              alt={isDesigningTrustArticle || isDigitalIdentitiesArticle ? article.title : ''}
+            />
+          </div>
+        )}
+
+        {isArchitectureArticle && <div className="whisper-article__reference-band" aria-hidden="true" />}
+
+        {isDesigningTrustArticle && (
+          <div className="whisper-article__reference-band">
+            <a className="whisper-article__template-badge" href="/contact">
+              <img src={`${import.meta.env.BASE_URL}assets/hero-portrait.png`} alt="" />
+              <span>
+                <strong>Get Template</strong>
+                <small>See what's inside</small>
+              </span>
+            </a>
+          </div>
+        )}
+
+        {isDigitalIdentitiesArticle && (
+          <div className="whisper-article__reference-band">
+            <a className="whisper-article__template-badge" href="/contact">
+              <img src={`${import.meta.env.BASE_URL}assets/hero-portrait.png`} alt="" />
+              <span>
+                <strong>Get Template</strong>
+                <small>See what's inside</small>
+              </span>
+            </a>
           </div>
         )}
 
@@ -72,15 +133,17 @@ export function WhisperArticlePage() {
         </div>
       </article>
 
-      <div className="whisper-article__reference-band">
-        <a className="whisper-article__template-badge" href="/contact">
-          <img src={`${import.meta.env.BASE_URL}assets/hero-portrait.png`} alt="" />
-          <span>
-            <strong>Get Template</strong>
-            <small>See what's inside</small>
-          </span>
-        </a>
-      </div>
+      {!isArchitectureArticle && !isDesigningTrustArticle && !isDigitalIdentitiesArticle && (
+        <div className="whisper-article__reference-band">
+          <a className="whisper-article__template-badge" href="/contact">
+            <img src={`${import.meta.env.BASE_URL}assets/hero-portrait.png`} alt="" />
+            <span>
+              <strong>Get Template</strong>
+              <small>See what's inside</small>
+            </span>
+          </a>
+        </div>
+      )}
 
       <section className="whisper-article__more container">
         <h2>more whispers</h2>
@@ -101,11 +164,20 @@ export function WhisperArticlePage() {
                     loading="lazy"
                   />
                 </div>
-                <span className="whisper-related-card__author">
-                  {item.author} — {item.date}
-                </span>
-                <h3>{item.title}</h3>
-                <p>{item.excerpt}</p>
+                <div className="whisper-related-card__scrim" />
+
+                <div className="whisper-related-card__meta">
+                  <div className="whisper-related-card__author-col">
+                    <span className="whisper-related-card__author">
+                      {item.author}
+                      <em>{item.role}</em>
+                    </span>
+                    <h3>{item.title}</h3>
+                  </div>
+                  <span className="whisper-related-card__date">{item.date}</span>
+                </div>
+
+                <p className="whisper-related-card__excerpt">{item.excerpt}</p>
               </Link>
             </motion.div>
           ))}

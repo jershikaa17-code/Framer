@@ -91,7 +91,11 @@ export function InspireCTA() {
           </h3>
 
           <div className="inspire-cta__testimonial">
-            <img className="inspire-cta__portrait-img" src="assets/portrait-tobias.jpg" alt="Tobias Neumann" />
+            <img
+              className="inspire-cta__portrait-img"
+              src={`${import.meta.env.BASE_URL}assets/portrait-tobias.jpg`}
+              alt="Tobias Neumann"
+            />
             <div className="inspire-cta__testimonial-text">
               <p className="inspire-cta__quote-text">
                 &ldquo;We listen first, stay transparent, and deliver what we promise. Every project

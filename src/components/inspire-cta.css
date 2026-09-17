@@ -2,10 +2,13 @@
   position: relative;
   overflow: hidden;
   background: var(--color-bg-soft);
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
   padding-block: clamp(56px, 8vw, 100px);
   border-top: 1px solid var(--color-border);
-  /* Enters as a thin vertical line at center, then wipes open to full width. */
-  clip-path: inset(0 50% 0 50%);
+  /* Enters as a narrow vertical panel, then expands to the full viewport. */
+  clip-path: inset(0 46% 0 46%);
   transition: clip-path 1s var(--ease-out);
 }
 

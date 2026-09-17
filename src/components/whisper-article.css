@@ -71,7 +71,7 @@
 
 .whisper-article__hero-stage {
   position: relative;
-  padding-bottom: calc(100svh - var(--nav-h));
+  height: calc(2 * (100svh - var(--nav-h)));
 }
 
 .whisper-article__hero {
@@ -81,7 +81,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
   gap: clamp(32px, 5vw, 80px);
-  align-items: center;
+  align-items: start;
   min-height: calc(100svh - var(--nav-h));
   padding-top: clamp(32px, 5vw, 56px);
   padding-bottom: clamp(32px, 5vw, 56px);
@@ -124,6 +124,7 @@
 }
 
 .whisper-article__title {
+  margin-top: clamp(64px, 8vw, 96px);
   font-size: 5rem;
   font-weight: var(--fw-medium);
   letter-spacing: -0.07em;
@@ -167,8 +168,8 @@
 
 .whisper-article__cover:hover img,
 .whisper-article__cover:hover video {
-  transform: scale(1.05);
-  filter: grayscale(1) contrast(1.08) brightness(0.6);
+  transform: scale(1.14);
+  filter: grayscale(1) contrast(1.08) brightness(0.48) blur(3px);
 }
 
 .whisper-article__intro {
@@ -190,6 +191,8 @@
 }
 
 .whisper-article__intro-img-wrap {
+  position: relative;
+  z-index: 2;
   width: 100vw;
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
@@ -208,8 +211,8 @@
 }
 
 .whisper-article__intro-img-wrap:hover img {
-  transform: scale(1.05);
-  filter: brightness(0.65);
+  transform: scale(1.1);
+  filter: brightness(0.48) blur(3px);
 }
 
 .whisper-article__content {
@@ -280,7 +283,7 @@
 
 .whisper-article__more h2 {
   font-family: var(--font-mono);
-  font-size: clamp(3.25rem, 10vw, 9rem);
+  font-size: clamp(3.5rem, 11vw, 10rem);
   line-height: 0.9;
   text-transform: uppercase;
   letter-spacing: -0.045em;
@@ -295,15 +298,17 @@
 }
 
 .whisper-related-card {
+  position: relative;
   display: block;
-  color: var(--color-text);
-}
-
-.whisper-related-card__img-wrap {
   border-radius: 12px;
   overflow: hidden;
   aspect-ratio: 4 / 3;
-  margin-bottom: 14px;
+  color: var(--color-white);
+}
+
+.whisper-related-card__img-wrap {
+  position: absolute;
+  inset: 0;
   background: #d6d6d6;
 }
 
@@ -318,32 +323,84 @@
 }
 
 .whisper-related-card:hover .whisper-related-card__img-wrap img {
-  transform: scale(1.05);
-  filter: brightness(0.62);
+  transform: scale(1.1);
+  filter: brightness(0.48) blur(3px);
+}
+
+.whisper-related-card__scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5, 6, 9, 0.55) 0%, rgba(5, 6, 9, 0.1) 30%, rgba(5, 6, 9, 0.65) 100%);
+}
+
+.whisper-related-card__meta {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 18px 20px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-nano);
+}
+
+.whisper-related-card__author-col {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.whisper-related-card__meta h3 {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 2rem;
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.05em;
+  line-height: 1.2;
+  max-width: 350px;
 }
 
 .whisper-related-card__author {
-  display: block;
-  font-family: var(--font-mono);
-  font-size: var(--fs-nano);
-  color: rgba(20, 20, 20, 0.68);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: 12px;
+  border-left: 1px solid #fff;
 }
 
-.whisper-related-card h3 {
-  font-size: clamp(1.2rem, 1rem + 0.55vw, 1.7rem);
-  font-weight: var(--fw-semibold);
-  letter-spacing: -0.045em;
-  margin-bottom: 8px;
-  line-height: 1.12;
+.whisper-related-card__author em {
+  font-style: normal;
+  color: rgba(255, 255, 255, 0.7);
 }
 
-.whisper-related-card p {
-  color: rgba(20, 20, 20, 0.7);
-  font-size: 0.95rem;
-  line-height: 1.6;
+.whisper-related-card__date {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.whisper-related-card__excerpt {
+  position: absolute;
+  z-index: 1;
+  left: 20px;
+  right: 20px;
+  bottom: 18px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: var(--fw-regular);
+  letter-spacing: -0.05em;
+  line-height: 1.4;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.4s var(--ease-out),
+    transform 0.4s var(--ease-out);
+  pointer-events: none;
+}
+
+.whisper-related-card:hover .whisper-related-card__excerpt,
+.whisper-related-card:focus-visible .whisper-related-card__excerpt {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (max-width: 809px) {
@@ -360,7 +417,11 @@
 
   .whisper-article__hero-stage {
     position: static;
-    padding-bottom: 0;
+    height: auto;
+  }
+
+  .whisper-article__intro {
+    margin-top: 0;
   }
 
   .whisper-article__hero-text {
