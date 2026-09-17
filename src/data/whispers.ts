@@ -87,6 +87,7 @@ export const whispers: WhisperArticle[] = [
     excerpt:
       'A look at how AI can be integrated into products and workflows to create smarter, scalable, long-term solutions.',
     cover: 'assets/whispers/rethinking-product-design.png',
+    bodyImage: 'assets/whispers/rethinking-product-design-body.png',
     leadIn:
       'A SaaS product team approached us with an AI add-on. The challenge was to rethink AI not as a widget but as a foundation for smarter systems.',
     body: automotiveBody,
