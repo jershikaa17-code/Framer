@@ -1,535 +1,341 @@
-I need you to FIX my existing `/whispers` page so it visually matches the whispers3.png screenshot/reference I
+HERO SECTION — EXACT ANIMATION RECREATION
 
-DO NOT redesign the page.
-DO NOT create a new page.
-DO NOT rewrite the project.
-DO NOT change other routes/pages.
+IMPORTANT
 
-Work ONLY on the existing `/whispers` page and its related CSS/components.
+Do NOT redesign the hero section.
+Do NOT change the existing text, wording, typography, layout, colors, images, buttons, spacing, or content.
 
-## REFERENCE VS CURRENT
+The hero section already exists and all text/content is already implemented.
 
- whispers3.png SCREENSHOT = TARGET\
-
-You must use the FIRST screenshot as the visual source of truth.
-
-The goal is NOT "similar".
-The goal is to match the reference's:
-
-* layout
-* spacing
-* typography
-* positioning
-* sizing
-* background visibility
-* image size
-* navbar positioning
-* button positioning
-* viewport composition
+Your task is ONLY to recreate the animation behavior visible in the reference video.
 
 ---
 
-# 1. NAVBAR
+HERO INTRO ANIMATION
 
-The reference navbar is a black horizontal bar approximately 64px high.
+The hero should initially enter as a cinematic, layered reveal.
 
-Target:
+1. Initial State
 
-* logo starts very close to the left edge, approximately 22px
-* logo is orange
-* WORK is positioned around the left/center area, approximately x=345px
-* STUDIO follows it
-* WHISPERS follows it
-* CONTACT is close to the right edge, approximately 1575px
-* navbar has no excessive horizontal container padding
+Before the hero animation begins:
 
-My current implementation has the navbar content too centered/inset.
+- Hero content is visually hidden.
+- The main hero image is hidden/dark.
+- Text elements should have opacity: 0.
+- Hero UI elements should not suddenly pop into their final positions.
+- Everything should feel like one coordinated entrance sequence.
 
-Fix ONLY the navbar positioning on `/whispers`.
-
-Use responsive spacing rather than hardcoding the entire page to one viewport.
-
-Target desktop structure:
-
-```text
-┌──────────────────────────────────────────────────────┐
-│ create®        WORK    STUDIO    WHISPERS       CONTACT │
-└──────────────────────────────────────────────────────┘
-```
-
-Keep the existing logo and text.
-
-Do not change the navbar typography unnecessarily.
+Use animation states rather than immediately rendering everything at full opacity.
 
 ---
 
-# 2. MAIN WHISPERS HERO/SECTION HEIGHT
+2. HERO IMAGE REVEAL
 
-The reference fills the viewport naturally.
+The large hero image is the primary visual element.
 
-Do NOT make the content unnecessarily tall.
+Animate it first/alongside the hero entrance.
 
-The current implementation is producing an extra BOOK AN INTRO CALL button at the bottom of the screenshot.
+Behavior:
 
-Find why that duplicate/extra button is appearing.
+- Start slightly zoomed in.
+- Start with low opacity.
+- Start slightly blurred/darkened.
+- Gradually become sharp and fully visible.
+- Scale down smoothly into its final scale.
+- Do NOT use a simple instant fade.
 
-There should NOT be an additional duplicated CTA at the bottom of this section.
+Recommended animation:
 
-If the CTA exists in the correct right-side testimonial area, keep that one.
+opacity: 0 → 1
+scale: approximately 1.08 → 1
+blur: approximately 12px → 0px
 
-Remove/fix only the duplicate caused by the current layout/component structure.
+Duration:
 
-Do not delete the legitimate CTA.
+1200ms – 1600ms
 
----
+Easing:
 
-# 3. BACKGROUND
+cubic-bezier(0.16, 1, 0.3, 1)
 
-The reference has the large light abstract 3D/background visual clearly visible behind the content.
-
-My current implementation is too faint.
-
-Increase the visibility of the EXISTING background visual to visually match the reference.
-
-Do NOT replace it with another random image.
-
-Do NOT create a new background.
-
-Do NOT change the actual asset if the correct asset already exists.
-
-Adjust only:
-
-* opacity
-* positioning
-* sizing
-* blending
-* background layer placement
-
-as necessary.
-
-The reference background has:
-
-* very light grey/white base
-* visible soft white/grey organic 3D forms
-* large curved lines/shapes
-* subtle but clearly visible depth
-
-The background must remain behind all content.
+The image should feel like it is emerging from darkness and settling into position.
 
 ---
 
-# 4. LEFT COLUMN POSITION
+3. HERO TEXT REVEAL
 
-Reference:
+The existing hero text must animate independently from the image.
 
-The left column starts much closer to the left edge.
+Do NOT replace the existing text.
 
-Approximately:
+Each text block should enter with a combination of:
 
-```text
-left: 44px
-```
+opacity
+translateY
+slight blur
 
-rather than the current approximately 78px.
+Initial:
 
-The large:
+opacity: 0
+transform: translateY(30px)
+filter: blur(8px)
 
-```text
-9 years
-```
+Final:
 
-should be positioned near the upper-left area.
+opacity: 1
+transform: translateY(0)
+filter: blur(0)
 
-Reference screenshot:
+Use a smooth cinematic easing curve.
 
-```text
-9 years
-Building lasting partnerships, scaling
-brands, and shipping work that stands out.
-```
+Recommended:
 
-The `9 years` heading is approximately 70px+ visually.
+cubic-bezier(0.16, 1, 0.3, 1)
 
-Keep the existing font family if it already matches.
+Duration:
 
-Do NOT replace the text.
+800ms – 1100ms
 
 ---
 
-# 5. RIGHT HEADING
+4. STAGGER THE HERO ELEMENTS
 
-This is one of the biggest differences.
+Do NOT animate every hero element simultaneously.
 
-REFERENCE:
+Create a subtle stagger.
 
-```text
-Let us Inspire
-your next
-project
-```
+Suggested order:
 
-with:
+1. Hero image/background
+2. Small eyebrow/metadata text
+3. Main heading
+4. Supporting paragraph
+5. CTA buttons
+6. Small decorative/statistical elements
 
-* very large typography
-* approximately 60–70px+ depending on the actual viewport/font
-* heavy/bold weight
-* tight line height
-* tight letter spacing
-* grey text
-* `Inspire` in the existing orange accent color
+Suggested stagger:
 
-The reference uses approximately THREE lines:
+80ms – 150ms between elements
 
-```text
-Let us Inspire
-your next
-project
-```
+The stagger should be subtle.
 
-My current version is:
+It should NOT look like each element is appearing independently.
 
-```text
-Let us inspire your
-next project
-```
-
-which is WRONG.
-
-Make the right heading container wider/narrower as required so it wraps exactly like the reference.
-
-Do NOT simply insert `<br>` tags unless necessary.
-
-Prefer matching the reference through the actual container width and typography.
-
-However, if responsive consistency requires explicit line breaks, desktop-only controlled line breaks are acceptable.
-
-The heading should start approximately around:
-
-```text
-x = 850px
-y = 150px
-```
-
-for the reference desktop viewport.
-
-It should be substantially larger than my current heading.
+The entire hero should feel like one coordinated animation.
 
 ---
 
-# 6. RIGHT COLUMN WIDTH
+5. MAIN HEADING
 
-The right column in my implementation is too compressed.
+The main heading is the most important text.
 
-The reference right content occupies approximately the right half of the screen.
+Animate it slightly more dramatically than the supporting text.
 
-Use a two-column layout similar to:
+Use:
 
-```text
-LEFT                    RIGHT
-40%                      60%
-```
+opacity: 0
+transform: translateY(45px)
+filter: blur(10px)
 
-but adjust it based on the actual screenshot.
+to:
 
-The right heading, testimonial and CTA must align to the same right-side content column.
+opacity: 1
+transform: translateY(0)
+filter: blur(0)
 
----
+Duration:
 
-# 7. TESTIMONIAL IMAGE
+1000ms – 1200ms
 
-The reference testimonial portrait is approximately:
+Use a slight stagger if the heading consists of multiple words/spans.
 
-```text
-210px × 270px
-```
+IMPORTANT:
 
-visually.
+Do not change the actual words.
 
-My current image is too small.
+Do not change the font.
 
-Increase it to match the reference.
+Do not change font size.
 
-Keep:
+Do not change font weight.
 
-* existing image
-* rounded corners
-* existing crop
-* existing person
-
-Do NOT replace the image.
-
-The image should sit immediately to the left of the testimonial quote.
-
-Target arrangement:
-
-```text
-┌───────────────┐   "We listen first, stay transparent,
-│               │    and deliver what we promise.
-│    portrait   │    Every project matters to us."
-│               │
-│               │    Tobias Neumann
-└───────────────┘    CEO of Create®
-```
+Only animate the existing heading.
 
 ---
 
-# 8. TESTIMONIAL POSITION
+6. CTA BUTTONS
 
-Reference:
+The existing CTA buttons should enter after the main heading.
 
-The testimonial block starts below the large heading.
+Animation:
 
-The image and quote should be horizontally aligned.
+opacity: 0
+transform: translateY(20px) scale(0.96)
 
-Do not stack them vertically on desktop.
+to:
 
-Current implementation is too high and too small.
+opacity: 1
+transform: translateY(0) scale(1)
 
-Move the testimonial block down so it visually matches the first screenshot.
+Duration:
 
----
+700ms – 900ms
 
-# 9. CTA
+Use the same smooth easing.
 
-The reference has ONE orange:
+Do NOT redesign the buttons.
 
-```text
-BOOK AN INTRO CALL ↗
-```
-
-button below the testimonial.
-
-It is approximately:
-
-```text
-width: 245px
-height: 56px
-border-radius: 30px
-```
-
-Use the existing button component/styles if available.
-
-Do NOT create another button.
-
-Do NOT duplicate it at the bottom of the page.
-
-The button should be positioned directly below the testimonial content in the right column.
+Do NOT change their labels.
 
 ---
 
-# 10. LEFT STATISTICS
+7. HERO RE-ENTRY / TRANSITION
 
-Reference:
+The reference contains a moment where the hero disappears into a dark transition and then the hero visual returns.
 
-The statistics are lower in the left column.
+Recreate this as a cinematic transition rather than abruptly unmounting the hero.
 
-They look approximately like:
+Sequence:
 
-```text
-+ 120+   projects delivered
+CURRENT HERO
+      ↓
+fade/darken
+      ↓
+brief near-black state
+      ↓
+hero image begins appearing
+      ↓
+image sharpens + scales into place
+      ↓
+text elements progressively return
+      ↓
+hero reaches final state
 
-+ 99%    on-time launches
+The dark transition should be brief.
 
-+ 84%    average boost in engagement
-```
-
-The orange `+ 120+`, `+ 99%`, `+ 84%` should remain orange.
-
-The descriptions should remain dark grey/black.
-
-Reference left alignment is approximately:
-
-```text
-x = 44px
-```
-
-There is a thin horizontal divider above the statistics.
-
-Keep the divider.
-
-The current statistics are too far inward and positioned too high.
-
-Move them to match the reference.
+Do not leave the page completely black for a noticeable amount of time.
 
 ---
 
-# 11. YEAR TEXT
+8. SCATTERED / DISPERSED TEXT EFFECT
 
-Reference has the large outlined year text near the bottom-left:
+If the existing hero implementation already supports individual characters/spans, use a subtle scattered-character entrance for the main heading.
 
-```text
-2016 — 2025
-```
+Characters can begin slightly displaced:
 
-It is extremely large and very light/outlined.
+random/small X offset
+random/small Y offset
+slight rotation
+opacity: 0
+blur
 
-Keep the existing year element if already present.
+Then converge into their normal positions:
 
-Position it near the bottom-left like the reference.
+x → 0
+y → 0
+rotation → 0
+opacity → 1
+blur → 0
 
-Do not make it solid dark text.
+IMPORTANT:
 
----
+The displacement must be subtle and controlled.
 
-# 12. IMPORTANT VIEWPORT COMPOSITION
+Do NOT make the letters fly wildly around the screen.
 
-At desktop viewport size, the page should look approximately like this:
+The final result should look premium and editorial, not like a generic "text explosion" animation.
 
-```text
-┌─────────────────────────────────────────────────────────────┐
-│ create®       WORK   STUDIO   WHISPERS              CONTACT │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  9 years                         Let us Inspire              │
-│                                  your next                  │
-│  Building lasting                project                    │
-│  partnerships, scaling                                      │
-│  brands, and shipping                                      │
-│  work that stands out.          ┌──────┐  "We listen..."   │
-│                                 │PHOTO │                    │
-│                                 │      │  Tobias Neumann    │
-│                                 └──────┘                    │
-│                                                             │
-│  ─────────────────────             BOOK AN INTRO CALL ↗     │
-│                                                             │
-│  + 120+ projects delivered                                  │
-│  + 99%  on-time launches                                    │
-│  + 84%  average boost in engagement                         │
-│                                                             │
-│  2016 — 2025                                                │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+Use staggered character timing around:
 
-The background visual should be visible behind this entire composition.
+20ms – 45ms per character
+
+with a small random variation.
 
 ---
 
-# 13. DO NOT COPY THE SCREENSHOT AS ONE IMAGE
+9. NO GENERIC ANIMATIONS
 
-This must remain a real React implementation.
+Do NOT use:
 
-Do NOT use the screenshot as a background.
+- generic fade-in only
+- bounce
+- excessive spring animation
+- spinning text
+- random large movements
+- exaggerated zoom
+- typewriter effect
+- flashy particle effects
+- unnecessary 3D effects
 
-Do NOT create a screenshot overlay.
-
-Do NOT hardcode everything into one absolute-positioned canvas.
-
-Use the existing components and responsive CSS.
-
----
-
-# 14. RESPONSIVE BEHAVIOR
-
-Desktop is the priority because the provided reference comparison is desktop.
-
-After matching desktop, make sure tablet/mobile still work.
-
-Do not break mobile just to match desktop.
-
-Use media queries where necessary.
+The reference animation is minimal, smooth, cinematic and premium.
 
 ---
 
-# 15. IMPORTANT — INSPECT BEFORE EDITING
+10. PERFORMANCE
 
-Before making changes:
+Use GPU-friendly properties wherever possible:
 
-1. Find the component responsible for `/whispers`.
-2. Find its CSS.
-3. Find the existing background asset.
-4. Find the existing testimonial image.
-5. Find the existing CTA.
-6. Find why the CTA appears twice.
-7. Find the current desktop container/grid dimensions.
+transform
+opacity
+filter
 
-Then make the minimum changes necessary.
+Avoid animating:
 
-Do NOT create duplicate components.
+width
+height
+top
+left
+margin
+padding
 
-Do NOT duplicate the background.
+unless absolutely necessary.
 
-Do NOT duplicate the testimonial.
+Use "will-change" only where appropriate.
 
-Do NOT duplicate the CTA.
-
----
-
-# 16. VISUAL VERIFICATION
-
-After changing the code:
-
-Run the dev server.
-
-Open:
-
-`/whispers`
-
-Take a screenshot at the same desktop viewport as my reference.
-
-Compare your result against the FIRST screenshot.
-
-Specifically verify:
-
-* navbar positions
-* 9 years position
-* left margin
-* right heading size
-* heading line wrapping
-* right column position
-* testimonial image size
-* testimonial position
-* CTA position
-* statistics position
-* year position
-* background visibility
-* absence of duplicate CTA
-* overall vertical composition
-
-If it does not visually match, adjust the CSS and check again.
-
-Do NOT stop after making one CSS change.
+The animation must remain smooth at 60fps.
 
 ---
 
-# 17. DO NOT TOUCH OTHER PAGES
+11. RESPONSIVE BEHAVIOR
 
-Only modify files required for `/whispers`.
+The animation must work on:
 
-Do not change:
+- desktop
+- tablet
+- mobile
 
-* homepage
-* work
-* studio
-* contact
-* global animations
-* navbar globally unless the navbar CSS is specifically shared and the change is required to reproduce the reference
+Do NOT use desktop-only pixel positions for the animation.
 
-If navbar CSS is global, scope any positioning changes carefully so other pages do not break.
+The final positions must always come from the existing responsive layout.
+
+Animation transforms should be relative to each element's existing position.
 
 ---
 
-FINAL GOAL:
+12. MOST IMPORTANT REQUIREMENT
 
-The SECOND screenshot must become visually like the FIRST screenshot.
+Compare the implementation against the reference video.
 
-The most important differences to correct are:
+The final result should feel like:
 
-1. ONE correct background.
-2. Correct viewport composition.
-3. Much larger right heading.
-4. Right heading wraps:
-   `Let us Inspire`
-   `your next`
-   `project`
-5. Larger testimonial image.
-6. Correct left/right column positions.
-7. Left content closer to screen edge.
-8. Correct statistics position.
-9. Correct year position.
-10. Only ONE CTA.
-11. Background visual more visible.
-12. No unnecessary extra vertical scrolling/content in the hero viewport.
+dark → image emerges → image sharpens/settles → text progressively appears → CTA appears → complete hero
 
-Make the implementation clean and responsive, but prioritize pixel-level visual matching to the FIRST screenshot.
+NOT:
 
+everything instantly fades in.
+
+Keep the existing hero design exactly as it is.
+
+Only improve/recreate the animation.
+
+After implementing it, inspect the actual rendered page and adjust:
+
+- timing
+- stagger
+- easing
+- opacity
+- blur
+- scale
+- translate distance
+
+until the animation visually matches the reference as closely as possible.

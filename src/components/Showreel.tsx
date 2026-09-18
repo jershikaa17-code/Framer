@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
-import { motion } from 'motion/react'
-import { scaleReveal, FRAMER_SPRING } from '../animations/variants'
+import { motion, type MotionStyle } from 'motion/react'
+import { EASE_OUT, FRAMER_SPRING } from '../animations/variants'
 import { ScrambleText } from '../animations/ScrambleText'
 import './showreel.css'
 
-export function Showreel() {
+export function Showreel({ delay = 0, exitStyle }: { delay?: number; exitStyle?: MotionStyle }) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const [isPlaying, setIsPlaying] = useState(true)
 
@@ -21,7 +21,7 @@ export function Showreel() {
   }
 
   return (
-    <section className="showreel" id="showreel">
+    <motion.section className="showreel" id="showreel" style={exitStyle}>
       <div className="showreel__head">
         <ScrambleText as="span" className="eyebrow" text="Showreel" />
         <span className="showreel__rule" />
@@ -30,16 +30,16 @@ export function Showreel() {
 
       <motion.div
         className="showreel__frame"
-        initial="hidden"
-        whileInView="show"
+        initial={{ opacity: 0, scale: 1.08 }}
+        whileInView={{ opacity: 1, scale: 1 }}
         viewport={{ once: true, amount: 0.3 }}
-        variants={scaleReveal}
+        transition={{ duration: 1.2, ease: EASE_OUT, delay }}
       >
         <video
           ref={videoRef}
           className="showreel__video"
-          src="assets/hero.mp4"
-          poster="assets/showreel.jpg"
+          src={`${import.meta.env.BASE_URL}assets/hero.mp4`}
+          poster={`${import.meta.env.BASE_URL}assets/showreel.jpg`}
           autoPlay
           muted
           loop
@@ -80,6 +80,11 @@ export function Showreel() {
           </motion.span>
         </button>
       </motion.div>
-    </section>
+
+      <p className="showreel__caption">
+        <span className="showreel__caption-marker" aria-hidden="true" />
+        Best Digital Campaign, Wobbly Awards
+      </p>
+    </motion.section>
   )
 }

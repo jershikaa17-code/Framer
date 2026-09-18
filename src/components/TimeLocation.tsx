@@ -17,7 +17,7 @@ export function TimeLocation() {
           <span className="time-loc__label">Our time</span>
           <span className="time-loc__clock">{time}</span>
         </p>
-        <p className="time-loc__zone">UTC−8 · Los Angeles</p>
+        <p className="time-loc__zone">UTC−8 Los Angeles</p>
       </div>
     </section>
   )

@@ -50,7 +50,7 @@ export function TeamGrid() {
           <motion.div className="team-card" key={member.name} variants={fadeUp} transition={{ delay: (i % 4) * 0.04 }}>
             <span className="team-card__index">// {String(i + 1).padStart(2, '0')}</span>
             <div className="team-card__img-wrap">
-              <img src={member.image} alt={member.name} loading="lazy" />
+              <img src={`${import.meta.env.BASE_URL}${member.image}`} alt={member.name} loading="lazy" />
               {member.kpi && (
                 <div className="team-card__kpi">
                   <span className="team-card__kpi-value">{member.kpi.value}</span>

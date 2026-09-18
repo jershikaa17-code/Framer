@@ -1,8 +1,9 @@
 import { motion, useReducedMotion } from 'motion/react'
+import type { ClientLogo } from '../data/clients'
 import './logo-marquee.css'
 
 interface LogoMarqueeProps {
-  items: string[]
+  items: ClientLogo[]
   speed?: number
   direction?: 'left' | 'right'
   variant?: 'light' | 'dark'
@@ -29,11 +30,17 @@ export function LogoMarquee({
         }
         transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
       >
-        {track.map((item, i) => (
-          <span className="logo-marquee__item" key={i}>
-            {item}
-          </span>
-        ))}
+        {track.map((item, i) =>
+          item.image ? (
+            <span className="logo-marquee__item logo-marquee__item--img" key={i}>
+              <img src={`${import.meta.env.BASE_URL}${item.image}`} alt={item.name} loading="lazy" />
+            </span>
+          ) : (
+            <span className="logo-marquee__item" key={i}>
+              {item.name}
+            </span>
+          ),
+        )}
       </motion.div>
       <div className="logo-marquee__fade logo-marquee__fade--right" />
     </div>

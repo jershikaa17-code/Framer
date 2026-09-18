@@ -29,7 +29,11 @@ export function CaseStudyTeaser() {
           whileHover="hover"
           viewport={{ once: true, amount: 0.3 }}
         >
-          <motion.img src={project.image} alt={project.title} variants={imgHover} />
+          <motion.img
+            src={`${import.meta.env.BASE_URL}${project.image}`}
+            alt={project.title}
+            variants={imgHover}
+          />
         </motion.div>
 
         <motion.div

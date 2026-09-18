@@ -45,5 +45,5 @@
   font-size: var(--fs-micro);
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-white);
 }

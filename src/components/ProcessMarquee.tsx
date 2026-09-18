@@ -3,12 +3,15 @@ import './process-marquee.css'
 
 const phrases = ['we listen', 'we imagine', 'we create', 'beautiful things']
 
-// Each phrase is `position: sticky` at its own (progressively lower) `top`
-// offset — see .process-marquee__phrase:nth-child(n) in the CSS — so once it
-// scrolls up to its slot it locks there and stays on screen for the rest of
-// the section, while the next phrase keeps scrolling up beneath it and locks
-// into its own slot below. That's what makes "we listen" stay put instead of
-// scrolling away once "we imagine" arrives: real stacking, not a crossfade.
+// Each phrase lives in its own `.process-marquee__slot` — a separate sticky
+// containing block, not one shared by all four. Slots overlap via negative
+// margin so the phrases still lock into a shared on-screen stack in
+// appearance order, but each slot is progressively taller than the last, so
+// each phrase's own sticky range ends at a different scroll position: once
+// the stack is complete, continuing to scroll releases "we listen" first
+// (its slot ends soonest), then "we imagine", then "we create", then
+// "beautiful things" last, right as the section ends — a peel-off, not a
+// simultaneous cut into whatever follows.
 //
 // The reveal is a plain IntersectionObserver (useInViewOnce) + CSS
 // transition class toggle — NOT Framer Motion's whileInView/animate, and
@@ -25,12 +28,14 @@ function Line({ phrase, index }: { phrase: string; index: number }) {
   const [ref, revealed] = useInViewOnce<HTMLParagraphElement>(0.4)
 
   return (
-    <p
-      ref={ref}
-      className={`process-marquee__phrase ${index === 2 ? 'is-accent' : ''} ${revealed ? 'is-revealed' : ''}`}
-    >
-      <span className="process-marquee__phrase-inner">{phrase}</span>
-    </p>
+    <div className={`process-marquee__slot process-marquee__slot--${index + 1}`}>
+      <p
+        ref={ref}
+        className={`process-marquee__phrase ${index === 2 ? 'is-accent' : ''} ${revealed ? 'is-revealed' : ''}`}
+      >
+        <span className="process-marquee__phrase-inner">{phrase}</span>
+      </p>
+    </div>
   )
 }
 
@@ -40,7 +45,7 @@ export function ProcessMarquee() {
       <div className="process-marquee__bg">
         <video
           className="process-marquee__rain"
-          src="assets/rain.mp4"
+          src={`${import.meta.env.BASE_URL}assets/rain.mp4`}
           autoPlay
           loop
           muted

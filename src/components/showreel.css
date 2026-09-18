@@ -1,8 +1,8 @@
 .showreel {
   position: absolute;
   z-index: 1;
-  right: var(--gutter);
-  bottom: clamp(48px, 8vh, 110px);
+  right: clamp(0px, 2vw, 24px);
+  bottom: clamp(-40px, -1vh, -10px);
   width: min(425px, 27vw);
 }
 
@@ -87,6 +87,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.showreel__caption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: var(--ls-wide);
+  text-transform: uppercase;
+  color: var(--color-text-faint-2);
+}
+
+.showreel__caption-marker {
+  width: 12px;
+  height: 1px;
+  background: var(--color-border-dark);
+  flex-shrink: 0;
 }
 
 @media (max-width: 1199px) {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { navLinks } from '../data/nav'
 import { EASE_OUT, springSnappy } from '../animations/variants'
@@ -17,6 +17,11 @@ const overlayLinks = [
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
+  const { pathname } = useLocation()
+  // On the homepage, the navbar reveals alongside the hero's third stagger
+  // tier (after the background image, then the stat/time-info blocks) —
+  // everywhere else there's no hero sequence to wait on, so it appears fast.
+  const navDelay = pathname === '/' ? 0.85 : 0.15
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? 'hidden' : ''
@@ -33,13 +38,9 @@ export function Navbar() {
         className={`navbar ${open ? 'navbar--open' : ''}`}
         initial={{ y: -32, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: EASE_OUT, delay: 0.15 }}
+        transition={{ duration: 0.8, ease: EASE_OUT, delay: navDelay }}
       >
         <div className="navbar__inner container">
-          <Link to="/" className="navbar__logo" onClick={closeMenu}>
-            Create<span className="navbar__reg">®</span>
-          </Link>
-
           <nav className="navbar__links" aria-label="Primary">
             {navLinks
               .filter((link) => link.label !== 'Contact')

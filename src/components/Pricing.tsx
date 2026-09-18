@@ -158,7 +158,7 @@ export function Pricing() {
                         <span className="pricing-card__save">SAVE 20%</span>
                       </div>
                       <div className="pricing-card__thumb">
-                        <img src={plan.image} alt="" loading="lazy" />
+                        <img src={`${import.meta.env.BASE_URL}${plan.image}`} alt="" loading="lazy" />
                       </div>
                       <p className="pricing-card__desc">{plan.description}</p>
                       <div className="pricing-card__mini-dashes" aria-hidden="true">

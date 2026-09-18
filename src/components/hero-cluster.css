@@ -1,33 +1,4 @@
 .hero-cluster {
   position: relative;
-  min-height: 100vh;
-  overflow: hidden;
   background: var(--color-bg-dark-2);
-}
-
-.hero-cluster__bg-parallax,
-.hero-cluster__bg-vanish,
-.hero-cluster__bg-drift {
-  position: absolute;
-  inset: 0;
-}
-
-.hero-cluster__content {
-  position: relative;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-@media (max-width: 809px) {
-  .hero-cluster {
-    height: auto;
-    min-height: 100vh;
-    overflow: visible;
-  }
-
-  .hero-cluster__content {
-    height: auto;
-    display: block;
-  }
 }

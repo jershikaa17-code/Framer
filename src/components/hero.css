@@ -1,29 +1,17 @@
-/* Tall scroll-spacer so `.hero` can stay pinned (position: sticky) while the
-   scroll-linked transforms below play out — the headline/`let's create`
-   swap, then the Intro/TimeLocation/CTA chapters, each fading in turn over
-   the same fixed image before finally releasing into Showreel. The 5200px
-   here must stay >= CTA_RANGE's last value in Hero.tsx. */
-.hero-pin {
-  position: relative;
-  height: calc(100vh + 5200px);
-}
-
+/* Single ~viewport-height composition. Everything lives in `.hero__stage`,
+   one absolutely-positioned layer over the shared photo, so headline,
+   "Create\Studio", the stat, the time block and the showreel preview all
+   read together on the first screen — no pin, no scroll-jack, no separate
+   chapters gated behind scroll position. */
 .hero {
-  position: sticky;
-  top: 0;
+  position: relative;
+  z-index: 0;
   height: 100vh;
-  min-height: 640px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden; /* fallback for browsers without overflow: clip */
-  overflow: clip;
+  min-height: 720px;
   color: var(--color-white);
+  overflow: hidden;
 }
 
-/* The hero's own copy of the portrait — pinned together with `.hero` so it
-   never drifts out of sync with it. This is the only `<img>` of this asset
-   in the app; Intro/TimeLocation/CTA render as chapters over this same
-   fixed photo instead of their own separate backgrounds. */
 .hero__bg {
   position: absolute;
   inset: 0;
@@ -38,12 +26,17 @@
   transform: scale(1);
 }
 
-.hero__bg img {
+.hero__bg-scroll {
+  width: 100%;
+  height: 100%;
+}
+
+.hero__bg img,
+.hero__bg video {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: 50% 20%;
-  filter: contrast(1.08) saturate(1.15);
 }
 
 .hero__tint {
@@ -52,10 +45,10 @@
   z-index: -1;
   background: linear-gradient(
     180deg,
-    rgba(5, 6, 9, 0.8) 0%,
-    rgba(5, 6, 9, 0.38) 24%,
-    rgba(5, 6, 9, 0.5) 72%,
-    rgba(5, 6, 9, 0.88) 100%
+    rgba(5, 6, 9, 0.45) 0%,
+    rgba(5, 6, 9, 0.08) 24%,
+    rgba(5, 6, 9, 0.1) 68%,
+    rgba(5, 6, 9, 0.6) 100%
   );
 }
 
@@ -66,60 +59,72 @@
   }
 }
 
-.hero__top,
-.hero__main {
-  position: relative;
+.hero__stage {
+  position: absolute;
+  inset: 0;
   z-index: 1;
 }
 
-.hero__top {
+/* Sits underneath everything else in .hero__stage (first in DOM order, no
+   explicit z-index), invisible at rest. As the wordmark fragments apart on
+   scroll-exit, this fades up and rises into view through the gaps — the
+   same exitProgress value drives both, so they read as one transition. */
+.hero__emerge {
+  position: absolute;
+  inset: 0;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding-top: calc(var(--nav-h) + clamp(28px, 9vh, 96px));
-  color: var(--color-text-faint-2);
+  justify-content: center;
+  pointer-events: none;
 }
 
-.hero__coord--right {
-  text-align: right;
+.hero__emerge-title {
+  font-size: clamp(3rem, 1.2rem + 7.2vw, 8.5rem);
+  font-weight: var(--fw-bold);
+  letter-spacing: -0.06em;
+  line-height: 1;
+  text-transform: lowercase;
+  color: var(--color-white);
 }
 
-.hero__main {
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: clamp(24px, 6vw, 96px);
-  padding-top: clamp(12px, 2vh, 24px);
+.hero__coord {
+  position: absolute;
+  top: clamp(96px, 13vh, 150px);
+  left: clamp(8px, 1.5vw, 24px);
 }
 
-/* Headline's own clipping mask — the reference clips this text through a
-   dedicated ~192px mask, separately from the hero's own overflow:clip. */
 .hero__headline-mask {
-  height: 192px;
-  overflow: hidden;
-  overflow: clip;
+  position: absolute;
+  top: clamp(96px, 13vh, 150px);
+  left: clamp(48px, 19vw, 360px);
+  max-width: min(620px, 46vw);
 }
 
 .hero__headline {
   font-size: var(--fs-hero);
   font-weight: var(--fw-medium);
-  line-height: var(--lh-tight);
-  letter-spacing: var(--ls-tight);
-  max-width: 20ch;
-  margin-left: 250px;
+  line-height: 1.1;
+  letter-spacing: -0.05em;
+}
+
+.hero__headline-dot {
+  color: var(--color-accent);
 }
 
 .hero__stat {
-  flex-shrink: 0;
+  position: absolute;
+  top: clamp(96px, 13vh, 150px);
+  right: clamp(20px, 5.2vw, 100px);
   text-align: right;
-  padding-top: 0.3em;
+  max-width: 220px;
 }
 
 .hero__stat-number {
   display: block;
-  font-family: var(--font-mono);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-semibold);
+  font-size: clamp(1.75rem, 1rem + 3.1vw, 3.75rem);
+  letter-spacing: -0.04em;
   color: var(--color-accent);
   line-height: 1;
 }
@@ -127,156 +132,184 @@
 .hero__stat-label {
   margin-top: 10px;
   font-family: var(--font-mono);
-  font-size: var(--fs-small);
-  letter-spacing: -0.04em;
+  font-size: var(--fs-body);
+  letter-spacing: -0.05em;
   text-transform: uppercase;
   color: var(--color-text-faint-2);
   line-height: var(--lh-normal);
-  max-width: 20ch;
-  margin-left: auto;
 }
 
-/* Scroll-linked second headline — rises from below the fold. No opacity/
-   fade/whileInView: visibility comes entirely from being positioned below
-   the hero's own clip boundary until scroll translates it upward. */
-.hero__lets-create-wrap {
+/* "Create\Studio" — the strongest element in the composition, sat large
+   and left-anchored over the flowers/face rather than in a centered block. */
+.hero__wordmark {
   position: absolute;
-  bottom: -500px;
-  left: 50%;
-  width: max-content;
-  margin: 0;
-  z-index: 1;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  will-change: transform;
+  left: clamp(16px, 11.5vw, 230px);
+  top: clamp(250px, 35vh, 410px);
+  max-width: min(1150px, 84vw);
 }
 
-.hero__lets-create {
-  display: block;
-  white-space: pre;
-  color: #fff;
-  font-family: var(--font-sans);
-  font-weight: var(--fw-bold);
-  font-size: 121px;
-  letter-spacing: -0.07em;
+.hero__wordmark-eyebrow {
+  position: absolute;
+  top: clamp(250px, 35vh, 410px);
+  left: clamp(8px, 1.5vw, 24px);
+}
+
+.hero__wordmark-title {
+  font-size: clamp(3.6rem, 2rem + 7.5vw, 9rem);
   line-height: 1.2;
-  transform: scale(0.8);
-  transform-origin: center;
+  letter-spacing: -0.07em;
+  font-weight: var(--fw-bold);
+  color: var(--color-white);
 }
 
-/* Intro/TimeLocation/CTA render inside `.hero` as full-frame chapters —
-   opacity/y are scroll-linked in Hero.tsx (INTRO_RANGE/TIME_RANGE/
-   CTA_RANGE), stacked on top of each other since only one is ever opaque
-   at a time. `pointer-events: none` keeps a hidden chapter's content
-   (mainly CTA's links) from intercepting clicks meant for whichever
-   chapter is actually visible; CTA re-enables its own via inline style
-   (`ctaPointer`) only while its opacity is up. */
-.hero__chapter {
+.hero__wordmark-accent {
+  color: var(--color-accent);
+}
+
+.hero__wordmark-slash {
+  color: var(--color-text-muted);
+  font-weight: var(--fw-medium);
+}
+
+/* Statements + time/location row — a separate block below the wordmark,
+   its own "// 00.03°" marker, rather than nested inside the wordmark. */
+.hero__statements {
   position: absolute;
-  inset: 0;
-  z-index: 1;
+  left: clamp(24px, 14.2vw, 290px);
+  top: clamp(500px, 68vh, 790px);
+}
+
+.hero__statements-eyebrow {
+  position: absolute;
+  top: clamp(500px, 68vh, 790px);
+  left: clamp(8px, 1.5vw, 24px);
+}
+
+.hero__wordmark-statements {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  pointer-events: none;
+  gap: 4px;
+  max-width: 38ch;
 }
+
+.hero__wordmark-statement {
+  font-family: var(--font-mono);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-regular);
+  line-height: 1.3;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.hero__wordmark-statement--muted {
+  color: var(--color-text-faint-2);
+}
+
+.hero__timeinfo {
+  margin-top: clamp(24px, 3.4vh, 48px);
+}
+
+.hero__timeinfo-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.hero__timeinfo-label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.hero__timeinfo-clock {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-size: var(--fs-micro);
+  letter-spacing: -0.03em;
+  color: var(--color-white);
+}
+
+.hero__timeinfo-zone {
+  margin-top: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-micro);
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
+  color: var(--color-white);
+}
+
+.hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(24px, 3.5vh, 44px);
+}
+
+.hero__cta .cta-pill {
+  font-size: var(--fs-body);
+  padding: 14px 22px;
+}
+
+/* `Showreel` is rendered directly inside the hero (not wrapped) — its own
+   CSS already positions it bottom-right, relative to `.hero__stage`, and
+   already has its own scaleReveal entrance animation. Wrapping it in a
+   motion.div with a `y`/transform animation would break that positioning:
+   any inline `transform` on an ancestor becomes the containing block for
+   `position: absolute` descendants, which would hijack `.showreel`'s
+   `right`/`bottom` away from `.hero__stage`. */
 
 @media (max-width: 1199px) {
-  .hero__headline {
-    max-width: 14ch;
-    margin-left: 120px;
+  .hero__headline-mask {
+    max-width: 56vw;
   }
 
-  .hero__lets-create {
-    font-size: 88px;
+  .hero__wordmark {
+    max-width: 84vw;
   }
 }
 
+/* Below desktop, the absolute overlap composition stops making sense —
+   recompose as a normal stacked column instead of shrinking it in place. */
 @media (max-width: 809px) {
-  /* Reference drops the pinned scroll transition on mobile — no extra
-     scroll runway, headline stays put, `let's create` doesn't render. */
-  .hero-pin {
-    height: auto;
-  }
-
   .hero {
-    position: relative;
-    flex: none;
-    min-height: auto;
-    padding-bottom: 24px;
-    overflow: visible;
+    height: auto;
+    min-height: 100vh;
+    padding: calc(var(--nav-h) + 24px) var(--gutter) 40px;
   }
 
   .hero__bg img {
     object-position: 50% 14%;
   }
 
-  .hero__top {
+  .hero__stage {
+    position: static;
+    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding-top: calc(var(--nav-h) + 24px);
+    gap: 28px;
   }
 
-  .hero__coord--right {
-    text-align: left;
-  }
-
-  .hero__main {
-    flex-direction: column;
-    gap: 32px;
-    padding-top: 32px;
-    padding-bottom: 40px;
-  }
-
-  .hero__headline-mask {
-    height: auto;
-    overflow: visible;
-  }
-
-  .hero__headline {
+  .hero__coord,
+  .hero__headline-mask,
+  .hero__stat,
+  .hero__wordmark-eyebrow,
+  .hero__wordmark,
+  .hero__statements-eyebrow,
+  .hero__statements,
+  .showreel {
+    position: static;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    transform: none;
     max-width: 100%;
-    margin-left: 0;
-    transform: none !important;
-  }
-
-  .hero__lets-create-wrap {
-    display: none;
+    width: 100%;
   }
 
   .hero__stat {
     text-align: left;
-  }
-
-  .hero__stat-label {
-    margin-left: 0;
-  }
-
-  /* No pin/scroll runway on mobile, so the chapters just render as normal
-     stacked sections after the hero's own content, in document order. */
-  .hero__chapter {
-    position: static !important;
-    opacity: 1 !important;
-    transform: none !important;
-    pointer-events: auto !important;
-    display: block;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-pin {
-    height: auto;
-  }
-
-  .hero {
-    position: relative;
-  }
-
-  .hero__chapter {
-    position: static !important;
-    opacity: 1 !important;
-    transform: none !important;
-    pointer-events: auto !important;
-    display: block;
   }
 }

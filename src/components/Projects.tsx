@@ -1,10 +1,8 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { motion, useScroll, useTransform } from 'motion/react'
+import { motion } from 'motion/react'
 import { projects, type Project } from '../data/projects'
-import { fadeUp, imgHover, scrimHover, staggerContainer, FRAMER_SPRING } from '../animations/variants'
-import { RevealText } from '../animations/RevealText'
-import { CharReveal } from '../animations/CharReveal'
+import { fadeUp, scrimHover, staggerContainer, FRAMER_SPRING } from '../animations/variants'
 import { useInViewOnce } from '../hooks/useInViewOnce'
 import './projects.css'
 
@@ -12,8 +10,6 @@ const MotionLink = motion.create(Link)
 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const cardRef = useRef<HTMLAnchorElement>(null)
-  const { scrollYProgress } = useScroll({ target: cardRef, offset: ['start end', 'end start'] })
-  const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
   // Watches cardRef (unclipped) rather than the img-wrap itself, since the
   // wrap's hidden state uses a clip-path that zeroes its visible area — such
   // an element never registers as intersecting on its own. See useInViewOnce.
@@ -27,24 +23,29 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       data-cursor="View case study"
       data-cursor-icon="arrow"
       initial="hidden"
-      whileInView="show"
+      animate={revealed ? 'show' : 'hidden'}
       whileHover="hover"
-      viewport={{ once: true, amount: 0.15 }}
       variants={fadeUp}
       transition={{ delay: index * 0.05 }}
     >
       <div className={`project-card__img-wrap ${revealed ? 'is-revealed' : ''}`}>
-        <motion.div className="project-card__img-inner" style={{ y: imgY }}>
-          <motion.img
-            className="project-card__img"
-            src={project.image}
-            alt={project.title}
-            loading="lazy"
-            variants={imgHover}
-          />
-        </motion.div>
+        <img
+          className="project-card__img"
+          src={`${import.meta.env.BASE_URL}${project.image}`}
+          alt={project.title}
+          loading="lazy"
+        />
       </div>
       <motion.div className="project-card__scrim" variants={scrimHover} />
+
+      {project.slug === 'blackwell-motors' && (
+        <img
+          src={`${import.meta.env.BASE_URL}assets/blackwell-logo.svg`}
+          alt="Blackwell"
+          className="project-card__logo"
+          draggable={false}
+        />
+      )}
 
       <div className="project-card__mark">{project.title.split(' ')[0]}</div>
       <div className="project-card__dashes" aria-hidden="true">
@@ -78,20 +79,6 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
 export function Projects() {
   return (
     <section className="projects section" id="work">
-      <div className="container projects__head">
-        <div>
-          <span className="eyebrow">
-            <CharReveal text="// 00.05°" />
-          </span>
-          <h2 className="projects__title">
-            <RevealText text="Selected work" />
-          </h2>
-        </div>
-        <Link to="/work" className="projects__more">
-          2017–2025 · More projects →
-        </Link>
-      </div>
-
       <div className="projects__list">
         {projects.map((project, i) => (
           <ProjectCard project={project} index={i} key={project.title} />

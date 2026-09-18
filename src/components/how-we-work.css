@@ -62,8 +62,8 @@
   position: absolute;
   top: -12%;
   bottom: -12%;
-  left: 0;
-  right: 0;
+  left: -6%;
+  right: -6%;
 }
 
 .process-stage__image-inner img {

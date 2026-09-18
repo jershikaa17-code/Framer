@@ -24,7 +24,7 @@ function ServiceRow({ service }: { service: Service }) {
         <div ref={revealRef} className={`service-row__media ${revealed ? 'is-revealed' : ''}`}>
           <motion.div className="service-row__media-inner" style={{ y: imgY }}>
             <motion.img
-              src={service.image}
+              src={`${import.meta.env.BASE_URL}${service.image}`}
               alt={service.title}
               loading="lazy"
               variants={imgHover}

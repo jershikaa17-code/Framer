@@ -68,13 +68,21 @@ export function WorkDetailPage() {
         </div>
 
         <motion.div
-          className="container work-detail__cover"
+          className={`work-detail__cover ${project.slug === 'blackwell-motors' ? 'work-detail__cover--portrait' : ''}`}
           initial={{ opacity: 0, scale: 1.04 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.9 }}
         >
-          <img src={project.image} alt={project.title} />
+          <img src={`${import.meta.env.BASE_URL}${project.image}`} alt={project.title} />
+          {project.slug === 'blackwell-motors' && (
+            <img
+              src={`${import.meta.env.BASE_URL}assets/blackwell-logo.svg`}
+              alt="Blackwell"
+              className="work-detail__cover-logo"
+              draggable={false}
+            />
+          )}
         </motion.div>
       </section>
 
@@ -194,7 +202,7 @@ export function WorkDetailPage() {
               if (!member) return null
               return (
                 <motion.div className="credit-row" key={name} variants={fadeUp}>
-                  <img src={member.image} alt={member.name} />
+                  <img src={`${import.meta.env.BASE_URL}${member.image}`} alt={member.name} />
                   <div>
                     <p className="credit-row__name">{member.name}</p>
                     <p className="credit-row__role">{member.role}</p>

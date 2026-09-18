@@ -60,7 +60,11 @@ export function ContactPage() {
             viewport={{ once: true, amount: 0.3 }}
             variants={headerZoom}
           >
-            <img className="contact-page__hero-img" src="assets/contact-hero.avif" alt="" />
+            <img
+              className="contact-page__hero-img"
+              src={`${import.meta.env.BASE_URL}assets/contact-hero.avif`}
+              alt=""
+            />
             <div className="contact-page__hero-scrim" />
 
             <div className="contact-page__hero-content">

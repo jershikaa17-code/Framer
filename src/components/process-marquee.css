@@ -39,25 +39,33 @@
   position: relative;
   z-index: 1;
   margin-top: -100vh;
-  height: 320vh;
 }
 
-/* Spread evenly across the full height of the tall .process-marquee__stack
-   behind it — this still paces WHEN each line's scroll-entrance happens.
-   The rain background stays visually fixed (it's sticky, in the sibling
-   above); each line below is ALSO sticky (see .process-marquee__phrase),
-   at its own lower `top`, so once it reaches its slot it locks there rather
-   than scrolling on past — all four accumulate on screen together, stacked
-   in reading order, instead of each one scrolling the last one away.
-   A fixed vh height (mirroring .process-marquee__stack) rather than 100% —
-   percentage heights don't resolve against a parent whose height comes only
-   from min-height. */
+/* Plain block flow (no flexbox) — each .process-marquee__slot below is a
+   normal, independently-positioned div, so its negative margin-top overlaps
+   the previous slot in a simple, predictable way. */
 .process-marquee__lines {
   position: relative;
-  height: 320vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
+}
+
+.process-marquee__slot {
+  position: relative;
+}
+
+.process-marquee__slot--1 {
+  height: 260vh;
+}
+.process-marquee__slot--2 {
+  height: 150vh;
+  margin-top: -100vh;
+}
+.process-marquee__slot--3 {
+  height: 150vh;
+  margin-top: -100vh;
+}
+.process-marquee__slot--4 {
+  height: 150vh;
+  margin-top: -100vh;
 }
 
 .process-marquee__phrase {
@@ -72,18 +80,16 @@
   text-align: center;
 }
 
-/* Each line locks progressively lower than the one before it, so the stack
-   reads top-to-bottom in the same order the phrases appear. */
-.process-marquee__phrase:nth-child(1) {
+.process-marquee__slot--1 .process-marquee__phrase {
   top: 12vh;
 }
-.process-marquee__phrase:nth-child(2) {
+.process-marquee__slot--2 .process-marquee__phrase {
   top: 29vh;
 }
-.process-marquee__phrase:nth-child(3) {
+.process-marquee__slot--3 .process-marquee__phrase {
   top: 46vh;
 }
-.process-marquee__phrase:nth-child(4) {
+.process-marquee__slot--4 .process-marquee__phrase {
   top: 63vh;
 }
 
@@ -112,24 +118,32 @@
 }
 
 @media (max-width: 809px) {
-  .process-marquee__stack {
-    height: 220vh;
+  .process-marquee__slot--1 {
+    height: 180vh;
+  }
+  .process-marquee__slot--2 {
+    height: 110vh;
+    margin-top: -70vh;
+  }
+  .process-marquee__slot--3 {
+    height: 110vh;
+    margin-top: -70vh;
+  }
+  .process-marquee__slot--4 {
+    height: 110vh;
+    margin-top: -70vh;
   }
 
-  .process-marquee__lines {
-    height: 220vh;
-  }
-
-  .process-marquee__phrase:nth-child(1) {
+  .process-marquee__slot--1 .process-marquee__phrase {
     top: 8vh;
   }
-  .process-marquee__phrase:nth-child(2) {
+  .process-marquee__slot--2 .process-marquee__phrase {
     top: 22vh;
   }
-  .process-marquee__phrase:nth-child(3) {
+  .process-marquee__slot--3 .process-marquee__phrase {
     top: 36vh;
   }
-  .process-marquee__phrase:nth-child(4) {
+  .process-marquee__slot--4 .process-marquee__phrase {
     top: 50vh;
   }
 }

@@ -267,6 +267,7 @@
 }
 
 .pricing-card__thumb {
+  position: relative;
   width: 140px;
   aspect-ratio: 140 / 92;
   border-radius: var(--radius-sm);

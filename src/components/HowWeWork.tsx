@@ -19,7 +19,7 @@ function ProcessStageCard({ stage, image }: { stage: ProcessStage; image: string
     <div className="process-stage" ref={stageRef}>
       <div ref={revealRef} className={`process-stage__image ${revealed ? 'is-revealed' : ''}`}>
         <motion.div className="process-stage__image-inner" style={{ y: imgY }}>
-          <img src={image} alt="" loading="lazy" />
+          <img src={`${import.meta.env.BASE_URL}${image}`} alt="" loading="lazy" />
         </motion.div>
       </div>
       <div className="process-stage__body">
