@@ -56,6 +56,16 @@
   object-position: center;
 }
 
+/* Aurelis/Blackwell/Lindholm's source photos are wider than the other
+   cards' fixed height, so `cover` cropped them hard. Size these cards to a
+   wider aspect ratio instead so `cover` (above) has much less excess to
+   crop — the image fills the card edge-to-edge with only a modest
+   top/bottom trim. */
+.project-card--fit {
+  height: auto;
+  aspect-ratio: 2.15;
+}
+
 .project-card__scrim {
   position: absolute;
   inset: 0;

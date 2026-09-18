@@ -25,8 +25,13 @@ export function Navbar() {
 
   useEffect(() => {
     document.documentElement.style.overflow = open ? 'hidden' : ''
+    // Blurs everything except the navbar/overlay themselves (see the
+    // `body.nav-menu-open` rule in navbar.css) so the page reads as
+    // genuinely behind the menu layer while it's open.
+    document.body.classList.toggle('nav-menu-open', open)
     return () => {
       document.documentElement.style.overflow = ''
+      document.body.classList.remove('nav-menu-open')
     }
   }, [open])
 

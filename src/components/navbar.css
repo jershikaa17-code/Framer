@@ -127,6 +127,18 @@
   transform: translateY(-3px) rotate(-45deg);
 }
 
+/* While the menu is open, everything under #root except the navbar/overlay
+   itself and the custom cursor blurs — the underlying page (whatever
+   section, including Services, sits behind the nav) reads as genuinely
+   layered beneath the open menu. */
+#root > *:not(.navbar):not(.nav-overlay):not(.custom-cursor) {
+  transition: filter 0.4s var(--ease-out);
+}
+
+body.nav-menu-open #root > *:not(.navbar):not(.nav-overlay):not(.custom-cursor) {
+  filter: blur(6px);
+}
+
 .nav-overlay {
   position: fixed;
   inset: 0;

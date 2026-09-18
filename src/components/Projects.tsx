@@ -1,12 +1,24 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'motion/react'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { projects, type Project } from '../data/projects'
 import { fadeUp, scrimHover, staggerContainer, FRAMER_SPRING } from '../animations/variants'
 import { useInViewOnce } from '../hooks/useInViewOnce'
 import './projects.css'
 
 const MotionLink = motion.create(Link)
+
+// These three cards' source photos are cropped hard by the shared card
+// height — size them to `.project-card--fit`'s own aspect ratio instead.
+const FIT_SLUGS = new Set(['aurelis-beach-resort', 'blackwell-motors', 'lindholm-aspen-877'])
+
+// Same three cards also get a strong scroll-linked zoom on the home page:
+// in as the card scrolls down through the viewport, back out as it scrolls
+// back up — driven purely by scroll position, so reversing scroll reverses
+// the zoom for free. Kept on the `<img>` itself, separate from the card's
+// own entrance fade/hover variants, so the motion mechanisms never fight
+// over the same element's transform.
+const SCROLL_ZOOM_SLUGS = FIT_SLUGS
 
 export function ProjectCard({ project, index }: { project: Project; index: number }) {
   const cardRef = useRef<HTMLAnchorElement>(null)
@@ -15,11 +27,20 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   // an element never registers as intersecting on its own. See useInViewOnce.
   const [, revealed] = useInViewOnce(0.15, cardRef)
 
+  const { scrollYProgress: cardProgress } = useScroll({
+    target: cardRef,
+    offset: ['start end', 'end start'],
+  })
+  // Never dips below 1 — `cover` already fills the card at scale 1, so this
+  // keeps the photo covering it edge-to-edge at every scroll position with
+  // no border of the card's own background showing through.
+  const imgZoom = useTransform(cardProgress, [0, 1], [1, 1.5])
+
   return (
     <MotionLink
       ref={cardRef}
       to={`/work/${project.slug}`}
-      className="project-card"
+      className={`project-card ${FIT_SLUGS.has(project.slug) ? 'project-card--fit' : ''}`}
       data-cursor="View case study"
       data-cursor-icon="arrow"
       initial="hidden"
@@ -28,14 +49,17 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       variants={fadeUp}
       transition={{ delay: index * 0.05 }}
     >
-      <div className={`project-card__img-wrap ${revealed ? 'is-revealed' : ''}`}>
-        <img
-          className="project-card__img"
-          src={`${import.meta.env.BASE_URL}${project.image}`}
-          alt={project.title}
-          loading="lazy"
-        />
-      </div>
+      {project.slug !== 'monolith-architecture' && (
+        <div className={`project-card__img-wrap ${revealed ? 'is-revealed' : ''}`}>
+          <motion.img
+            className="project-card__img"
+            src={`${import.meta.env.BASE_URL}${project.image}`}
+            alt={project.title}
+            loading="lazy"
+            style={SCROLL_ZOOM_SLUGS.has(project.slug) ? { scale: imgZoom } : undefined}
+          />
+        </div>
+      )}
       <motion.div className="project-card__scrim" variants={scrimHover} />
 
       {project.slug === 'blackwell-motors' && (

@@ -1,18 +1,44 @@
-import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'motion/react'
+import { useEffect, useRef } from 'react'
+import { motion, useScroll, useTransform, useMotionValue } from 'motion/react'
 import { services, type Service } from '../data/services'
 import { headerZoom, headerEyebrow, headerTitle, headerSub, imgHover } from '../animations/variants'
 import { useInViewOnce } from '../hooks/useInViewOnce'
 import './services.css'
 
+// Each `.service-row` is `position: sticky; top: 0`, so as you scroll, the
+// next row rises up from below and covers the current one before it too
+// pins (see the comment in services.css). Framer's `useScroll` computes
+// progress from the target's own live geometry, which freezes solid the
+// moment a sticky element actually pins (its rect stops changing) — so it
+// gets stuck rather than continuing to track scroll. Instead, capture the
+// row's normal-flow document top once on mount and derive pin progress
+// directly from window.scrollY, which keeps advancing correctly through
+// the whole pinned phase.
 function ServiceRow({ service }: { service: Service }) {
-  const rowRef = useRef<HTMLDivElement>(null)
+  const rowRef = useRef<HTMLDivElement | null>(null)
   const { scrollYProgress } = useScroll({ target: rowRef, offset: ['start end', 'end start'] })
   const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
   const [revealRef, revealed] = useInViewOnce<HTMLDivElement>(0.3)
 
+  const pinProgress = useMotionValue(0)
+  const coverBlur = useTransform(pinProgress, [0.45, 1], ['blur(0px)', 'blur(12px)'])
+
+  useEffect(() => {
+    const el = rowRef.current
+    if (!el) return
+    const docTop = el.getBoundingClientRect().top + window.scrollY
+    const height = el.offsetHeight
+    const onScroll = () => {
+      const raw = (window.scrollY - docTop) / height
+      pinProgress.set(Math.min(1, Math.max(0, raw)))
+    }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [pinProgress])
+
   return (
-    <motion.div className="service-row" ref={rowRef} whileHover="hover">
+    <motion.div className="service-row" ref={rowRef} whileHover="hover" style={{ filter: coverBlur }}>
       <div className="service-row__tab">
         <span className="service-row__category">{service.category}</span>
         <span className="service-row__index">/{service.index}</span>
