@@ -60,8 +60,6 @@ const arrow = (
 export function ServicesOverview() {
   return (
     <section className="services-overview section">
-      <div className="services-overview__bg" aria-hidden="true" />
-
       <div className="container services-overview__grid">
         <motion.div
           className="services-overview__intro"

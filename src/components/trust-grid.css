@@ -7,6 +7,7 @@
   font-size: var(--fs-h1);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-tight);
+  color: var(--color-text-muted);
   margin-top: 16px;
   max-width: 20ch;
 }
@@ -84,15 +85,31 @@
 }
 
 .trust-card__foot {
+  display: flex;
+  align-items: center;
+  gap: 14px;
   margin-top: auto;
   padding-top: clamp(20px, 3vw, 28px);
-  border-top: 1px dashed var(--color-border-strong);
   font-size: var(--fs-small);
   color: var(--color-text-muted);
 }
 
 .trust-card__foot span {
   color: var(--color-accent);
+}
+
+.trust-card__hatch {
+  flex: 1;
+  max-width: 130px;
+  height: 22px;
+  border-radius: 4px;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--color-border-strong) 0px,
+    var(--color-border-strong) 1px,
+    transparent 1px,
+    transparent 6px
+  );
 }
 
 .trust-card--tagline .trust-card__tagline {
@@ -108,10 +125,13 @@
 }
 
 .trust-card__dots {
+  position: relative;
+  z-index: 0;
   display: flex;
   align-items: center;
   gap: 10px;
   margin-top: clamp(20px, 3vw, 32px);
+  margin-bottom: 28px;
 }
 
 .trust-card__dots span {
@@ -122,9 +142,18 @@
 }
 
 .trust-card__dots span.is-active {
-  width: 44px;
-  height: 44px;
+  position: relative;
   background: var(--color-accent);
+}
+
+.trust-card__dots span.is-active::before {
+  content: '';
+  position: absolute;
+  inset: -28px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  box-shadow: 0 10px 30px rgba(20, 20, 20, 0.1);
+  z-index: -1;
 }
 
 .trust-card--stats .trust-card__stats-head {
@@ -137,7 +166,13 @@
 .trust-card--stats h3 {
   font-size: var(--fs-h3);
   font-weight: var(--fw-medium);
-  max-width: 16ch;
+  max-width: 12ch;
+}
+
+.trust-card__stats-divider {
+  align-self: stretch;
+  width: 1px;
+  background: var(--color-border-strong);
 }
 
 .trust-card__big-stat {
@@ -191,7 +226,36 @@
   font-size: var(--fs-h3);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-tight);
-  max-width: 16ch;
+  white-space: nowrap;
+}
+
+.trust-card__fresh-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 3vw, 36px);
+  margin-top: clamp(16px, 3vw, 28px);
+}
+
+.trust-card__grip {
+  display: inline-flex;
+}
+
+.trust-card__grip span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-border-strong);
+}
+
+.trust-card__grip--quad {
+  display: grid;
+  grid-template-columns: repeat(2, 8px);
+  gap: 6px;
+}
+
+.trust-card__grip--quad span:last-child {
+  background: var(--color-text-muted);
 }
 
 .trust-card__dotted-mark {
@@ -201,7 +265,7 @@
   justify-content: center;
   width: clamp(140px, 16vw, 190px);
   height: clamp(140px, 16vw, 190px);
-  margin: clamp(16px, 3vw, 28px) auto 0;
+  margin: 0;
   border-radius: 50%;
   background-image: radial-gradient(var(--color-border-strong) 1.4px, transparent 1.4px);
   background-size: 9px 9px;

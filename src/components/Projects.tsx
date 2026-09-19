@@ -100,11 +100,13 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   )
 }
 
+const homeProjects = projects.filter((project) => project.slug !== 'monolith-architecture')
+
 export function Projects() {
   return (
     <section className="projects section" id="work">
       <div className="projects__list">
-        {projects.map((project, i) => (
+        {homeProjects.map((project, i) => (
           <ProjectCard project={project} index={i} key={project.title} />
         ))}
       </div>

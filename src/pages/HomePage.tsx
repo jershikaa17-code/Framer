@@ -19,12 +19,20 @@ export function HomePage() {
       <HeroCluster />
       <ProcessMarquee />
       <Projects />
-      <CaseStudyTeaser />
       <Performance />
       <ClientMarquee />
       <Services />
-      <ServicesOverview />
-      <HowWeWork />
+      <div className="process-glow-wrap">
+        <img
+          className="process-glow-wrap__bg"
+          src={`${import.meta.env.BASE_URL}assets/process-glow.jpg`}
+          alt=""
+          aria-hidden="true"
+        />
+        <HowWeWork />
+        <ServicesOverview />
+      </div>
+      <CaseStudyTeaser />
       <TrustGrid />
       <Pricing />
       <Testimonial />

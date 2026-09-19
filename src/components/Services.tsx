@@ -14,7 +14,7 @@ import './services.css'
 // row's normal-flow document top once on mount and derive pin progress
 // directly from window.scrollY, which keeps advancing correctly through
 // the whole pinned phase.
-function ServiceRow({ service }: { service: Service }) {
+function ServiceRow({ service, isLast }: { service: Service; isLast?: boolean }) {
   const rowRef = useRef<HTMLDivElement | null>(null)
   const { scrollYProgress } = useScroll({ target: rowRef, offset: ['start end', 'end start'] })
   const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
@@ -66,6 +66,7 @@ function ServiceRow({ service }: { service: Service }) {
             </li>
           ))}
         </ul>
+        {isLast && <div className="service-row__lines" aria-hidden="true" />}
       </div>
     </motion.div>
   )
@@ -93,8 +94,8 @@ export function Services() {
       </motion.div>
 
       <div className="container services__list">
-        {services.map((service) => (
-          <ServiceRow service={service} key={service.title} />
+        {services.map((service, i) => (
+          <ServiceRow service={service} isLast={i === services.length - 1} key={service.title} />
         ))}
       </div>
     </section>

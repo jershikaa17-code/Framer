@@ -8,3 +8,17 @@ dist-ssr
 # Saved reference page snapshot (research aid, not part of the app)
 Create® — Design Studio.html
 Create® — Design Studio_files/
+createstudio.framer.media.har
+
+# Ad-hoc reference screenshots / scratch notes (not part of the app)
+miss.png
+miss1.png
+miss2.png
+man
+Attached Element Context from Integrated.txt
+Attached Element Context from Integratedd.txt
+public/assets/hi.txt
+public/assets/Attached Element Context from Integrated.txt
+
+# Claude Code local tooling config
+.claude/

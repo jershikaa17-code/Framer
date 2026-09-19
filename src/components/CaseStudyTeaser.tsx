@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { projects } from '../data/projects'
 import { RevealText } from '../animations/RevealText'
-import { fadeUp, fadeLeft, fadeRight, imgHover } from '../animations/variants'
+import { fadeUp, fadeRight, imgHover } from '../animations/variants'
 import './case-study-teaser.css'
 
 const arrow = (
@@ -22,6 +22,7 @@ export function CaseStudyTeaser() {
 
   return (
     <section className="case-study-teaser section">
+      <div className="case-study-teaser__bg" aria-hidden="true" />
       <div className="container case-study-teaser__grid">
         <motion.div
           className="case-study-teaser__visual"
@@ -30,38 +31,47 @@ export function CaseStudyTeaser() {
           viewport={{ once: true, amount: 0.3 }}
         >
           <motion.img
+            className="case-study-teaser__visual-img"
             src={`${import.meta.env.BASE_URL}${project.image}`}
             alt={project.title}
             variants={imgHover}
           />
+          <div className="case-study-teaser__visual-scrim" aria-hidden="true" />
+          <img
+            className="case-study-teaser__visual-logo"
+            src={`${import.meta.env.BASE_URL}assets/blackwell-logo.svg`}
+            alt=""
+            aria-hidden="true"
+          />
+          <span className="case-study-teaser__visual-title">{project.title}</span>
         </motion.div>
 
-        <motion.div
+        <motion.p
           className="case-study-teaser__copy"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
-          variants={fadeLeft}
+          variants={fadeUp}
         >
-          <span className="eyebrow">
-            <span className="eyebrow__marker" aria-hidden="true" />
-            Featured case study
-          </span>
-          <motion.h2 variants={fadeUp}>
-            <RevealText text={project.title} />
-          </motion.h2>
-          <motion.p variants={fadeUp}>
-            Step inside one of our featured projects. From first brief to launch, follow the
-            process that shows what makes Create® different.
-          </motion.p>
+          Step inside one of our featured projects. From first brief to launch, follow the
+          process that shows what makes Create® different.
+        </motion.p>
 
-          <motion.div className="case-study-teaser__sub" variants={fadeRight}>
-            <h3>Our process in motion</h3>
-            <p>Explore a real case where strategy, design, and delivery lined up exactly as we work today.</p>
-          </motion.div>
+        <motion.div
+          className="case-study-teaser__sub"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeRight}
+        >
+          <h3>
+            <RevealText text="Our process in motion" />
+          </h3>
+          <p>Explore a real case where strategy, design, and delivery lined up exactly as we work today.</p>
 
           <Link to="/work" className="case-study-teaser__cta">
-            Explore case studies {arrow}
+            <span className="case-study-teaser__cta-icon">{arrow}</span>
+            Explore Case Studies
           </Link>
         </motion.div>
       </div>

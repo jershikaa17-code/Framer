@@ -5,13 +5,6 @@
   color: var(--color-white);
 }
 
-.services-overview__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  background: linear-gradient(135deg, #0c2e3e 0%, #164b5e 26%, #1c5f66 42%, #2a4a63 60%, #3a2f5c 78%, #241a33 100%);
-}
-
 .services-overview__grid {
   position: relative;
   z-index: 1;

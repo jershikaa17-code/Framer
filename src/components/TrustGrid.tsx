@@ -63,6 +63,7 @@ export function TrustGrid() {
             <span className="is-active" />
           </div>
           <p className="trust-card__foot">
+            <span className="trust-card__hatch" aria-hidden="true" />
             <span>Ideas</span> that start with you
           </p>
         </motion.div>
@@ -70,6 +71,7 @@ export function TrustGrid() {
         <motion.div className="trust-card trust-card--stats" variants={fadeUp}>
           <div className="trust-card__stats-head">
             <h3>Client Satisfaction Rate</h3>
+            <span className="trust-card__stats-divider" aria-hidden="true" />
             <span className="trust-card__big-stat">99.9%</span>
           </div>
 
@@ -100,12 +102,24 @@ export function TrustGrid() {
         <motion.div className="trust-card trust-card--fresh" variants={fadeUp}>
           <p className="trust-card__eyebrow-line">No reheated or pre-made.</p>
           <h3>Every project starts fresh.</h3>
-          <div className="trust-card__dotted-mark" aria-hidden="true">
-            <span className="trust-card__dotted-logo">
-              create<sup>®</sup>
+          <div className="trust-card__fresh-row">
+            <span className="trust-card__grip" aria-hidden="true">
+              <span />
             </span>
+            <span className="trust-card__grip trust-card__grip--quad" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+            </span>
+            <div className="trust-card__dotted-mark" aria-hidden="true">
+              <span className="trust-card__dotted-logo">
+                create<sup>®</sup>
+              </span>
+            </div>
           </div>
           <p className="trust-card__foot">
+            <span className="trust-card__hatch" aria-hidden="true" />
             <span>Custom work</span> from day one.
           </p>
         </motion.div>
