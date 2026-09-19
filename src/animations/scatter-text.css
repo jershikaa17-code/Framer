@@ -1,12 +1,9 @@
 .scatter-char {
   display: inline-block;
   opacity: 0;
-  transform: translate(var(--scatter-x), var(--scatter-y));
-  transition-property: opacity, transform;
-  transition-duration: 0.45s;
+  transition: opacity 0.3s ease-out;
 }
 
 .scatter-char.is-revealed {
   opacity: 1;
-  transform: translate(0, 0);
 }

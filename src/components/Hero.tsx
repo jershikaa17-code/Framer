@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react'
+import { motion, useMotionTemplate, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { CharReveal } from '../animations/CharReveal'
 import { ScatterText } from '../animations/ScatterText'
@@ -43,50 +43,15 @@ const IMAGE_DELAY_MS = 2000
 const TIER_TIME = 2
 const TIER_CTA = 2.3
 const TIER_REST = 2.6
+// The two statement lines only start their character reveal once the
+// "Our time / UTC−8 Los Angeles" block (TIER_TIME, 0.8s rise duration) has
+// fully finished, per the requested reveal order.
+const STATEMENTS_DELAY = 2.9
 
-// Deterministic small per-character jitter, reused for the wordmark's
-// scroll-exit fragmentation (see FragmentChars below) — same idea as
-// ScatterText's JITTER table, kept local since it's only used here.
-const FRAGMENT_JITTER = [
-  { x: -1, y: 1 },
-  { x: 1, y: -1 },
-  { x: -1, y: -1 },
-  { x: 1, y: 1 },
-  { x: -1, y: 1 },
-  { x: 1, y: -1 },
-]
-
-// Splits text into characters that drift apart, rotate and fade as the page
-// scrolls — driven purely by `style` MotionValues on a dedicated inner span
-// per character, kept off the CSS-transition-driven entrance above it (same
-// safe-separation pattern as ScatterText/ScatterCharExit).
-function FragmentChars({ text, exitProgress, startIndex = 0 }: { text: string; exitProgress?: MotionValue<number>; startIndex?: number }) {
-  return (
-    <>
-      {text.split('').map((ch, i) => (
-        <FragmentChar key={startIndex + i} ch={ch} index={startIndex + i} exitProgress={exitProgress} />
-      ))}
-    </>
-  )
-}
-
-function FragmentChar({ ch, index, exitProgress }: { ch: string; index: number; exitProgress?: MotionValue<number> }) {
-  const j = FRAGMENT_JITTER[index % FRAGMENT_JITTER.length]
-  const fallback = useTransform(() => 0)
-  const source = exitProgress ?? fallback
-  const x = useTransform(source, [0.05, 0.75], [0, j.x * 90])
-  const y = useTransform(source, [0.05, 0.75], [0, j.y * 70 - 60])
-  const rotate = useTransform(source, [0.05, 0.75], [0, j.x * 40])
-  const opacity = useTransform(source, [0.05, 0.5], [1, 0])
-
-  if (!exitProgress) return <span>{ch === ' ' ? ' ' : ch}</span>
-
-  return (
-    <motion.span style={{ display: 'inline-block', x, y, rotate, opacity }}>
-      {ch === ' ' ? ' ' : ch}
-    </motion.span>
-  )
-}
+// The wordmark's scroll-exit is a hard horizontal wipe (see wordmarkClipPath
+// in Hero() below) rather than a fade/translate or character-scatter — an
+// invisible horizontal boundary sweeps down through the letterforms via
+// clip-path, erasing them in place while the text itself never moves.
 
 export function Hero() {
   const shouldReduceMotion = Boolean(useReducedMotion())
@@ -113,16 +78,51 @@ export function Hero() {
     offset: ['start start', 'end start'],
   })
 
-  const largeExitY = useTransform(exitProgress, [0, 1], [0, -160])
-  const largeExitOpacity = useTransform(exitProgress, [0.12, 0.62], [1, 0])
   const smallExitY = useTransform(exitProgress, [0, 1], [0, -80])
   const smallExitOpacity = useTransform(exitProgress, [0.08, 0.5], [1, 0])
   const bgExitScale = useTransform(exitProgress, [0, 1], [1, 1.05])
 
-  const largeExitStyle = shouldReduceMotion ? {} : { y: largeExitY, opacity: largeExitOpacity }
   const smallExitStyle = shouldReduceMotion ? {} : { y: smallExitY, opacity: smallExitOpacity }
   const bgExitStyle = shouldReduceMotion ? {} : { scale: bgExitScale }
-  const charExitProgress = shouldReduceMotion ? undefined : exitProgress
+
+  // The wordmark is erased by a hard horizontal boundary sweeping down
+  // through the letterforms as the page scrolls, instead of fading or
+  // translating — position stays fixed, only the clip mask moves. Starts
+  // almost immediately once scrolling begins, same minimal dead-scroll
+  // distance as the headline's wipe above.
+  const wordmarkClipProgress = useTransform(exitProgress, [0.03, 0.43], [0, 100])
+  const wordmarkClipPathRaw = useMotionTemplate`inset(${wordmarkClipProgress}% 0 0 0)`
+  const wordmarkClipPath = shouldReduceMotion ? undefined : wordmarkClipPathRaw
+
+  // "Digital experiences that…" is erased by the SAME kind of hard
+  // horizontal wipe as the wordmark — never a fade or an upward translate
+  // — and starts almost immediately once scrolling begins (barely any dead
+  // scroll distance), since its own mount-entrance rise() is already long
+  // finished (~3.4s after load) by the time a user actually starts
+  // scrolling.
+  const headlineClipProgress = useTransform(exitProgress, [0.03, 0.43], [0, 100])
+  const headlineClipPathRaw = useMotionTemplate`inset(${headlineClipProgress}% 0 0 0)`
+  const headlineClipPath = shouldReduceMotion ? undefined : headlineClipPathRaw
+  // Same wipe, same [0.03, 0.43] timing, shared by everything else that
+  // should vanish in sync with the headline/wordmark: both "// 00.0X°"
+  // eyebrows below the fold, the two statement lines, the time/location
+  // block, the CTA buttons, and the showreel — one clip motion value
+  // reused as a style object rather than a patchwork of separate
+  // fade/translate/dissolve exits.
+  const uniformClipProgress = useTransform(exitProgress, [0.03, 0.43], [0, 100])
+  const uniformClipPathRaw = useMotionTemplate`inset(${uniformClipProgress}% 0 0 0)`
+  const uniformClipPath = shouldReduceMotion ? undefined : uniformClipPathRaw
+  const uniformClipStyle = { clipPath: uniformClipPath, WebkitClipPath: uniformClipPath }
+  // "// 00.02°" sits high enough on the page (top: ~250-410px) that normal
+  // page scroll carries it behind the fixed navbar (z-index 200, 60px
+  // tall) around exitProgress ~0.27-0.29 — well before the shared
+  // [0.03, 0.43] wipe would finish, so it looked like it was getting cut
+  // off/stuck instead of cleanly vanishing. Same 0.03 start as everything
+  // else, just a shorter span so it fully completes before that point.
+  const wordmarkEyebrowClipProgress = useTransform(exitProgress, [0.03, 0.22], [0, 100])
+  const wordmarkEyebrowClipPathRaw = useMotionTemplate`inset(${wordmarkEyebrowClipProgress}% 0 0 0)`
+  const wordmarkEyebrowClipPath = shouldReduceMotion ? undefined : wordmarkEyebrowClipPathRaw
+  const wordmarkEyebrowClipStyle = { clipPath: wordmarkEyebrowClipPath, WebkitClipPath: wordmarkEyebrowClipPath }
 
   // "let's create" rises from underneath the wordmark on the SAME
   // exitProgress value that fragments it, so the two feel like one
@@ -155,15 +155,18 @@ export function Hero() {
           </motion.span>
         </motion.div>
 
-        <motion.div className="hero__headline-mask" style={largeExitStyle}>
+        <div className="hero__headline-mask">
           <motion.div {...rise(TIER_REST)}>
-            <h1 className="hero__headline">
+            <motion.h1
+              className="hero__headline"
+              style={{ clipPath: headlineClipPath, WebkitClipPath: headlineClipPath }}
+            >
               Digital experiences that
               <br />
               connect, scale and perform<span className="hero__headline-dot">.</span>
-            </h1>
+            </motion.h1>
           </motion.div>
-        </motion.div>
+        </div>
 
         <motion.div className="hero__stat" style={smallExitStyle}>
           <motion.div {...rise(TIER_REST)}>
@@ -174,28 +177,27 @@ export function Hero() {
           </motion.div>
         </motion.div>
 
-        <motion.div className="hero__wordmark-eyebrow" style={smallExitStyle}>
+        <motion.div className="hero__wordmark-eyebrow" style={wordmarkEyebrowClipStyle}>
           <motion.span className="eyebrow eyebrow--coord" {...rise(TIER_REST, 40)}>
             <span className="eyebrow__line" aria-hidden="true" />
             // 00.02°
           </motion.span>
         </motion.div>
 
-        <motion.div className="hero__wordmark" style={largeExitStyle}>
+        <div className="hero__wordmark">
           <motion.div {...rise(TIER_REST, 40)}>
-            <h2 className="hero__wordmark-title">
-              <span className="hero__wordmark-accent">
-                <FragmentChars text="Create" exitProgress={charExitProgress} startIndex={0} />
-              </span>
-              <span className="hero__wordmark-slash">
-                <FragmentChars text="\" exitProgress={charExitProgress} startIndex={6} />
-              </span>
-              <FragmentChars text="Studio" exitProgress={charExitProgress} startIndex={7} />
-            </h2>
+            <motion.h2
+              className="hero__wordmark-title"
+              style={{ clipPath: wordmarkClipPath, WebkitClipPath: wordmarkClipPath }}
+            >
+              <span className="hero__wordmark-accent">Create</span>
+              <span className="hero__wordmark-slash">\</span>
+              Studio
+            </motion.h2>
           </motion.div>
-        </motion.div>
+        </div>
 
-        <motion.div className="hero__statements-eyebrow" style={smallExitStyle}>
+        <motion.div className="hero__statements-eyebrow" style={uniformClipStyle}>
           <motion.span className="eyebrow eyebrow--coord" {...rise(TIER_REST)}>
             <span className="eyebrow__line" aria-hidden="true" />
             // 00.03°
@@ -203,24 +205,22 @@ export function Hero() {
         </motion.div>
 
         <div className="hero__statements">
-          <div className="hero__wordmark-statements">
+          <motion.div className="hero__wordmark-statements" style={uniformClipStyle}>
             <p className="hero__wordmark-statement hero__wordmark-statement--muted">
               <ScatterText
                 text="A design studio trusted by startups and leading brands."
-                delay={TIER_REST}
-                exitProgress={charExitProgress}
+                delay={STATEMENTS_DELAY}
               />
             </p>
             <p className="hero__wordmark-statement">
               <ScatterText
                 text="We create stories people remember."
-                delay={TIER_REST + 0.15}
-                exitProgress={charExitProgress}
+                delay={STATEMENTS_DELAY + 0.2}
               />
             </p>
-          </div>
+          </motion.div>
 
-          <motion.div style={smallExitStyle}>
+          <motion.div style={uniformClipStyle}>
             <motion.div className="hero__timeinfo" {...rise(TIER_TIME)}>
               <p className="hero__timeinfo-row">
                 <span className="hero__timeinfo-label">Our time</span>
@@ -230,7 +230,7 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          <motion.div style={smallExitStyle}>
+          <motion.div style={uniformClipStyle}>
             <motion.div className="hero__cta" {...rise(TIER_CTA, 48)}>
               <MotionLink
                 to="/work"
@@ -254,7 +254,7 @@ export function Hero() {
           </motion.div>
         </div>
 
-        <Showreel delay={TIER_REST} exitStyle={smallExitStyle} />
+        <Showreel delay={TIER_REST} exitStyle={uniformClipStyle} />
       </div>
     </section>
   )
