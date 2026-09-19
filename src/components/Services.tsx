@@ -38,37 +38,39 @@ function ServiceRow({ service, isLast }: { service: Service; isLast?: boolean })
   }, [pinProgress])
 
   return (
-    <motion.div className="service-row" ref={rowRef} whileHover="hover" style={{ filter: coverBlur }}>
-      <div className="service-row__tab">
-        <span className="service-row__category">{service.category}</span>
-        <span className="service-row__index">/{service.index}</span>
-      </div>
-
-      <h3 className="service-row__title">{service.title}</h3>
-
-      <div className="service-row__content">
-        <div ref={revealRef} className={`service-row__media ${revealed ? 'is-revealed' : ''}`}>
-          <motion.div className="service-row__media-inner" style={{ y: imgY }}>
-            <motion.img
-              src={`${import.meta.env.BASE_URL}${service.image}`}
-              alt={service.title}
-              loading="lazy"
-              variants={imgHover}
-            />
-          </motion.div>
+    <div className="service-row" ref={rowRef}>
+      <motion.div className="service-row__blur-group" whileHover="hover" style={{ filter: coverBlur }}>
+        <div className="service-row__tab">
+          <span className="service-row__category">{service.category}</span>
+          <span className="service-row__index">/{service.index}</span>
         </div>
-        <p className="service-row__desc">{service.description}</p>
-        <ul className="service-row__capabilities">
-          {service.capabilities.map((cap) => (
-            <li key={cap}>
-              <span>+</span>
-              {cap}
-            </li>
-          ))}
-        </ul>
-        {isLast && <div className="service-row__lines" aria-hidden="true" />}
-      </div>
-    </motion.div>
+
+        <h3 className="service-row__title">{service.title}</h3>
+
+        <div className="service-row__content">
+          <div ref={revealRef} className={`service-row__media ${revealed ? 'is-revealed' : ''}`}>
+            <motion.div className="service-row__media-inner" style={{ y: imgY }}>
+              <motion.img
+                src={`${import.meta.env.BASE_URL}${service.image}`}
+                alt={service.title}
+                loading="lazy"
+                variants={imgHover}
+              />
+            </motion.div>
+          </div>
+          <p className="service-row__desc">{service.description}</p>
+          <ul className="service-row__capabilities">
+            {service.capabilities.map((cap) => (
+              <li key={cap}>
+                <span>+</span>
+                {cap}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </motion.div>
+      {isLast && <div className="service-row__lines" aria-hidden="true" />}
+    </div>
   )
 }
 

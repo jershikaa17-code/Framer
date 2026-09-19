@@ -186,11 +186,37 @@
 
 .footer__credit {
   display: flex;
-  gap: 24px;
+  align-items: center;
+  gap: 20px;
   margin-top: 18px;
+}
+
+.footer__credit-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 14px;
   font-weight: var(--fw-semibold);
-  color: var(--color-text-secondary);
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.footer__credit-icon {
+  display: block;
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.55;
+}
+
+.footer__credit-badge svg {
+  display: block;
+  width: 130px;
+  height: 14px;
+  color: var(--color-text-muted);
 }
 
 .footer__contact-grid {
@@ -217,6 +243,10 @@
   letter-spacing: normal;
   color: var(--color-text-secondary);
   margin-bottom: 28px;
+}
+
+.footer__label--muted {
+  color: var(--color-text-muted)
 }
 
 .footer__small-rule {
@@ -248,7 +278,7 @@
 }
 
 .footer__phone a {
-  color: var(--color-text);
+  color: var(--color-text-muted);
   font-size: 48px;
   line-height: 1;
   font-weight: var(--fw-regular);
