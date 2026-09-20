@@ -21,13 +21,13 @@
 .navbar__inner {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: clamp(48px, 9vw, 134px);
   width: 100%;
 }
 
 .navbar__logo {
   font-family: var(--font-sans);
-  font-size: 1.35rem;
+  font-size: 1.75rem;
   font-weight: var(--fw-bold);
   letter-spacing: var(--ls-tight);
   text-transform: lowercase;
@@ -86,16 +86,30 @@
 }
 
 .navbar__count {
+  position: absolute;
+  top: -5px;
+  right: -12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #ebebeb;
   font-family: var(--font-mono);
   font-size: 0.64em;
+  line-height: 1.2em;
   color: var(--color-text-secondary);
-  margin-left: 2px;
+  margin: 0;
 }
 
 .navbar__actions {
   display: flex;
   align-items: center;
   gap: 20px;
+  margin-left: auto;
   z-index: 2;
 }
 

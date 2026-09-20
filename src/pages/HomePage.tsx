@@ -22,6 +22,7 @@ export function HomePage() {
       <Performance />
       <ClientMarquee />
       <Services />
+      <HowWeWork />
       <div className="process-glow-wrap">
         <img
           className="process-glow-wrap__bg"
@@ -29,7 +30,6 @@ export function HomePage() {
           alt=""
           aria-hidden="true"
         />
-        <HowWeWork />
         <ServicesOverview />
       </div>
       <CaseStudyTeaser />

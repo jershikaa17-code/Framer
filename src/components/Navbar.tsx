@@ -46,6 +46,10 @@ export function Navbar() {
         transition={{ duration: 0.8, ease: EASE_OUT, delay: navDelay }}
       >
         <div className="navbar__inner container">
+          <Link to="/" className="navbar__logo" onClick={closeMenu}>
+            create<span className="navbar__reg">®</span>
+          </Link>
+
           <nav className="navbar__links" aria-label="Primary">
             {navLinks
               .filter((link) => link.label !== 'Contact')

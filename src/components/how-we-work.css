@@ -8,20 +8,82 @@
   color: var(--color-text-faint);
 }
 
+.how-we-work__grid {
+  display: grid;
+  grid-template-columns: 140px 1fr 110px;
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+}
+
+.how-we-work__left {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.how-we-work__swatch {
+  width: 100%;
+  height: 18px;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.35) 0px,
+    rgba(255, 255, 255, 0.35) 1px,
+    transparent 1px,
+    transparent 8px
+  );
+  opacity: 0.5;
+}
+
+.how-we-work__middle {
+  position: relative;
+}
+
+.how-we-work__rule {
+  position: relative;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  margin-bottom: clamp(24px, 4vw, 40px);
+}
+
+.how-we-work__rule::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 28px;
+  height: 1px;
+  background: var(--color-accent);
+}
+
 .how-we-work__title {
-  font-size: var(--fs-h1);
+  font-size: clamp(2.5rem, 1.6rem + 4.5vw, 5rem);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-tight);
-  color: var(--color-text-secondary);
+  color: var(--color-text-faint);
   max-width: 16ch;
-  margin-top: 16px;
 }
 
 .how-we-work__sub {
   margin-top: 20px;
   max-width: 46ch;
-  color: rgba(255, 255, 255, 0.42);
+  color: var(--color-text-faint);
   font-size: var(--fs-body-lg);
+}
+
+.how-we-work__right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.how-we-work__logo {
+  font-weight: var(--fw-bold);
+  font-size: 20px;
+  letter-spacing: var(--ls-tight);
+  color: var(--color-accent);
+}
+
+.how-we-work__logo sup {
+  font-size: 0.5em;
 }
 
 .how-we-work__dashes {
@@ -34,4 +96,27 @@
     transparent 1px,
     transparent 18px
   );
+}
+
+@media (max-width: 809px) {
+  .how-we-work__grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .how-we-work__left {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .how-we-work__swatch {
+    width: 96px;
+    height: 16px;
+  }
+
+  .how-we-work__right {
+    justify-content: flex-start;
+    order: -1;
+  }
 }

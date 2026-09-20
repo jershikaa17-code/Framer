@@ -10,23 +10,13 @@
 
 .services__wordmark {
   position: relative;
-  font-size: clamp(4rem, 13vw, 10.5rem);
+  font-size: clamp(4rem, 27.5vw, 26.5rem);
   font-weight: var(--fw-bold);
   letter-spacing: var(--ls-tightest);
   line-height: 0.9;
   text-transform: lowercase;
   margin-top: 8px;
   width: fit-content;
-}
-
-.services__dot {
-  position: absolute;
-  top: -0.28em;
-  left: 0.02em;
-  width: 0.14em;
-  height: 0.14em;
-  border-radius: 50%;
-  background: var(--color-text);
 }
 
 .services__sub {

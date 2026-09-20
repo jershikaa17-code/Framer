@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { motion, useScroll, useTransform, useMotionValue } from 'motion/react'
 import { services, type Service } from '../data/services'
-import { headerZoom, headerEyebrow, headerTitle, headerSub, imgHover } from '../animations/variants'
+import { headerZoom, headerTitle, headerSub, imgHover } from '../animations/variants'
 import { useInViewOnce } from '../hooks/useInViewOnce'
 import './services.css'
 
@@ -84,11 +84,8 @@ export function Services() {
         viewport={{ once: true, amount: 0.3 }}
         variants={headerZoom}
       >
-        <motion.span className="eyebrow" variants={headerEyebrow}>
-          // 00.06°
-        </motion.span>
         <motion.h2 className="services__wordmark" variants={headerTitle}>
-          services<span className="services__dot" />
+          services
         </motion.h2>
         <motion.p className="services__sub" variants={headerSub}>
           What we do best, and what your next project needs most.

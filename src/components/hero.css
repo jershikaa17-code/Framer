@@ -79,12 +79,13 @@
 }
 
 .hero__emerge-title {
-  font-size: clamp(3rem, 1.2rem + 7.2vw, 8.5rem);
+  font-size: clamp(3.5rem, 1.2rem + 8.6vw, 10.5rem);
   font-weight: var(--fw-bold);
   letter-spacing: -0.06em;
   line-height: 1;
   text-transform: lowercase;
   color: var(--color-white);
+  opacity: 0.5;
 }
 
 .hero__coord {

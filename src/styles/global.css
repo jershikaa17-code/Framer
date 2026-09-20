@@ -148,10 +148,8 @@ svg {
   }
 }
 
-/* Shared full-bleed background photo behind How We Work + Services Overview,
-   matching the reference: one tall glow image spans both sections so the
-   glow reads as a continuous scroll-linked backdrop rather than two
-   separately-colored blocks. */
+/* Full-bleed background photo behind Services Overview, matching the
+   reference's colorful glow backdrop for that section. */
 .process-glow-wrap {
   position: relative;
   background: var(--color-bg-dark);
@@ -166,7 +164,6 @@ svg {
   object-fit: cover;
 }
 
-.process-glow-wrap > .how-we-work,
 .process-glow-wrap > .services-overview {
   position: relative;
   z-index: 1;
