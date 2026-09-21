@@ -129,6 +129,13 @@ export function Pricing() {
           <p className="pricing__eyebrow-label">Quick intro call, no strings attached.</p>
           <p className="pricing__big-heading">Let&rsquo;s chat or just say hello.</p>
 
+          <img
+            src={`${import.meta.env.BASE_URL}assets/pricing-mascot.png`}
+            alt=""
+            className="pricing__book-mascot"
+            loading="lazy"
+          />
+
           <div className="pricing__book-panel">
             <p className="pricing__book-panel-label">
               {clockIcon} Next Availability
@@ -268,7 +275,12 @@ export function Pricing() {
           Schedule a quick call, and we'll walk you through our flexible plans.
         </p>
         <div className="pricing__expert-person">
-          <div className="pricing__expert-avatar" aria-hidden="true" />
+          <img
+            src={`${import.meta.env.BASE_URL}assets/maggie-winslow.avif`}
+            alt=""
+            className="pricing__expert-avatar"
+            loading="lazy"
+          />
           <div>
             <p className="pricing__expert-name">Maggie Winslow</p>
             <p className="pricing__expert-role">Project Operations Manager</p>

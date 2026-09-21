@@ -88,6 +88,10 @@
   flex-direction: column;
 }
 
+.trust-card--tagline {
+  overflow: hidden;
+}
+
 .trust-card__foot {
   display: flex;
   align-items: center;
@@ -131,6 +135,50 @@
 
 .trust-card__tagline-line {
   display: block;
+}
+
+.trust-card__dots {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 113px;
+  margin-top: auto;
+  padding-top: clamp(24px, 4vw, 40px);
+}
+
+.trust-card__dots span:not(.trust-card__dots-spot):not(.trust-card__dots-last) {
+  position: relative;
+  z-index: 1;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-text);
+  flex-shrink: 0;
+}
+
+.trust-card__dots-last {
+  position: relative;
+  z-index: 1;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.trust-card__dots-spot {
+  position: absolute;
+  z-index: 0;
+  left: calc(50% - 197px);
+  top: 100%;
+  width: 120px;
+  height: 120px;
+  margin-top: -74px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  box-shadow: 0 20px 40px rgba(20, 20, 20, 0.12);
+  pointer-events: none;
 }
 
 .trust-card--stats .trust-card__stats-head {
@@ -229,14 +277,59 @@
   background: var(--color-border-strong);
 }
 
+.trust-card__grip:not(.trust-card__grip--quad) span {
+  animation: grip-pulse 2.2s ease-in-out infinite;
+}
+
 .trust-card__grip--quad {
   display: grid;
   grid-template-columns: repeat(2, 8px);
   gap: 6px;
 }
 
-.trust-card__grip--quad span:last-child {
-  background: var(--color-text-muted);
+.trust-card__grip--quad span {
+  opacity: 0.35;
+  animation: grip-quad-cycle 2.4s ease-in-out infinite;
+}
+
+.trust-card__grip--quad span:nth-child(1) {
+  animation-delay: 0s;
+}
+.trust-card__grip--quad span:nth-child(2) {
+  animation-delay: 0.6s;
+}
+.trust-card__grip--quad span:nth-child(3) {
+  animation-delay: 1.2s;
+}
+.trust-card__grip--quad span:nth-child(4) {
+  animation-delay: 1.8s;
+}
+
+@keyframes grip-pulse {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes grip-quad-cycle {
+  0%,
+  35%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+    background: var(--color-border-strong);
+  }
+  15% {
+    opacity: 1;
+    transform: scale(1.35);
+    background: var(--color-text-secondary);
+  }
 }
 
 .trust-card__dotted-mark {
@@ -248,13 +341,40 @@
   height: clamp(140px, 16vw, 190px);
   margin: 0;
   border-radius: 50%;
-  background-image: radial-gradient(var(--color-border-strong) 1.4px, transparent 1.4px);
-  background-size: 9px 9px;
   -webkit-mask-image: radial-gradient(circle, #000 68%, transparent 70%);
   mask-image: radial-gradient(circle, #000 68%, transparent 70%);
 }
 
+.trust-card__dotted-svg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.trust-card__dotted-dot {
+  fill: var(--color-border-strong);
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0.6;
+  animation: dotted-dot-ripple 3.6s ease-in-out infinite;
+}
+
+@keyframes dotted-dot-ripple {
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(calc(var(--ux, 0) * 5px), calc(var(--uy, 0) * 5px));
+  }
+}
+
 .trust-card__dotted-logo {
+  position: relative;
+  z-index: 1;
   font-family: var(--font-sans);
   font-weight: var(--fw-bold);
   font-size: var(--fs-body-lg);

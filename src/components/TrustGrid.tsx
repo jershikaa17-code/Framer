@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react'
 import { motion } from 'motion/react'
 import { RevealText } from '../animations/RevealText'
 import { fadeUp, fadeLeft, staggerContainer } from '../animations/variants'
@@ -15,6 +16,23 @@ const pills = [
   { value: '96%', label: 'First Draft Approved' },
   { value: '99%', label: 'Ship on-Time' },
 ]
+
+const DOTTED_R = 95
+const DOTTED_SPACING = 9
+
+const dottedDots = (() => {
+  const pts: { x: number; y: number; ux: number; uy: number; dist: number }[] = []
+  for (let x = 0; x <= DOTTED_R * 2; x += DOTTED_SPACING) {
+    for (let y = 0; y <= DOTTED_R * 2; y += DOTTED_SPACING) {
+      const dx = x - DOTTED_R
+      const dy = y - DOTTED_R
+      const dist = Math.sqrt(dx * dx + dy * dy)
+      if (dist > DOTTED_R) continue
+      pts.push({ x, y, ux: dist === 0 ? 0 : dx / dist, uy: dist === 0 ? 0 : dy / dist, dist })
+    }
+  }
+  return pts
+})()
 
 export function TrustGrid() {
   return (
@@ -59,6 +77,21 @@ export function TrustGrid() {
               className="trust-card__tagline-line trust-card__tagline-accent"
               delay={0.24}
             />
+          </div>
+          <div className="trust-card__dots" aria-hidden="true">
+            <motion.span
+              className="trust-card__dots-spot"
+              animate={{ x: [0, 0, 133, 133, 270, 270, 0] }}
+              transition={{
+                duration: 6,
+                times: [0, 0.1, 0.35, 0.45, 0.7, 0.9, 1],
+                ease: 'easeInOut',
+                repeat: Infinity,
+              }}
+            />
+            <span />
+            <span />
+            <span className="trust-card__dots-last" />
           </div>
           <p className="trust-card__foot">
             <span className="trust-card__hatch" aria-hidden="true" />
@@ -111,6 +144,28 @@ export function TrustGrid() {
               <span />
             </span>
             <div className="trust-card__dotted-mark" aria-hidden="true">
+              <svg
+                className="trust-card__dotted-svg"
+                viewBox={`0 0 ${DOTTED_R * 2} ${DOTTED_R * 2}`}
+                preserveAspectRatio="xMidYMid meet"
+              >
+                {dottedDots.map((d, i) => (
+                  <circle
+                    key={i}
+                    cx={d.x}
+                    cy={d.y}
+                    r={1.4}
+                    className="trust-card__dotted-dot"
+                    style={
+                      {
+                        '--ux': d.ux,
+                        '--uy': d.uy,
+                        animationDelay: `${(d.dist * 18).toFixed(0)}ms`,
+                      } as CSSProperties
+                    }
+                  />
+                ))}
+              </svg>
               <span className="trust-card__dotted-logo">
                 create<sup>®</sup>
               </span>

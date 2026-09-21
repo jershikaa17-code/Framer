@@ -226,9 +226,27 @@
   justify-content: center;
 }
 
+.pricing__long-run-book .pricing__eyebrow-label,
+.pricing__long-run-book > .pricing__big-heading {
+  position: relative;
+  z-index: 2;
+}
+
 .pricing__long-run-book .pricing__big-heading {
   margin-top: 12px;
   max-width: 14ch;
+}
+
+.pricing__book-mascot {
+  position: absolute;
+  z-index: 0;
+  right: 4%;
+  bottom: 0;
+  height: 82%;
+  width: auto;
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
 }
 
 .pricing__book-panel {
@@ -609,6 +627,7 @@
   border-radius: 50%;
   background: var(--color-bg-dark-2);
   flex-shrink: 0;
+  object-fit: cover;
 }
 
 .pricing__expert-name {
