@@ -1,6 +1,7 @@
 .trust-grid {
   background: var(--color-bg);
-  padding-block: clamp(64px, 9vw, 120px);
+  padding-top: clamp(64px, 9vw, 120px);
+  padding-bottom: clamp(24px, 3vw, 40px);
 }
 
 .trust-grid__title {
@@ -48,7 +49,9 @@
 
 .trust-grid__score {
   font-weight: var(--fw-semibold);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
+  letter-spacing: -0.04em;
+  color: var(--color-text-secondary);
 }
 
 .trust-grid__reviews-count {
@@ -59,7 +62,8 @@
 .trust-grid__backed {
   margin-top: 12px;
   color: var(--color-text-muted);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
+  letter-spacing: -0.04em;
 }
 
 .trust-grid__backed strong {
@@ -90,8 +94,9 @@
   gap: 14px;
   margin-top: auto;
   padding-top: clamp(20px, 3vw, 28px);
-  font-size: var(--fs-small);
-  color: var(--color-text-muted);
+  font-size: var(--fs-body);
+  letter-spacing: -0.04em;
+  color: var(--color-text);
 }
 
 .trust-card__foot span {
@@ -113,47 +118,19 @@
 }
 
 .trust-card--tagline .trust-card__tagline {
-  font-size: clamp(1.6rem, 1.1rem + 2vw, 2.25rem);
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
   font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-tight);
-  color: var(--color-text-muted);
-  line-height: 1.25;
+  letter-spacing: -0.06em;
+  color: var(--color-text-secondary);
+  line-height: 1.1;
 }
 
-.trust-card--tagline .trust-card__tagline span {
+.trust-card--tagline .trust-card__tagline-accent {
   color: var(--color-accent);
 }
 
-.trust-card__dots {
-  position: relative;
-  z-index: 0;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: clamp(20px, 3vw, 32px);
-  margin-bottom: 28px;
-}
-
-.trust-card__dots span {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: var(--color-text);
-}
-
-.trust-card__dots span.is-active {
-  position: relative;
-  background: var(--color-accent);
-}
-
-.trust-card__dots span.is-active::before {
-  content: '';
-  position: absolute;
-  inset: -28px;
-  border-radius: 50%;
-  background: var(--color-bg);
-  box-shadow: 0 10px 30px rgba(20, 20, 20, 0.1);
-  z-index: -1;
+.trust-card__tagline-line {
+  display: block;
 }
 
 .trust-card--stats .trust-card__stats-head {
@@ -164,8 +141,10 @@
 }
 
 .trust-card--stats h3 {
-  font-size: var(--fs-h3);
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
   font-weight: var(--fw-medium);
+  letter-spacing: -0.06em;
+  color: var(--color-text-secondary);
   max-width: 12ch;
 }
 
@@ -202,10 +181,10 @@
   border-radius: var(--radius-pill);
   background: var(--color-bg);
   font-family: var(--font-mono);
-  font-size: var(--fs-small);
+  font-size: var(--fs-body);
   text-transform: uppercase;
-  letter-spacing: var(--ls-wide);
-  color: var(--color-text-muted);
+  letter-spacing: -0.05em;
+  color: var(--color-text-secondary);
 }
 
 .trust-pill__value {
@@ -217,15 +196,17 @@
 }
 
 .trust-card--fresh .trust-card__eyebrow-line {
-  font-size: var(--fs-small);
-  color: var(--color-text-muted);
+  font-size: var(--fs-body);
+  letter-spacing: -0.04em;
+  color: var(--color-text-secondary);
 }
 
 .trust-card--fresh h3 {
   margin-top: 8px;
-  font-size: var(--fs-h3);
+  font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem);
   font-weight: var(--fw-medium);
-  letter-spacing: var(--ls-tight);
+  letter-spacing: -0.06em;
+  color: var(--color-text-secondary);
   white-space: nowrap;
 }
 

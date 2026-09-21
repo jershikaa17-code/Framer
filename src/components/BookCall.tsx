@@ -15,10 +15,10 @@ const arrow = (
 
 export function BookCall() {
   const { pathname } = useLocation()
-  // The Whispers page already has its own "Book an intro call" CTA inside
-  // InspireCTA, right above where this band would render — skip the
-  // duplicate there.
-  if (pathname === '/whispers') return null
+  // The Home and Whispers pages already have their own "Book an intro call"
+  // CTA inside InspireCTA, right above where this band would render — skip
+  // the duplicate there.
+  if (pathname === '/whispers' || pathname === '/') return null
 
   return (
     <section className="book-call section" id="contact">

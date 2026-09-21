@@ -41,6 +41,13 @@ const clockIcon = (
   </svg>
 )
 
+const simpleIcon = (
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
+    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.4" />
+    <path d="M8 16 16 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+  </svg>
+)
+
 const arrowIcon = (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
     <path
@@ -65,6 +72,82 @@ export function Pricing() {
   return (
     <section className="pricing section">
       <motion.div
+        className="container pricing__long-run"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={fadeUp}
+      >
+        <div className="pricing__simple">
+          <p className="pricing__big-heading">
+            {simpleIcon}
+            Simple Pricing
+          </p>
+          <p className="pricing__simple-sub">
+            Plans that scale with your project and give you room for unlimited creative
+            opportunities.
+          </p>
+          <div className="pricing__simple-thumb">
+            <img src={`${import.meta.env.BASE_URL}assets/pricing-scale.jpg`} alt="" loading="lazy" />
+          </div>
+          <p className="pricing__simple-caption">
+            Pick a plan that grows with you and keeps creative costs predictable.
+          </p>
+          <a href="#contact" className="pricing__simple-cta">
+            {arrowIcon} Explore plans
+          </a>
+        </div>
+
+        <div className="pricing__long-run-copy">
+          <span className="pricing__long-run-copy-bug" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <path
+                d="M6 12c0-2.21 1.79-4 4-4 2.5 0 4.5 2 6 4 1.5 2 3.5 4 6 4 2.21 0 4-1.79 4-4s-1.79-4-4-4c-2.5 0-4.5 2-6 4-1.5 2-3.5 4-6 4-2.21 0-4-1.79-4-4z"
+                stroke="currentColor"
+                strokeWidth="1.4"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </span>
+          <p className="pricing__eyebrow-label">Built for the long run</p>
+          <p className="pricing__big-heading">
+            With You
+            <br />
+            Beyond Launch
+          </p>
+          <ul className="pricing__long-run-list">
+            {['Ongoing support', 'Long-term partnership', 'Future-ready builds'].map((item) => (
+              <li key={item}>
+                {checkIcon}
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="pricing__long-run-book">
+          <p className="pricing__eyebrow-label">Quick intro call, no strings attached.</p>
+          <p className="pricing__big-heading">Let&rsquo;s chat or just say hello.</p>
+
+          <div className="pricing__book-panel">
+            <p className="pricing__book-panel-label">
+              {clockIcon} Next Availability
+            </p>
+            <p className="pricing__book-panel-date">from {nextAvailability()}.</p>
+            <a href="#contact" className="pricing__book-panel-cta">
+              <span className="pricing__book-panel-cta-icon">{arrowIcon}</span>
+              Book now
+            </a>
+          </div>
+
+          <span className="pricing__book-watermark" aria-hidden="true">
+            <span className="pricing__book-watermark-badge">©</span>
+            create<sup>®</sup>
+          </span>
+        </div>
+      </motion.div>
+
+      <motion.div
         className="container pricing__head"
         initial="hidden"
         whileInView="show"
@@ -85,32 +168,6 @@ export function Pricing() {
           {Array.from({ length: 40 }).map((_, i) => (
             <span key={i} />
           ))}
-        </div>
-      </motion.div>
-
-      <motion.div
-        className="container pricing__long-run"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={fadeUp}
-      >
-        <div className="pricing__long-run-copy">
-          <h3>Built for the long run, With You Beyond Launch</h3>
-          <ul>
-            <li>Ongoing support</li>
-            <li>Long-term partnership</li>
-            <li>Future-ready builds</li>
-          </ul>
-        </div>
-        <div className="pricing__long-run-book">
-          <p>Quick intro call, no strings attached. Let&rsquo;s chat or just say hello.</p>
-          <p className="pricing__long-run-availability">
-            Next Availability: from {nextAvailability()}.
-          </p>
-          <a href="#contact" className="pricing__long-run-cta">
-            Book now {arrowIcon}
-          </a>
         </div>
       </motion.div>
 

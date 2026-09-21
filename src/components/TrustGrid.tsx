@@ -50,17 +50,15 @@ export function TrustGrid() {
         variants={staggerContainer(0.08)}
       >
         <motion.div className="trust-card trust-card--tagline" variants={fadeUp}>
-          <p className="trust-card__tagline">
-            we listen.
-            <br />
-            we imagine.
-            <br />
-            <span>we create.</span>
-          </p>
-          <div className="trust-card__dots" aria-hidden="true">
-            <span />
-            <span />
-            <span className="is-active" />
+          <div className="trust-card__tagline">
+            <RevealText text="we listen." as="span" className="trust-card__tagline-line" delay={0} />
+            <RevealText text="we imagine." as="span" className="trust-card__tagline-line" delay={0.12} />
+            <RevealText
+              text="we create."
+              as="span"
+              className="trust-card__tagline-line trust-card__tagline-accent"
+              delay={0.24}
+            />
           </div>
           <p className="trust-card__foot">
             <span className="trust-card__hatch" aria-hidden="true" />

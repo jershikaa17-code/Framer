@@ -4,6 +4,7 @@ import { motion } from 'motion/react'
 import { whispers } from '../data/whispers'
 import { RevealText } from '../animations/RevealText'
 import { InspireCTA } from '../components/InspireCTA'
+import { LazyCoverImage } from '../components/LazyCoverImage'
 import { useFitText } from '../hooks/useFitText'
 import { useInViewOnce } from '../hooks/useInViewOnce'
 import { fadeUp, fadeLeft, fadeRight, staggerContainer } from '../animations/variants'
@@ -91,7 +92,7 @@ export function WhispersPage() {
               data-cursor="Read article"
               data-cursor-icon="arrow"
             >
-              <img
+              <LazyCoverImage
                 className="whispers-featured__img"
                 src={`${import.meta.env.BASE_URL}${featuredArticle.cover}`}
                 alt={featuredArticle.title}
@@ -171,7 +172,7 @@ export function WhispersPage() {
                   data-cursor-icon="arrow"
                 >
                   <div className="whisper-card__img-wrap">
-                    <img src={`${import.meta.env.BASE_URL}${article.cover}`} alt={article.title} loading="lazy" />
+                    <LazyCoverImage src={`${import.meta.env.BASE_URL}${article.cover}`} alt={article.title} />
                     <div className="whisper-card__scrim" />
                   </div>
                   <div className="whisper-card__meta">

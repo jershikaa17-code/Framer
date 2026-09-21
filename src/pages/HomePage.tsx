@@ -9,9 +9,11 @@ import { ServicesOverview } from '../components/ServicesOverview'
 import { HowWeWork } from '../components/HowWeWork'
 import { TrustGrid } from '../components/TrustGrid'
 import { Pricing } from '../components/Pricing'
+import { Faq } from '../components/Faq'
 import { Testimonial } from '../components/Testimonial'
 import { WhispersTeaser } from '../components/WhispersTeaser'
 import { GetTemplateCta } from '../components/GetTemplateCta'
+import { InspireCTA } from '../components/InspireCTA'
 
 export function HomePage() {
   return (
@@ -35,9 +37,11 @@ export function HomePage() {
       <CaseStudyTeaser />
       <TrustGrid />
       <Pricing />
+      <Faq />
       <Testimonial />
       <WhispersTeaser />
       <GetTemplateCta />
+      <InspireCTA />
     </main>
   )
 }

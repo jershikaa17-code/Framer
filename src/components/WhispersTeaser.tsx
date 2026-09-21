@@ -2,6 +2,7 @@ import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { whispers } from '../data/whispers'
 import { RevealText } from '../animations/RevealText'
+import { LazyCoverImage } from './LazyCoverImage'
 import { fadeUp, fadeLeft, staggerContainer } from '../animations/variants'
 import '../components/whispers-page.css'
 import './whispers-teaser.css'
@@ -89,7 +90,7 @@ export function WhispersTeaser() {
           <motion.div key={article.slug} variants={fadeUp}>
             <Link to={`/whispers/${article.slug}`} className="whisper-card">
               <div className="whisper-card__img-wrap">
-                <img src={`${import.meta.env.BASE_URL}${article.cover}`} alt={article.title} loading="lazy" />
+                <LazyCoverImage src={`${import.meta.env.BASE_URL}${article.cover}`} alt={article.title} />
                 <div className="whisper-card__scrim" />
               </div>
               <div className="whisper-card__meta">
