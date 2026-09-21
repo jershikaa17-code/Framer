@@ -3,6 +3,7 @@ import { RevealText } from '../animations/RevealText'
 import { fadeUp, scaleReveal } from '../animations/variants'
 import { reviews } from '../data/reviews'
 import { TestimonialMarquee } from './TestimonialMarquee'
+import '../components/cta-area.css'
 import './testimonial.css'
 
 const starIcon = (
@@ -11,73 +12,97 @@ const starIcon = (
   </svg>
 )
 
+const arrowIcon = (
+  <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
+    <path
+      d="M7 17 17 7M17 7H9M17 7v8"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
+
 export function Testimonial() {
   const spotlight = reviews[0]
 
   return (
     <section className="testimonial section" id="whispers">
-      <motion.div
-        className="container testimonial__head"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={fadeUp}
-      >
-        <span className="eyebrow">What our clients say</span>
-        <h2 className="testimonial__title">
-          <RevealText text="Partnerships that last, results that stick." />
-        </h2>
-        <p className="testimonial__sub">
-          From kickoff to launch, brands trust us to stay close, adapt fast, and deliver without
-          any drama.
-        </p>
-
-        <div className="testimonial__rating">
-          <span className="testimonial__stars" aria-hidden="true">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <span key={i}>{starIcon}</span>
-            ))}
-          </span>
-          <span className="testimonial__score">
-            5 / 5 <span className="testimonial__reviews-count">(98 reviews)</span>
-          </span>
-          <span className="testimonial__backed">
-            Backed by feedback from <strong>120+</strong> brands we&rsquo;ve worked with.
-          </span>
-          <a href="#contact" className="testimonial__write">
-            Write a review
-          </a>
-        </div>
-      </motion.div>
-
-      <div className="container testimonial__spotlight">
-        <span className="testimonial__watermark" aria-hidden="true">
-          Spotlight
-        </span>
-
+      <div className="container testimonial__grid">
         <motion.div
-          className="testimonial__portrait"
+          className="testimonial__panel testimonial__panel--light"
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
-          variants={scaleReveal}
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeUp}
         >
-          <img src={spotlight.avatar} alt={spotlight.name} />
+          <span className="eyebrow">What our clients say</span>
+          <h2 className="testimonial__title">
+            <RevealText text="Partnerships that last, results that stick." />
+          </h2>
+          <p className="testimonial__sub">
+            From kickoff to launch, brands trust us to stay close, adapt fast, and deliver without
+            any drama.
+          </p>
+
+          <div className="testimonial__rating">
+            <div className="testimonial__rating-score">
+              <span className="testimonial__stars" aria-hidden="true">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <span key={i}>{starIcon}</span>
+                ))}
+              </span>
+              <span className="testimonial__score">
+                5 / 5 <span className="testimonial__reviews-count">(98 reviews)</span>
+              </span>
+            </div>
+            <p className="testimonial__backed">
+              Backed by feedback from <strong>120+</strong> brands we&rsquo;ve worked with.
+            </p>
+          </div>
+
+          <a href="#contact" className="cta-pill cta-pill--accent testimonial__write">
+            Write a review <span className="cta-pill__icon">{arrowIcon}</span>
+          </a>
         </motion.div>
 
         <motion.div
-          className="testimonial__quote-block"
+          className="testimonial__panel testimonial__panel--dark"
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: true, amount: 0.3 }}
           variants={fadeUp}
         >
-          <span className="testimonial__date">{spotlight.date}</span>
-          <p className="testimonial__quote">&ldquo;{spotlight.quote}&rdquo;</p>
-          <p className="testimonial__name">{spotlight.name}</p>
-          <p className="testimonial__role">
-            {spotlight.role} · {spotlight.company}
-          </p>
+          <span className="testimonial__watermark" aria-hidden="true">
+            Spotlight
+          </span>
+
+          <div className="testimonial__spotlight-body">
+            <motion.div
+              className="testimonial__portrait"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.4 }}
+              variants={scaleReveal}
+            >
+              <img src={spotlight.avatar} alt={spotlight.name} />
+            </motion.div>
+
+            <motion.div
+              className="testimonial__quote-block"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.5 }}
+              variants={fadeUp}
+            >
+              <p className="testimonial__quote">&ldquo;{spotlight.quote}&rdquo;</p>
+              <p className="testimonial__name">{spotlight.name}</p>
+              <p className="testimonial__role">{spotlight.role}</p>
+            </motion.div>
+          </div>
+
+          <span className="testimonial__badge">{spotlight.company}</span>
         </motion.div>
       </div>
 

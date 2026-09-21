@@ -1,0 +1,21 @@
+.gather-text__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.gather-char {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(3px);
+  transform: translate(var(--gx, 0px), var(--gy, 0px)) rotate(var(--gr, 0deg));
+  transition:
+    opacity 0.6s var(--ease-out),
+    transform 0.65s var(--ease-out),
+    filter 0.6s var(--ease-out);
+}
+
+.gather-char.is-revealed {
+  opacity: 1;
+  filter: blur(0px);
+  transform: translate(0, 0) rotate(0deg);
+}

@@ -10,7 +10,7 @@ export const team: TeamMember[] = [
   {
     name: 'Tobias Neumann',
     role: 'Founder & CEO',
-    image: 'assets/portrait-tobias.jpg',
+    image: 'assets/team/tobias-neumann.avif',
     kpi: { value: '97%', label: 'Projects delivered on time under his oversight.' },
   },
   {

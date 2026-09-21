@@ -45,7 +45,12 @@ export function Faq() {
           <div className="faq__contact">
             <p className="faq__contact-lead">Book a quick chat and we&rsquo;ll walk you through how we do things.</p>
             <div className="faq__contact-person">
-              <div className="faq__contact-avatar" aria-hidden="true" />
+              <img
+                src={`${import.meta.env.BASE_URL}assets/lynn-bergmann.avif`}
+                alt=""
+                className="faq__contact-avatar"
+                loading="lazy"
+              />
               <div>
                 <p className="faq__contact-name">Lynn Bergmann</p>
                 <p className="faq__contact-role">Project Manager</p>
@@ -73,7 +78,6 @@ export function Faq() {
                   onClick={() => setOpenIndex(isOpen ? -1 : i)}
                   aria-expanded={isOpen}
                 >
-                  <span className="faq-item__index">// {String(i + 1).padStart(2, '0')}</span>
                   <span className="faq-item__question">{item.question}</span>
                   <motion.span
                     className="faq-item__toggle"

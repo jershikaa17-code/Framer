@@ -9,6 +9,7 @@ import { ServicesOverview } from '../components/ServicesOverview'
 import { HowWeWork } from '../components/HowWeWork'
 import { TrustGrid } from '../components/TrustGrid'
 import { Pricing } from '../components/Pricing'
+import { TeamSpotlight } from '../components/TeamSpotlight'
 import { Faq } from '../components/Faq'
 import { Testimonial } from '../components/Testimonial'
 import { WhispersTeaser } from '../components/WhispersTeaser'
@@ -37,6 +38,7 @@ export function HomePage() {
       <CaseStudyTeaser />
       <TrustGrid />
       <Pricing />
+      <TeamSpotlight />
       <Faq />
       <Testimonial />
       <WhispersTeaser />

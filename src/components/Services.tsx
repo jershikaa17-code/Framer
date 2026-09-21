@@ -10,12 +10,20 @@ import './services.css'
 // pins (see the comment in services.css). Framer's `useScroll` computes
 // progress from the target's own live geometry, which freezes solid the
 // moment a sticky element actually pins (its rect stops changing) — so it
-// gets stuck rather than continuing to track scroll. Instead, capture the
-// row's normal-flow document top once on mount and derive pin progress
-// directly from window.scrollY, which keeps advancing correctly through
-// the whole pinned phase.
+// gets stuck rather than continuing to track scroll.
+//
+// A once-on-mount snapshot of the row's document top (`getBoundingClientRect().top
+// + window.scrollY`) doesn't work either — it goes stale the instant anything
+// above this row changes height after mount (a lazy image, a web font swap,
+// another section's own scroll-triggered reveal), permanently throwing off
+// every later progress calculation for the row's whole lifetime. Instead, a
+// zero-height sentinel sits in normal flow right before the sticky row and
+// is re-measured on every scroll tick — since it's never sticky, its rect
+// never freezes and never goes stale, so pin progress stays correct no
+// matter what shifts elsewhere on the page.
 function ServiceRow({ service, isLast }: { service: Service; isLast?: boolean }) {
   const rowRef = useRef<HTMLDivElement | null>(null)
+  const sentinelRef = useRef<HTMLDivElement | null>(null)
   const { scrollYProgress } = useScroll({ target: rowRef, offset: ['start end', 'end start'] })
   const imgY = useTransform(scrollYProgress, [0, 1], ['-9%', '9%'])
   const [revealRef, revealed] = useInViewOnce<HTMLDivElement>(0.3)
@@ -24,53 +32,60 @@ function ServiceRow({ service, isLast }: { service: Service; isLast?: boolean })
   const coverBlur = useTransform(pinProgress, [0.45, 1], ['blur(0px)', 'blur(12px)'])
 
   useEffect(() => {
-    const el = rowRef.current
-    if (!el) return
-    const docTop = el.getBoundingClientRect().top + window.scrollY
-    const height = el.offsetHeight
+    const sentinel = sentinelRef.current
+    const row = rowRef.current
+    if (!sentinel || !row) return
     const onScroll = () => {
-      const raw = (window.scrollY - docTop) / height
+      const height = row.offsetHeight
+      const raw = -sentinel.getBoundingClientRect().top / height
       pinProgress.set(Math.min(1, Math.max(0, raw)))
     }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
   }, [pinProgress])
 
   return (
-    <div className="service-row" ref={rowRef}>
-      <motion.div className="service-row__blur-group" whileHover="hover" style={{ filter: coverBlur }}>
-        <div className="service-row__tab">
-          <span className="service-row__category">{service.category}</span>
-          <span className="service-row__index">/{service.index}</span>
-        </div>
-
-        <h3 className="service-row__title">{service.title}</h3>
-
-        <div className="service-row__content">
-          <div ref={revealRef} className={`service-row__media ${revealed ? 'is-revealed' : ''}`}>
-            <motion.div className="service-row__media-inner" style={{ y: imgY }}>
-              <motion.img
-                src={`${import.meta.env.BASE_URL}${service.image}`}
-                alt={service.title}
-                loading="lazy"
-                variants={imgHover}
-              />
-            </motion.div>
+    <>
+      <div ref={sentinelRef} aria-hidden="true" style={{ height: 0 }} />
+      <div className="service-row" ref={rowRef}>
+        <motion.div className="service-row__blur-group" whileHover="hover" style={{ filter: coverBlur }}>
+          <div className="service-row__tab">
+            <span className="service-row__category">{service.category}</span>
+            <span className="service-row__index">/{service.index}</span>
           </div>
-          <p className="service-row__desc">{service.description}</p>
-          <ul className="service-row__capabilities">
-            {service.capabilities.map((cap) => (
-              <li key={cap}>
-                <span>+</span>
-                {cap}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </motion.div>
-      {isLast && <div className="service-row__lines" aria-hidden="true" />}
-    </div>
+
+          <h3 className="service-row__title">{service.title}</h3>
+
+          <div className="service-row__content">
+            <div ref={revealRef} className={`service-row__media ${revealed ? 'is-revealed' : ''}`}>
+              <motion.div className="service-row__media-inner" style={{ y: imgY }}>
+                <motion.img
+                  src={`${import.meta.env.BASE_URL}${service.image}`}
+                  alt={service.title}
+                  loading="lazy"
+                  variants={imgHover}
+                />
+              </motion.div>
+            </div>
+            <p className="service-row__desc">{service.description}</p>
+            <ul className="service-row__capabilities">
+              {service.capabilities.map((cap) => (
+                <li key={cap}>
+                  <span>+</span>
+                  {cap}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+        {isLast && <div className="service-row__lines" aria-hidden="true" />}
+      </div>
+    </>
   )
 }
 
