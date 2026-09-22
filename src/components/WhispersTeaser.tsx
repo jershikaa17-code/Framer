@@ -172,12 +172,9 @@ export function WhispersTeaser() {
         viewport={{ once: true, amount: 0.1 }}
         variants={staggerContainer(0.06)}
       >
-        {gridArticles.map((article) => (
-          <motion.div
-            key={article.slug}
-            className={largeCardSlugs.has(article.slug) ? 'whispers-teaser__grid-item--large' : undefined}
-            variants={fadeUp}
-          >
+        {gridArticles.map((article) => {
+          const isLarge = largeCardSlugs.has(article.slug)
+          const card = (
             <Link to={`/whispers/${article.slug}`} className="whisper-card">
               <div className="whisper-card__img-wrap">
                 <LazyCoverImage
@@ -196,15 +193,29 @@ export function WhispersTeaser() {
               <h3 className="whisper-card__title">{article.title}</h3>
               <p className="whisper-card__excerpt">{article.excerpt}</p>
             </Link>
-          </motion.div>
-        ))}
-      </motion.div>
+          )
 
-      <div className="container whispers-teaser__more">
-        <Link to="/whispers" className="whispers-teaser__more-link">
-          More Whispers {arrow}
-        </Link>
-      </div>
+          if (!isLarge) {
+            return (
+              <motion.div key={article.slug} variants={fadeUp}>
+                {card}
+              </motion.div>
+            )
+          }
+
+          return (
+            <motion.div key={article.slug} className="whispers-teaser__grid-item--large" variants={fadeUp}>
+              <div className="whispers-teaser__large-row">
+                {card}
+                <Link to="/whispers" className="whispers-teaser__more-link">
+                  <span>More Whispers</span>
+                  <span className="whispers-teaser__more-link-icon">{arrow}</span>
+                </Link>
+              </div>
+            </motion.div>
+          )
+        })}
+      </motion.div>
     </section>
   )
 }

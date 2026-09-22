@@ -129,12 +129,21 @@ export function Pricing() {
           <p className="pricing__eyebrow-label">Quick intro call, no strings attached.</p>
           <p className="pricing__big-heading">Let&rsquo;s chat or just say hello.</p>
 
-          <img
-            src={`${import.meta.env.BASE_URL}assets/pricing-mascot.png`}
-            alt=""
-            className="pricing__book-mascot"
-            loading="lazy"
-          />
+          <div className="pricing__book-mascot-wrap">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/pricing-mascot.png`}
+              alt=""
+              className="pricing__book-mascot pricing__book-mascot-body"
+              loading="lazy"
+            />
+            <img
+              src={`${import.meta.env.BASE_URL}assets/pricing-mascot.png`}
+              alt=""
+              aria-hidden="true"
+              className="pricing__book-mascot pricing__book-mascot-hand"
+              loading="lazy"
+            />
+          </div>
 
           <div className="pricing__book-panel">
             <p className="pricing__book-panel-label">

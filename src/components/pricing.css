@@ -237,25 +237,124 @@
   max-width: 14ch;
 }
 
-.pricing__book-mascot {
+.pricing__book-mascot-wrap {
   position: absolute;
   z-index: 0;
   right: 4%;
   bottom: 0;
   height: 82%;
+  line-height: 0;
+}
+
+.pricing__book-mascot {
+  display: block;
+  height: 100%;
   width: auto;
   object-fit: contain;
   pointer-events: none;
   user-select: none;
 }
 
+.pricing__book-mascot-body {
+  /* full mascot, minus a circular hole around the raised hand — the hand
+     overlay below fills that circle and is the only part that animates.
+     A circle (not a rectangle) is used because it's the same shape at any
+     rotation angle, so the cutout and the animated hand always line up
+     exactly no matter where the wave animation is mid-swing. */
+  clip-path: polygon(
+    0% 0%,
+    100% 0%,
+    100% 100%,
+    0% 100%,
+    0.00% 33.00%,
+    2.11% 33.00%,
+    2.47% 34.95%,
+    3.55% 36.83%,
+    5.30% 38.56%,
+    7.65% 40.07%,
+    10.53% 41.31%,
+    13.80% 42.24%,
+    17.36% 42.81%,
+    21.05% 43.00%,
+    24.75% 42.81%,
+    28.30% 42.24%,
+    31.58% 41.31%,
+    34.45% 40.07%,
+    36.81% 38.56%,
+    38.56% 36.83%,
+    39.64% 34.95%,
+    40.00% 33.00%,
+    39.64% 31.05%,
+    38.56% 29.17%,
+    36.81% 27.44%,
+    34.45% 25.93%,
+    31.58% 24.69%,
+    28.30% 23.76%,
+    24.75% 23.19%,
+    21.05% 23.00%,
+    17.36% 23.19%,
+    13.80% 23.76%,
+    10.53% 24.69%,
+    7.65% 25.93%,
+    5.30% 27.44%,
+    3.55% 29.17%,
+    2.47% 31.05%,
+    2.11% 33.00%,
+    0.00% 33.00%
+  );
+}
+
+.pricing__book-mascot-hand {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  clip-path: circle(12.51% at 21.05% 33%);
+  transform-origin: 21.05% 33%;
+  animation: pricingHandWave 4.5s ease-in-out infinite;
+}
+
+@keyframes pricingHandWave {
+  0%,
+  45% {
+    transform: rotate(0deg);
+  }
+  51% {
+    transform: rotate(-16deg);
+  }
+  57% {
+    transform: rotate(13deg);
+  }
+  63% {
+    transform: rotate(-11deg);
+  }
+  69% {
+    transform: rotate(9deg);
+  }
+  75% {
+    transform: rotate(-6deg);
+  }
+  81% {
+    transform: rotate(3deg);
+  }
+  87%,
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pricing__book-mascot-hand {
+    animation: none;
+  }
+}
+
 .pricing__book-panel {
   position: relative;
   z-index: 1;
   margin-top: auto;
-  width: 80%;
-  max-width: 300px;
-  padding: 20px 22px;
+  width: 88%;
+  max-width: 340px;
+  padding: 26px 28px;
   border-radius: var(--radius-md);
   background: var(--color-bg);
   box-shadow: 0 20px 40px rgba(20, 20, 20, 0.08);
