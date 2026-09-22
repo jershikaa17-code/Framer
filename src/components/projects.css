@@ -83,6 +83,12 @@
   letter-spacing: var(--ls-tight);
 }
 
+.project-card__mark-logo {
+  display: block;
+  height: 20px;
+  width: auto;
+}
+
 .project-card__dashes {
   position: absolute;
   top: clamp(24px, 3vw, 42px);

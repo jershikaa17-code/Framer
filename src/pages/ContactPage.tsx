@@ -1,20 +1,19 @@
 import { useState } from 'react'
 import type { ChangeEvent, FormEvent } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { AnimatePresence, motion, type Variants } from 'motion/react'
 import { InspireCTA } from '../components/InspireCTA'
 import { RevealText } from '../animations/RevealText'
-import { ScrambleText } from '../animations/ScrambleText'
-import {
-  headerZoom,
-  headerEyebrow,
-  headerTitle,
-  headerSub,
-  headerLine,
-  fadeUp,
-} from '../animations/variants'
+import { headerZoom, headerTitle, headerSub, fadeUp, EASE_OUT } from '../animations/variants'
 import '../components/contact-page.css'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+// Wipes up from the bottom edge as the hero scrolls into view, rather than
+// just fading/scaling in with the rest of `.contact-page__hero`.
+const heroImgReveal: Variants = {
+  hidden: { clipPath: 'inset(100% 0% 0% 0%)' },
+  show: { clipPath: 'inset(0% 0% 0% 0%)', transition: { duration: 1.1, ease: EASE_OUT } },
+}
 
 interface FormState {
   name: string
@@ -52,7 +51,7 @@ export function ContactPage() {
   return (
     <main className="contact-page">
       <section className="contact-page__intro section">
-        <div className="container contact-page__grid">
+        <div className="contact-page__grid">
           <motion.div
             className="contact-page__hero"
             initial="hidden"
@@ -60,26 +59,20 @@ export function ContactPage() {
             viewport={{ once: true, amount: 0.3 }}
             variants={headerZoom}
           >
-            <img
+            <motion.img
               className="contact-page__hero-img"
               src={`${import.meta.env.BASE_URL}assets/contact-hero.avif`}
               alt=""
+              variants={heroImgReveal}
             />
             <div className="contact-page__hero-scrim" />
 
             <div className="contact-page__hero-content">
-              <motion.div variants={headerEyebrow}>
-                <span className="eyebrow">
-                  <span className="eyebrow__marker" aria-hidden="true" />
-                  <motion.span className="eyebrow__line" variants={headerLine} aria-hidden="true" />
-                  <ScrambleText as="span" text="Contact" />
-                </span>
-              </motion.div>
               <motion.h1 className="contact-page__title" variants={headerTitle}>
                 <RevealText text="Thinking about your next move?" />
               </motion.h1>
               <motion.p className="contact-page__sub" variants={headerSub}>
-                —— Let&rsquo;s discuss how Create® can help make it real.
+                Let&rsquo;s discuss how Create® can help make it real.
               </motion.p>
             </div>
           </motion.div>
@@ -115,35 +108,47 @@ export function ContactPage() {
                   exit={{ opacity: 0, y: -8 }}
                   noValidate
                 >
-                  <input
-                    type="text"
-                    placeholder="Your name"
-                    value={form.name}
-                    onChange={update('name')}
-                    aria-label="Your name"
-                  />
-                  <input
-                    type="text"
-                    placeholder="Company"
-                    value={form.company}
-                    onChange={update('company')}
-                    aria-label="Company"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={form.email}
-                    onChange={update('email')}
-                    aria-label="Email"
-                    aria-invalid={Boolean(error)}
-                  />
-                  <textarea
-                    placeholder="Your message"
-                    value={form.message}
-                    onChange={update('message')}
-                    aria-label="Your message"
-                    rows={4}
-                  />
+                  <div className="contact-page__field">
+                    <input
+                      id="contact-name"
+                      type="text"
+                      placeholder=" "
+                      value={form.name}
+                      onChange={update('name')}
+                    />
+                    <label htmlFor="contact-name">Your name</label>
+                  </div>
+                  <div className="contact-page__field">
+                    <input
+                      id="contact-company"
+                      type="text"
+                      placeholder=" "
+                      value={form.company}
+                      onChange={update('company')}
+                    />
+                    <label htmlFor="contact-company">Company</label>
+                  </div>
+                  <div className="contact-page__field">
+                    <input
+                      id="contact-email"
+                      type="email"
+                      placeholder=" "
+                      value={form.email}
+                      onChange={update('email')}
+                      aria-invalid={Boolean(error)}
+                    />
+                    <label htmlFor="contact-email">Email</label>
+                  </div>
+                  <div className="contact-page__field">
+                    <textarea
+                      id="contact-message"
+                      placeholder=" "
+                      value={form.message}
+                      onChange={update('message')}
+                      rows={4}
+                    />
+                    <label htmlFor="contact-message">Your message</label>
+                  </div>
                   <button type="submit">Submit →</button>
                 </motion.form>
               )}

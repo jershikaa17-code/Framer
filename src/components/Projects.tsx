@@ -71,7 +71,18 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
         />
       )}
 
-      <div className="project-card__mark">{project.title.split(' ')[0]}</div>
+      <div className="project-card__mark">
+        {project.slug === 'aurelis-beach-resort' ? (
+          <img
+            src={`${import.meta.env.BASE_URL}assets/aurelis-logo.svg`}
+            alt={project.title}
+            className="project-card__mark-logo"
+            draggable={false}
+          />
+        ) : (
+          project.title.split(' ')[0]
+        )}
+      </div>
       <div className="project-card__dashes" aria-hidden="true">
         {Array.from({ length: 24 }).map((_, d) => (
           <span key={d} />
