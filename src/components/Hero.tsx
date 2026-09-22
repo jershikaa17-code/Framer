@@ -15,7 +15,7 @@ const MotionLink = motion.create(Link)
 const arrow = (
   <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
     <path
-      d="M7 17 17 7M17 7H9M17 7v8"
+      d="M4 12h16M13 5l7 7-7 7"
       stroke="currentColor"
       strokeWidth="1.6"
       strokeLinecap="round"

@@ -174,9 +174,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
   background: var(--color-accent);
   color: var(--color-white);
   transition: background-color 0.3s var(--ease-out);

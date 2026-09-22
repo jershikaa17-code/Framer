@@ -51,7 +51,7 @@ const simpleIcon = (
 const arrowIcon = (
   <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
     <path
-      d="M7 17 17 7M17 7H9M17 7v8"
+      d="M4 12h16M13 5l7 7-7 7"
       stroke="currentColor"
       strokeWidth="1.6"
       strokeLinecap="round"
@@ -129,21 +129,12 @@ export function Pricing() {
           <p className="pricing__eyebrow-label">Quick intro call, no strings attached.</p>
           <p className="pricing__big-heading">Let&rsquo;s chat or just say hello.</p>
 
-          <div className="pricing__book-mascot-wrap">
-            <img
-              src={`${import.meta.env.BASE_URL}assets/pricing-mascot.png`}
-              alt=""
-              className="pricing__book-mascot pricing__book-mascot-body"
-              loading="lazy"
-            />
-            <img
-              src={`${import.meta.env.BASE_URL}assets/pricing-mascot.png`}
-              alt=""
-              aria-hidden="true"
-              className="pricing__book-mascot pricing__book-mascot-hand"
-              loading="lazy"
-            />
-          </div>
+          <img
+            src={`${import.meta.env.BASE_URL}assets/pricing-mascot.png`}
+            alt=""
+            className="pricing__book-mascot"
+            loading="lazy"
+          />
 
           <div className="pricing__book-panel">
             <p className="pricing__book-panel-label">

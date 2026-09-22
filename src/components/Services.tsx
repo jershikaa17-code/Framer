@@ -29,7 +29,12 @@ function ServiceRow({ service, isLast }: { service: Service; isLast?: boolean })
   const [revealRef, revealed] = useInViewOnce<HTMLDivElement>(0.3)
 
   const pinProgress = useMotionValue(0)
+  // Only the text dissolves as the next row covers this one — blurring the
+  // photo as well produced a visible seam where its own clipped/transformed
+  // layer met the rest of the group. Fading opacity toward 0 reads as the
+  // text fading to white, since the page background is white.
   const coverBlur = useTransform(pinProgress, [0.45, 1], ['blur(0px)', 'blur(12px)'])
+  const coverFade = useTransform(pinProgress, [0.45, 1], [1, 0])
 
   useEffect(() => {
     const sentinel = sentinelRef.current
@@ -53,13 +58,15 @@ function ServiceRow({ service, isLast }: { service: Service; isLast?: boolean })
     <>
       <div ref={sentinelRef} aria-hidden="true" style={{ height: 0 }} />
       <div className="service-row" ref={rowRef}>
-        <motion.div className="service-row__blur-group" whileHover="hover" style={{ filter: coverBlur }}>
-          <div className="service-row__tab">
-            <span className="service-row__category">{service.category}</span>
-            <span className="service-row__index">/{service.index}</span>
-          </div>
+        <motion.div className="service-row__blur-group" whileHover="hover">
+          <motion.div className="service-row__fade" style={{ filter: coverBlur, opacity: coverFade }}>
+            <div className="service-row__tab">
+              <span className="service-row__category">{service.category}</span>
+              <span className="service-row__index">/{service.index}</span>
+            </div>
 
-          <h3 className="service-row__title">{service.title}</h3>
+            <h3 className="service-row__title">{service.title}</h3>
+          </motion.div>
 
           <div className="service-row__content">
             <div ref={revealRef} className={`service-row__media ${revealed ? 'is-revealed' : ''}`}>
@@ -72,15 +79,17 @@ function ServiceRow({ service, isLast }: { service: Service; isLast?: boolean })
                 />
               </motion.div>
             </div>
-            <p className="service-row__desc">{service.description}</p>
-            <ul className="service-row__capabilities">
-              {service.capabilities.map((cap) => (
-                <li key={cap}>
-                  <span>+</span>
-                  {cap}
-                </li>
-              ))}
-            </ul>
+            <motion.div className="service-row__fade" style={{ filter: coverBlur, opacity: coverFade }}>
+              <p className="service-row__desc">{service.description}</p>
+              <ul className="service-row__capabilities">
+                {service.capabilities.map((cap) => (
+                  <li key={cap}>
+                    <span>+</span>
+                    {cap}
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
           </div>
         </motion.div>
         {isLast && <div className="service-row__lines" aria-hidden="true" />}
