@@ -2,7 +2,7 @@ import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { GatherText } from '../animations/GatherText'
 import { team } from '../data/team'
-import { staggerContainer, fadeUp } from '../animations/variants'
+import { staggerContainer, fadeUp, EASE_OUT } from '../animations/variants'
 import './team-spotlight.css'
 
 const leadership = team.slice(0, 4)
@@ -72,41 +72,50 @@ export function TeamSpotlight() {
         viewport={{ once: true, amount: 0.1 }}
         variants={staggerContainer(0.08)}
       >
-        {leadership.map((member) => (
-          <motion.div className="team-spotlight-card" key={member.name} variants={fadeUp}>
-            <img
-              className="team-spotlight-card__img"
-              src={member.image}
-              alt={member.name}
-              loading="lazy"
-            />
-            <div className="team-spotlight-card__scrim" aria-hidden="true" />
+        {leadership.map((member) => {
+          // All cards share the same inward 3D tilt, straightening flat on hover.
+          return (
+            <motion.div
+              className="team-spotlight-card"
+              key={member.name}
+              variants={fadeUp}
+              style={{ transformPerspective: 1200, rotateY: 13.5 }}
+              whileHover={{ rotateY: 0, transition: { duration: 0.5, ease: EASE_OUT } }}
+            >
+              <img
+                className="team-spotlight-card__img"
+                src={member.image}
+                alt={member.name}
+                loading="lazy"
+              />
+              <div className="team-spotlight-card__scrim" aria-hidden="true" />
 
-            {member.kpi && (
-              <div className="team-spotlight-card__kpi">
-                <span className="team-spotlight-card__kpi-tag">//KPI</span>
-                <span className="team-spotlight-card__kpi-value">{member.kpi.value}</span>
-                <span className="team-spotlight-card__kpi-label">{member.kpi.label}</span>
-              </div>
-            )}
+              {member.kpi && (
+                <div className="team-spotlight-card__kpi">
+                  <span className="team-spotlight-card__kpi-tag">//KPI</span>
+                  <span className="team-spotlight-card__kpi-value">{member.kpi.value}</span>
+                  <span className="team-spotlight-card__kpi-label">{member.kpi.label}</span>
+                </div>
+              )}
 
-            <div className="team-spotlight-card__body">
-              <p className="team-spotlight-card__name">{member.name}</p>
-              <p className="team-spotlight-card__role">{member.role}</p>
-              <div className="team-spotlight-card__socials">
-                <a href="#" aria-label={`Email ${member.name}`}>
-                  {mailIcon}
-                </a>
-                <a href="#" aria-label={`${member.name} on X`}>
-                  {xIcon}
-                </a>
-                <a href="#" aria-label={`${member.name} on LinkedIn`}>
-                  {linkedinIcon}
-                </a>
+              <div className="team-spotlight-card__body">
+                <p className="team-spotlight-card__name">{member.name}</p>
+                <p className="team-spotlight-card__role">{member.role}</p>
+                <div className="team-spotlight-card__socials">
+                  <a href="#" aria-label={`Email ${member.name}`}>
+                    {mailIcon}
+                  </a>
+                  <a href="#" aria-label={`${member.name} on X`}>
+                    {xIcon}
+                  </a>
+                  <a href="#" aria-label={`${member.name} on LinkedIn`}>
+                    {linkedinIcon}
+                  </a>
+                </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          )
+        })}
       </motion.div>
 
       <motion.div
