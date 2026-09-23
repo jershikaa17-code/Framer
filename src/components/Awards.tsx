@@ -1,19 +1,23 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { RevealText } from '../animations/RevealText'
-import { ScrambleText } from '../animations/ScrambleText'
 import { awards } from '../data/awards'
-import {
-  headerZoom,
-  headerEyebrow,
-  headerTitle,
-  headerSub,
-  headerLine,
-  fadeUp,
-} from '../animations/variants'
+import { headerZoom, headerTitle, headerSub, fadeUp } from '../animations/variants'
 import './awards.css'
 
 const VISIBLE_COUNT = 3
+
+const arrow = (
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+    <path
+      d="M4 12h16M13 5l7 7-7 7"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
 
 export function Awards() {
   const [expanded, setExpanded] = useState(false)
@@ -21,73 +25,71 @@ export function Awards() {
 
   return (
     <section className="awards section">
-      <motion.div
-        className="container awards__head"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.3 }}
-        variants={headerZoom}
-      >
-        <motion.div variants={headerEyebrow}>
-          <span className="eyebrow">
-            <span className="eyebrow__marker" aria-hidden="true" />
-            <motion.span className="eyebrow__line" variants={headerLine} aria-hidden="true" />
-            <ScrambleText as="span" text="Awards" />
-          </span>
-        </motion.div>
-        <motion.h2 className="awards__title" variants={headerTitle}>
-          <RevealText text="Recognition for work that delivers, not just looks good." />
-        </motion.h2>
-        <motion.p className="awards__sub" variants={headerSub}>
-          —— We take pride in projects that perform in the real world and get noticed by the
-          right people.
-        </motion.p>
-      </motion.div>
-
-      <div className="container awards__highlight-row">
-        <motion.p
-          className="awards__highlight"
+      <div className="container awards__in">
+        <motion.div
+          className="awards__intro"
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
-          variants={fadeUp}
+          viewport={{ once: true, amount: 0.3 }}
+          variants={headerZoom}
         >
-          Create® was named <strong>Best Creative Agency 2025</strong> by the Wobbly Awards®
-        </motion.p>
-        <button
-          type="button"
-          className="awards__toggle"
-          onClick={() => setExpanded((v) => !v)}
-        >
-          {expanded ? 'Show less' : 'More Awards'}
-        </button>
-      </div>
+          <motion.h2 className="awards__title" variants={headerTitle}>
+            <RevealText text="Awards" />
+          </motion.h2>
+          <motion.p className="awards__statement" variants={headerSub}>
+            Recognition for work that delivers, not just looks good.
+          </motion.p>
+          <motion.p className="awards__sub" variants={headerSub}>
+            We take pride in projects that perform in the real world and get noticed by the right
+            people.
+          </motion.p>
+          <motion.img
+            className="awards__img"
+            src={`${import.meta.env.BASE_URL}assets/award.avif`}
+            alt="Wobbly Awards 2025 — Best Creative Agency"
+            variants={fadeUp}
+          />
+          <motion.p className="awards__note" variants={headerSub}>
+            Create® was named Best Creative Agency 2025 by the{' '}
+            <span className="awards__note-accent">Wobbly Awards®</span>
+          </motion.p>
+          <motion.button
+            type="button"
+            className="awards__toggle"
+            variants={headerSub}
+            onClick={() => setExpanded((v) => !v)}
+          >
+            <span className="awards__toggle-icon">{arrow}</span>
+            {expanded ? 'Show less' : 'More Awards'}
+          </motion.button>
+        </motion.div>
 
-      <div className="container awards__table">
-        <div className="awards__table-head">
-          <span>Award</span>
-          <span>Category</span>
-          <span>Year</span>
+        <div className="awards__table">
+          <div className="awards__table-head">
+            <p>Award</p>
+            <p>Category</p>
+            <p>Year</p>
+          </div>
+          <AnimatePresence initial={false}>
+            {visibleAwards.map((award) => (
+              <motion.div
+                className="award-row"
+                key={award.name}
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div>
+                  <p className="award-row__name">{award.name}</p>
+                  <p className="award-row__description">{award.description}</p>
+                </div>
+                <p className="award-row__category">{award.category}</p>
+                <p className="award-row__year">{award.year}</p>
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
-        <AnimatePresence initial={false}>
-          {visibleAwards.map((award) => (
-            <motion.div
-              className="award-row"
-              key={award.name}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.4 }}
-            >
-              <div className="award-row__main">
-                <span className="award-row__name">{award.name}</span>
-                <span className="award-row__category">{award.category}</span>
-                <span className="award-row__year">{award.year}</span>
-              </div>
-              <p className="award-row__description">{award.description}</p>
-            </motion.div>
-          ))}
-        </AnimatePresence>
       </div>
     </section>
   )

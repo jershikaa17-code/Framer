@@ -16,39 +16,39 @@ export const team: TeamMember[] = [
   {
     name: 'Amelia Cross',
     role: 'Head of Strategy',
-    image: 'https://framerusercontent.com/images/kRj0YuKJIE6hToAeq15afb9pH4.jpeg',
+    image: 'assets/team/amelia-cross.jpg',
     kpi: { value: '89%', label: 'Campaigns hit or exceeded client KPIs.' },
   },
   {
     name: 'Sofia Reyes',
     role: 'Chief Creative Officer',
-    image: 'https://framerusercontent.com/images/khgZBntViz424uxS4wjdwEmEk.jpeg',
+    image: 'assets/team/sofia-reyes.jpg',
     kpi: { value: '120+', label: 'Brand identities launched across industries.' },
   },
   {
     name: 'Lucas Marino',
     role: 'Technical Director',
-    image: 'https://framerusercontent.com/images/4GI3J65Rp3grUuMh8lDptPl1pvw.jpg',
+    image: 'assets/team/lucas-marino.jpg',
     kpi: { value: '3.4x', label: 'Faster site performance vs industry average.' },
   },
   {
     name: 'Fredrik Hansen',
     role: 'Head of Projects',
-    image: 'https://framerusercontent.com/images/QsUAlw2uvcpXka3OIfBkMR7hIKg.jpg',
+    image: 'assets/team/fredrik-hansen.jpg',
   },
   {
     name: 'Naomi Chen',
     role: 'Client Services Director',
-    image: 'https://framerusercontent.com/images/5UFAIV7LuZuL88IK4WQLuUQcWaA.jpg',
+    image: 'assets/team/naomi-chen.jpg',
   },
   {
     name: 'Inès Laurent',
     role: 'Campaign Strategist',
-    image: 'https://framerusercontent.com/images/IXoZk0GX4b82wzbVdgUq07pXs.jpg',
+    image: 'assets/team/ines-laurent.jpg',
   },
   {
     name: 'Magnus Bjørnsen',
     role: 'Design Director',
-    image: 'https://framerusercontent.com/images/hq6inRzpOxpC9cXbuJkkv7SpnM.jpeg',
+    image: 'assets/team/magnus-bjornsen.jpeg',
   },
 ]

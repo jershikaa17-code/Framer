@@ -13,8 +13,21 @@ import {
 } from '../animations/variants'
 import './team-grid.css'
 
+const arrowIcon = (
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none">
+    <path
+      d="M4 12h16M13 5l7 7-7 7"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+)
+
 export function TeamGrid() {
   return (
+    <>
     <section className="team-grid section">
       <motion.div
         className="container team-grid__head"
@@ -27,15 +40,14 @@ export function TeamGrid() {
           <span className="eyebrow">
             <span className="eyebrow__marker" aria-hidden="true" />
             <motion.span className="eyebrow__line" variants={headerLine} aria-hidden="true" />
-            <ScrambleText as="span" text="we are" />
+            <ScrambleText as="span" text="The team" />
           </span>
         </motion.div>
         <motion.h2 className="team-grid__title" variants={headerTitle}>
-          <RevealText text="Amazing group of designers, developers, and strategists." />
+          <RevealText text="Get to know the team behind the work. Makers, thinkers, and problem-solvers." />
         </motion.h2>
         <motion.p className="team-grid__sub" variants={headerSub}>
-          —— Get to know the team behind the work. Makers, thinkers, and problem-solvers who take
-          ideas seriously, just not themselves.
+          —— We&rsquo;re a happy creative bunch who take ideas seriously. Just not ourselves.
         </motion.p>
       </motion.div>
 
@@ -66,5 +78,37 @@ export function TeamGrid() {
         ))}
       </motion.div>
     </section>
+
+    <section className="team-grid__leadership">
+      <motion.div
+        className="container team-grid__leadership-inner"
+        initial="hidden"
+        whileInView="show"
+        viewport={{ once: true, amount: 0.3 }}
+        variants={staggerContainer(0.1)}
+      >
+        <motion.p className="team-grid__leadership-title" variants={fadeUp}>
+          Our leadership team involved from{' '}
+          <span>first kickoff to final delivery.</span>
+        </motion.p>
+
+        <motion.div className="team-grid__leadership-discover" variants={fadeUp}>
+          <p className="team-grid__leadership-heading">Discover team Create®</p>
+          <p className="team-grid__leadership-text">
+            Meet the people, culture, and energy that keep our work sharp and our days fun.
+          </p>
+          <a
+            href="https://www.linkedin.com"
+            target="_blank"
+            rel="noreferrer"
+            className="team-grid__leadership-cta"
+          >
+            <span className="team-grid__leadership-cta-icon">{arrowIcon}</span>
+            Follow us on LinkedIn
+          </a>
+        </motion.div>
+      </motion.div>
+    </section>
+    </>
   )
 }

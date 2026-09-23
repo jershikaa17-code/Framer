@@ -1,5 +1,6 @@
 .team-grid {
-  background: var(--color-bg);
+  background: var(--color-bg-dark-2);
+  color: var(--color-white);
   padding-block: clamp(64px, 9vw, 120px);
 }
 
@@ -11,6 +12,7 @@
   font-size: var(--fs-h1);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-tight);
+  color: var(--color-text-muted);
   max-width: 18ch;
   margin-top: 16px;
 }
@@ -18,7 +20,7 @@
 .team-grid__sub {
   margin-top: 20px;
   max-width: 46ch;
-  color: var(--color-text-muted);
+  color: var(--color-text-faint-2);
   font-size: var(--fs-body-lg);
 }
 
@@ -47,7 +49,7 @@
   aspect-ratio: 3 / 4;
   border-radius: var(--radius-md);
   overflow: hidden;
-  background: var(--color-bg-alt);
+  background: var(--color-bg-dark);
 }
 
 .team-card__img-wrap img {
@@ -100,12 +102,12 @@
 .team-card__name {
   font-size: var(--fs-body);
   font-weight: var(--fw-semibold);
-  color: var(--color-text);
+  color: var(--color-white);
 }
 
 .team-card__role {
   font-size: var(--fs-small);
-  color: var(--color-text-muted);
+  color: var(--color-text-faint-2);
 }
 
 @media (max-width: 1000px) {
@@ -118,5 +120,77 @@
   .team-grid__list {
     grid-template-columns: 1fr 1fr;
     gap: 14px;
+  }
+}
+
+.team-grid__leadership {
+  background: var(--color-bg-dark-2);
+  padding-block: clamp(56px, 8vw, 96px);
+}
+
+.team-grid__leadership-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 4vw, 48px);
+  align-items: start;
+}
+
+.team-grid__leadership-title {
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2rem);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-tight);
+  line-height: var(--lh-snug);
+  color: var(--color-white);
+  max-width: 16ch;
+}
+
+.team-grid__leadership-title span {
+  color: var(--color-accent);
+}
+
+.team-grid__leadership-heading {
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2rem);
+  font-weight: var(--fw-medium);
+  letter-spacing: var(--ls-tight);
+  color: var(--color-white);
+}
+
+.team-grid__leadership-text {
+  margin-top: 10px;
+  color: var(--color-text-faint-2);
+  max-width: 40ch;
+}
+
+.team-grid__leadership-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 24px;
+  font-weight: var(--fw-medium);
+  color: var(--color-white);
+}
+
+.team-grid__leadership-cta-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background: var(--color-accent);
+  color: var(--color-white);
+  flex-shrink: 0;
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+}
+
+.team-grid__leadership-cta:hover .team-grid__leadership-cta-icon {
+  background: var(--color-white);
+  color: var(--color-text);
+}
+
+@media (max-width: 780px) {
+  .team-grid__leadership-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
   }
 }

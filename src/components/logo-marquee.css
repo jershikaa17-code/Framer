@@ -42,16 +42,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 191px;
-  height: 60px;
+  height: 32px;
   flex-shrink: 0;
 }
 
 .logo-marquee__item--img img {
-  width: 100%;
   height: 100%;
-  object-fit: cover;
-  border-radius: var(--radius-sm);
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  opacity: 0.85;
+  transition: opacity 0.3s var(--ease-out);
+}
+
+.logo-marquee__item--img:hover img {
+  opacity: 1;
 }
 
 .logo-marquee__fade {
