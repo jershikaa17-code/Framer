@@ -19,6 +19,10 @@ const arrow = (
   </svg>
 )
 
+const home = import.meta.env.BASE_URL
+
+const bulletIcons = ['play', 'mute', 'fullscreen']
+
 export function Awards() {
   const [expanded, setExpanded] = useState(false)
   const visibleAwards = expanded ? awards : awards.slice(0, VISIBLE_COUNT)
@@ -45,7 +49,7 @@ export function Awards() {
           </motion.p>
           <motion.img
             className="awards__img"
-            src={`${import.meta.env.BASE_URL}assets/award.avif`}
+            src={`${home}assets/award.avif`}
             alt="Wobbly Awards 2025 — Best Creative Agency"
             variants={fadeUp}
           />
@@ -71,7 +75,7 @@ export function Awards() {
             <p>Year</p>
           </div>
           <AnimatePresence initial={false}>
-            {visibleAwards.map((award) => (
+            {visibleAwards.map((award, i) => (
               <motion.div
                 className="award-row"
                 key={award.name}
@@ -81,7 +85,15 @@ export function Awards() {
                 transition={{ duration: 0.4 }}
               >
                 <div>
-                  <p className="award-row__name">{award.name}</p>
+                  <p className="award-row__name">
+                    <img
+                      className="award-row__icon"
+                      src={`${home}assets/icons/${bulletIcons[i % bulletIcons.length]}.svg`}
+                      alt=""
+                      aria-hidden="true"
+                    />
+                    {award.name}
+                  </p>
                   <p className="award-row__description">{award.description}</p>
                 </div>
                 <p className="award-row__category">{award.category}</p>

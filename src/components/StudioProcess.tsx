@@ -121,16 +121,6 @@ export function StudioProcess() {
           </motion.div>
         </motion.div>
       </div>
-
-      <div className="studio-process__clip">
-        <video
-          src={`${import.meta.env.BASE_URL}assets/replace.mp4`}
-          autoPlay
-          muted
-          loop
-          playsInline
-        />
-      </div>
     </section>
   )
 }

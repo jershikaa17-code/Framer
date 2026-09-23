@@ -68,7 +68,7 @@
 
 .studio-process-step__title {
   font-family: var(--font-mono);
-  font-size: var(--fs-small);
+  font-size: 1.05rem;
   text-transform: uppercase;
   letter-spacing: var(--ls-wide);
   color: var(--color-accent);
@@ -114,6 +114,17 @@
 
 .studio-process__cta:hover .studio-process__cta-icon {
   background: var(--color-text);
+}
+
+.studio-process__ticks {
+  display: block;
+  width: 100%;
+  height: 140px;
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-border-strong) 0 1px,
+    transparent 1px 10px
+  );
 }
 
 .studio-process__clip {

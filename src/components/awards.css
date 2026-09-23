@@ -39,11 +39,12 @@
 }
 
 .awards__img {
+  display: block;
   width: 230px;
   height: 250px;
   margin-top: 40px;
   object-fit: contain;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
 }
 
 .awards__note {
@@ -128,16 +129,14 @@
   line-height: 1.3;
   letter-spacing: -0.04em;
   color: var(--color-text-secondary);
-  font-weight: var(--fw-semibold);
+  font-weight: var(--fw-regular);
 }
 
-.award-row__name::before {
-  content: '';
+.award-row__icon {
   flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  background: var(--color-accent);
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent);
 }
 
 .award-row__description {

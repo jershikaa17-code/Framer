@@ -82,6 +82,7 @@ const caseCards = [
 export function StudioPage() {
   return (
     <main className="studio-page">
+      <div className="studio-stack">
       <section className="studio-hero section">
         <motion.div
           className="studio-hero__grid"
@@ -138,18 +139,12 @@ export function StudioPage() {
       </section>
 
       <section className="studio-we section">
-        <motion.div
-          className="studio-we__media"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={clipReveal}
-        >
+        <div className="studio-we__media">
           <img
             src={`${import.meta.env.BASE_URL}assets/studio-we.avif`}
             alt="Two Create® teammates working together at a desk."
           />
-        </motion.div>
+        </div>
 
         <motion.div
           className="studio-we__content"
@@ -163,27 +158,46 @@ export function StudioPage() {
             character.
           </motion.p>
 
-          <div className="studio-we__stamp">
-            <motion.h2 className="studio-we__h" variants={fadeUp}>
-              we are
-            </motion.h2>
-            <motion.h2 className="studio-we__h" variants={fadeUp}>
-              <span className="studio-we__accent">
-                create<sup>®</sup>
-              </span>
-            </motion.h2>
-          </div>
+          <div className="studio-we__stamp-group">
+            <div className="studio-we__stamp">
+              <motion.h2 className="studio-we__h" variants={fadeUp}>
+                we are
+              </motion.h2>
+              <motion.h2 className="studio-we__h" variants={fadeUp}>
+                <span className="studio-we__accent">
+                  create<sup>®</sup>
+                </span>
+              </motion.h2>
+            </div>
 
-          <motion.p className="studio-we__p" variants={fadeUp}>
-            Amazing group of designers, developers, and strategists who enjoy the process as much
-            as the final product.
-          </motion.p>
+            <motion.p className="studio-we__p" variants={fadeUp}>
+              Amazing group of designers, developers, and strategists who enjoy the process as
+              much as the final product.
+            </motion.p>
+          </div>
         </motion.div>
       </section>
 
       <TeamGrid />
+      </div>
       <StudioProcess />
-      <ClientsGrid />
+
+      <div className="studio-stack-2">
+        <section className="studio-band section">
+          <span className="studio-process__ticks" aria-hidden="true" />
+          <div className="studio-process__clip">
+            <video
+              src={`${import.meta.env.BASE_URL}assets/replace.mp4`}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          </div>
+          <span className="studio-process__ticks" aria-hidden="true" />
+        </section>
+        <ClientsGrid />
+      </div>
 
       <section className="partner-cta section">
         <motion.div
