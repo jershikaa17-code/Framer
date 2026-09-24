@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { motion } from 'motion/react'
 import { Link } from 'react-router-dom'
 import { TeamGrid } from '../components/TeamGrid'
@@ -80,6 +81,8 @@ const caseCards = [
 ] as const
 
 export function StudioPage() {
+  const missionSentinelRef = useRef<HTMLDivElement>(null)
+
   return (
     <main className="studio-page">
       <div className="studio-stack">
@@ -87,8 +90,7 @@ export function StudioPage() {
         <motion.div
           className="studio-hero__grid"
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          animate="show"
           variants={headerZoom}
         >
           <motion.div className="studio-hero__media" variants={clipReveal}>
@@ -109,31 +111,40 @@ export function StudioPage() {
               <motion.span className="studio-hero__tagline-accent" variants={fadeUp}>
                 we create.
               </motion.span>
+              <span className="studio-hero__ticks studio-hero__ticks--media" aria-hidden="true" />
             </motion.div>
           </motion.div>
 
           <div className="studio-hero__content">
-            <motion.div variants={headerEyebrow}>
-              <span className="eyebrow">
-                <span className="eyebrow__marker" aria-hidden="true" />
-                <motion.span className="eyebrow__line" variants={headerLine} aria-hidden="true" />
-              </span>
-            </motion.div>
-            <motion.h1 className="studio-hero__title" variants={headerTitle}>
-              <RevealText text="The Studio" />
-            </motion.h1>
-            <motion.h6 className="studio-hero__lead" variants={headerSub}>
-              We help ambitious teams turn good ideas into strong digital experiences and products.
-            </motion.h6>
+            <div className="studio-hero__content-top">
+              <motion.div variants={headerEyebrow}>
+                <span className="eyebrow">
+                  <span className="eyebrow__marker" aria-hidden="true" />
+                  <motion.span className="eyebrow__line" variants={headerLine} aria-hidden="true" />
+                </span>
+              </motion.div>
+              <motion.h1 className="studio-hero__title" variants={headerTitle}>
+                <RevealText text="The Studio" />
+              </motion.h1>
+            </div>
+
+            <div className="studio-hero__content-bottom">
+              <motion.h6 className="studio-hero__lead" variants={headerSub}>
+                We help ambitious teams turn good ideas into strong digital experiences and products.
+              </motion.h6>
+              <span className="studio-hero__ticks studio-hero__ticks--content" aria-hidden="true" />
+            </div>
           </div>
         </motion.div>
       </section>
 
+      <div ref={missionSentinelRef} aria-hidden="true" style={{ height: 0 }} />
       <section className="studio-mission section">
         <div className="container studio-mission__inner">
           <ScrollLitWords
             className="studio-mission__statement"
             text="Every project is personal to us, shaped by real conversations, thoughtful decisions, and the belief that great work comes from collaboration, not hierarchy."
+            sentinelRef={missionSentinelRef}
           />
         </div>
       </section>
@@ -154,6 +165,15 @@ export function StudioPage() {
           variants={staggerContainer(0.1)}
         >
           <motion.p className="studio-we__card" variants={fadeUp}>
+            <video
+              className="studio-we__card-loop"
+              src={`${import.meta.env.BASE_URL}assets/loop.mp4`}
+              autoPlay
+              muted
+              loop
+              playsInline
+              aria-hidden="true"
+            />
             Create® design, build, and launch digital products that connect clarity with
             character.
           </motion.p>
