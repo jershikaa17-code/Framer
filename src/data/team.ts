@@ -47,4 +47,9 @@ export const team: TeamMember[] = [
     role: 'Design Director',
     image: 'assets/team/magnus-bjornsen.jpeg',
   },
+  {
+    name: 'Elias Novak',
+    role: 'Interaction Designer',
+    image: 'assets/team/lucas-marino.jpg',
+  },
 ]

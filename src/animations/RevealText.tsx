@@ -15,6 +15,12 @@ interface RevealTextProps {
    * so existing callers (Performance, Pricing, HowWeWork, etc.) look unchanged. */
   blur?: boolean
   duration?: number
+  /** Set to false for text that's already on screen on load (above-the-fold
+   * hero titles). whileInView's IntersectionObserver can fail to fire for
+   * content that's visible before any scroll/mutation nudges it — same class
+   * of bug documented in Services.tsx/ScrollLitWords — so those callers
+   * should drive the reveal with `animate` instead. */
+  viewTrigger?: boolean
 }
 
 export function RevealText({
@@ -27,16 +33,19 @@ export function RevealText({
   amount = 0.6,
   blur = false,
   duration = 0.85,
+  viewTrigger = true,
 }: RevealTextProps) {
   const words = text.split(' ')
   const Tag = motion[as] as typeof motion.span
+  const trigger = viewTrigger
+    ? { whileInView: 'show', viewport: { once, amount } }
+    : { animate: 'show' }
 
   return (
     <Tag
       className={`reveal-text ${className}`}
       initial="hidden"
-      whileInView="show"
-      viewport={{ once, amount }}
+      {...trigger}
       variants={{
         hidden: {},
         show: { transition: { staggerChildren: stagger, delayChildren: delay } },

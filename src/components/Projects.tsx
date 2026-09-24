@@ -111,7 +111,9 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
   )
 }
 
-const homeProjects = projects.filter((project) => project.slug !== 'monolith-architecture')
+const homeProjects = projects.filter(
+  (project) => project.slug !== 'monolith-architecture' && project.slug !== 'numeriq-fashion'
+)
 
 export function Projects() {
   return (

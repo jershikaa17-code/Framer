@@ -1,19 +1,11 @@
 import { useMemo, useState } from 'react'
 import { motion } from 'motion/react'
+import { Link } from 'react-router-dom'
 import { projects } from '../data/projects'
-import { ProjectCard } from '../components/Projects'
 import { WorkFilter } from '../components/WorkFilter'
 import { InspireCTA } from '../components/InspireCTA'
 import { RevealText } from '../animations/RevealText'
-import { ScrambleText } from '../animations/ScrambleText'
-import {
-  headerZoom,
-  headerEyebrow,
-  headerTitle,
-  headerSub,
-  headerLine,
-  fadeUp,
-} from '../animations/variants'
+import { headerZoom, headerTitle, headerSub, fadeUp } from '../animations/variants'
 import '../components/work-page.css'
 
 export function WorkPage() {
@@ -35,33 +27,33 @@ export function WorkPage() {
         <motion.div
           className="container work-page__head"
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.3 }}
+          animate="show"
           variants={headerZoom}
         >
-          <motion.div variants={headerEyebrow}>
-            <span className="eyebrow">
-              <span className="eyebrow__marker" aria-hidden="true" />
-              <motion.span className="eyebrow__line" variants={headerLine} aria-hidden="true" />
-              <ScrambleText as="span" text="Selected work" />
-            </span>
-          </motion.div>
           <motion.h1 className="work-page__title" variants={headerTitle}>
-            <RevealText text="Alongside the result, you'll see the process behind our projects." />
+            <RevealText text="selected work" viewTrigger={false} />
           </motion.h1>
-          <motion.p className="work-page__sub" variants={headerSub}>
-            —— Each project began with a challenge and delivered measurable results. Discover how
-            we turn complex problems into clear solutions.
-          </motion.p>
 
-          <motion.div variants={headerSub}>
-            <WorkFilter
-              query={query}
-              onQueryChange={setQuery}
-              category={category}
-              onCategoryChange={setCategory}
-            />
-          </motion.div>
+          <div className="work-page__head-row">
+            <div className="work-page__head-copy">
+              <motion.h6 className="work-page__lead" variants={headerSub}>
+                Alongside the result, you&rsquo;ll see the process behind our project.
+              </motion.h6>
+              <motion.p className="work-page__sub" variants={headerSub}>
+                Each project began with a challenge and delivered measurable results. Discover how
+                we turn complex problems into clear solutions.
+              </motion.p>
+            </div>
+
+            <motion.div variants={headerSub}>
+              <WorkFilter
+                query={query}
+                onQueryChange={setQuery}
+                category={category}
+                onCategoryChange={setCategory}
+              />
+            </motion.div>
+          </div>
         </motion.div>
 
         <div className="container work-page__list">
@@ -76,14 +68,56 @@ export function WorkPage() {
               No projects match that search yet — try another name or category.
             </motion.p>
           ) : (
-            filtered.map((project, i) => (
-              <div className="work-page__item" key={project.title}>
-                <div className="work-page__release">
-                  <span>Release date</span>
-                  <span>{project.releaseDate}</span>
-                </div>
-                <ProjectCard project={project} index={i} />
-              </div>
+            filtered.map((project) => (
+              <motion.div
+                key={project.title}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={fadeUp}
+              >
+                <Link
+                  to={`/work/${project.slug}`}
+                  className="work-row"
+                  data-cursor="View case study"
+                  data-cursor-icon="arrow"
+                >
+                  <div className="work-row__panel">
+                    <img className="work-row__logo" src={`${import.meta.env.BASE_URL}${project.logo}`} alt={project.client} />
+                    <span className="work-row__hairline" aria-hidden="true" />
+                    <span className="work-row__accent" aria-hidden="true" />
+                    <h3 className="work-row__title">{project.title}</h3>
+                    <p className="work-row__category">{project.category}</p>
+                    <span className="work-row__divider" aria-hidden="true" />
+                    <p className="work-row__tagline">{project.tagline}</p>
+                  </div>
+                  <div className="work-row__media">
+                    <div className="work-row__reveal">
+                      <div className="work-row__reveal-date">
+                        <span className="work-row__date-label">Release date</span>
+                        <span className="work-row__date-value">{project.releaseDate}</span>
+                      </div>
+                    </div>
+                    {project.video ? (
+                      <video
+                        className="work-row__img"
+                        src={`${import.meta.env.BASE_URL}${project.video}`}
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                      />
+                    ) : (
+                      <img
+                        className="work-row__img"
+                        src={`${import.meta.env.BASE_URL}${project.image}`}
+                        alt={project.title}
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+                </Link>
+              </motion.div>
             ))
           )}
         </div>
