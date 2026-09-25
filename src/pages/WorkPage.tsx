@@ -43,6 +43,7 @@ export function WorkPage() {
                 Each project began with a challenge and delivered measurable results. Discover how
                 we turn complex problems into clear solutions.
               </motion.p>
+              <motion.span className="work-page__ticks" variants={headerSub} aria-hidden="true" />
             </div>
 
             <motion.div variants={headerSub}>
@@ -86,8 +87,10 @@ export function WorkPage() {
                     <img className="work-row__logo" src={`${import.meta.env.BASE_URL}${project.logo}`} alt={project.client} />
                     <span className="work-row__hairline" aria-hidden="true" />
                     <span className="work-row__accent" aria-hidden="true" />
-                    <h3 className="work-row__title">{project.title}</h3>
-                    <p className="work-row__category">{project.category}</p>
+                    <div className="work-row__heading">
+                      <h3 className="work-row__title">{project.title}</h3>
+                      <p className="work-row__category">{project.category}</p>
+                    </div>
                     <span className="work-row__divider" aria-hidden="true" />
                     <p className="work-row__tagline">{project.tagline}</p>
                   </div>

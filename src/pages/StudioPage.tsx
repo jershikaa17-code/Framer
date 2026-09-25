@@ -8,18 +8,36 @@ import { Achievements } from '../components/Achievements'
 import { Awards } from '../components/Awards'
 import { InspireCTA } from '../components/InspireCTA'
 import { RevealText } from '../animations/RevealText'
+import { CharReveal } from '../animations/CharReveal'
 import { ScrollLitWords } from '../animations/ScrollLitWords'
+import type { Variants } from 'motion/react'
 import {
   fadeUp,
+  fadeIn,
   staggerContainer,
   headerZoom,
-  headerEyebrow,
   headerTitle,
   headerSub,
-  headerLine,
   clipReveal,
+  EASE_OUT,
 } from '../animations/variants'
 import '../components/studio-page.css'
+
+// Studio hero sequencing: the copy outside the photo (title + lead) uses the
+// shared clipReveal/headerTitle/headerSub timings as-is (they animate first,
+// starting at t=0). The photo itself is held back until that copy has
+// settled, then the "we listen / we imagine" lines inside the photo wait for
+// the photo to finish revealing before they simply fade in, and "we create."
+// types in letter by letter right after.
+const heroImageReveal: Variants = {
+  hidden: clipReveal.hidden,
+  show: {
+    ...clipReveal.show,
+    transition: { duration: 1.1, ease: EASE_OUT, delay: 1.3 },
+  },
+}
+const HERO_IMAGE_DONE = 2.4
+const HERO_CREATE_DELAY = 2.9
 
 const arrow = (
   <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
@@ -93,7 +111,7 @@ export function StudioPage() {
           animate="show"
           variants={headerZoom}
         >
-          <motion.div className="studio-hero__media" variants={clipReveal}>
+          <motion.div className="studio-hero__media" variants={heroImageReveal}>
             <img
               src={`${import.meta.env.BASE_URL}assets/studio-hero.jpg`}
               alt="The Create® team gathered around a table, collaborating."
@@ -104,25 +122,28 @@ export function StudioPage() {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, amount: 0.4 }}
-              variants={staggerContainer(0.12, 0.3)}
+              variants={staggerContainer(0.15, HERO_IMAGE_DONE)}
             >
-              <motion.span variants={fadeUp}>we listen.</motion.span>
-              <motion.span variants={fadeUp}>we imagine.</motion.span>
-              <motion.span className="studio-hero__tagline-accent" variants={fadeUp}>
-                we create.
-              </motion.span>
+              <motion.span variants={fadeIn}>we listen.</motion.span>
+              <motion.span variants={fadeIn}>we imagine.</motion.span>
+              <CharReveal
+                text="we create."
+                as="span"
+                className="studio-hero__tagline-accent"
+                offset={22}
+                stagger={0.05}
+                delay={HERO_CREATE_DELAY}
+              />
               <span className="studio-hero__ticks studio-hero__ticks--media" aria-hidden="true" />
             </motion.div>
           </motion.div>
 
           <div className="studio-hero__content">
             <div className="studio-hero__content-top">
-              <motion.div variants={headerEyebrow}>
-                <span className="eyebrow">
-                  <span className="eyebrow__marker" aria-hidden="true" />
-                  <motion.span className="eyebrow__line" variants={headerLine} aria-hidden="true" />
-                </span>
-              </motion.div>
+              <div className="studio-hero__accent" aria-hidden="true">
+                <span className="studio-hero__accent-line" />
+                <span className="studio-hero__accent-bar" />
+              </div>
               <motion.h1 className="studio-hero__title" variants={headerTitle}>
                 <RevealText text="The Studio" />
               </motion.h1>

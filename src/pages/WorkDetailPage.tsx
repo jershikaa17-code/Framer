@@ -7,6 +7,7 @@ import { RevealText } from '../animations/RevealText'
 import { Counter } from '../animations/Counter'
 import { fadeUp, fadeLeft, staggerContainer } from '../animations/variants'
 import '../components/work-detail.css'
+import '../components/studio-page.css'
 
 function parseStatValue(raw: string): { value: number; suffix: string } {
   const match = raw.match(/^(-?\d+(?:\.\d+)?)(.*)$/)
@@ -20,49 +21,68 @@ export function WorkDetailPage() {
 
   if (!project) return <Navigate to="/work" replace />
 
-  const index = projects.findIndex((p) => p.slug === slug)
-  const next = projects[(index + 1) % projects.length]
+  const otherProjects = projects.filter((p) => p.slug !== slug)
 
   const hasDetailContent = Boolean(project.subTagline)
 
   return (
     <main className="work-detail">
-      <section className="work-detail__hero section">
-        <div className="container work-detail__hero-head">
-          <motion.div initial="hidden" animate="show" variants={staggerContainer(0.08)}>
-            {hasDetailContent ? (
-              <>
-                <motion.span className="eyebrow" variants={fadeUp}>
-                  <span className="eyebrow__marker" aria-hidden="true" />
-                </motion.span>
+      {hasDetailContent ? (
+        <section className="work-detail__hero work-detail__hero--split section">
+          <div className="work-detail__hero-split">
+            <div className="work-detail__hero-copy-wrap">
+              <motion.div
+                className="work-detail__hero-copy"
+                initial="hidden"
+                animate="show"
+                variants={staggerContainer(0.08)}
+              >
+                <motion.div className="work-detail__hero-divider" variants={fadeUp} aria-hidden="true">
+                  <span className="work-detail__hero-divider-bar" />
+                  <span className="work-detail__hero-divider-line" />
+                </motion.div>
                 <motion.p className="work-detail__tagline-top" variants={fadeUp}>
                   {project.tagline}
                 </motion.p>
                 <motion.h1 className="work-detail__title" variants={fadeUp}>
                   <RevealText text={project.title} viewTrigger={false} />
                 </motion.h1>
-                <motion.p className="work-detail__tagline" variants={fadeUp}>
-                  {project.subTagline}
-                </motion.p>
-                <motion.span className="work-detail__ticks" variants={fadeUp} aria-hidden="true" />
-              </>
-            ) : (
-              <>
-                <motion.span className="eyebrow" variants={fadeUp}>
-                  <span className="eyebrow__marker" aria-hidden="true" />
-                  {project.category}
-                </motion.span>
-                <motion.h1 className="work-detail__title" variants={fadeUp}>
-                  <RevealText text={project.title} viewTrigger={false} />
-                </motion.h1>
-                <motion.p className="work-detail__tagline" variants={fadeUp}>
-                  {project.tagline}
-                </motion.p>
-              </>
-            )}
-          </motion.div>
+              </motion.div>
+            </div>
 
-          {!hasDetailContent && (
+            <motion.div
+              className="work-detail__cover work-detail__cover--full"
+              initial={{ opacity: 0, scale: 1.04 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.9 }}
+            >
+              <img src={`${import.meta.env.BASE_URL}${project.heroImage ?? project.image}`} alt={project.title} />
+              {project.heroTags && (
+                <div className="work-detail__hero-tags">
+                  {project.heroTags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          </div>
+        </section>
+      ) : (
+        <section className="work-detail__hero section">
+          <div className="container work-detail__hero-head">
+            <motion.div initial="hidden" animate="show" variants={staggerContainer(0.08)}>
+              <motion.span className="eyebrow" variants={fadeUp}>
+                <span className="eyebrow__marker" aria-hidden="true" />
+                {project.category}
+              </motion.span>
+              <motion.h1 className="work-detail__title" variants={fadeUp}>
+                <RevealText text={project.title} viewTrigger={false} />
+              </motion.h1>
+              <motion.p className="work-detail__tagline" variants={fadeUp}>
+                {project.tagline}
+              </motion.p>
+            </motion.div>
+
             <motion.div className="work-detail__meta" initial="hidden" animate="show" variants={fadeUp}>
               <div>
                 <span className="work-detail__meta-label">Client</span>
@@ -77,54 +97,137 @@ export function WorkDetailPage() {
                 <span className="work-detail__meta-value">{project.stack.join(', ')}</span>
               </div>
             </motion.div>
-          )}
-        </div>
+          </div>
 
+          <motion.div
+            className={`work-detail__cover ${project.slug === 'blackwell-motors' ? 'work-detail__cover--portrait' : ''}`}
+            initial={{ opacity: 0, scale: 1.04 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.9 }}
+          >
+            {project.video ? (
+              <video
+                src={`${import.meta.env.BASE_URL}${project.video}`}
+                autoPlay
+                muted
+                loop
+                playsInline
+              />
+            ) : (
+              <img src={`${import.meta.env.BASE_URL}${project.heroImage ?? project.image}`} alt={project.title} />
+            )}
+            {project.heroTags && (
+              <div className="work-detail__hero-tags">
+                {project.heroTags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            )}
+            {project.slug === 'blackwell-motors' && (
+              <img
+                src={`${import.meta.env.BASE_URL}assets/blackwell-logo.svg`}
+                alt="Blackwell"
+                className="work-detail__cover-logo"
+                draggable={false}
+              />
+            )}
+          </motion.div>
+        </section>
+      )}
+
+      {hasDetailContent ? (
         <motion.div
-          className={`work-detail__cover ${project.slug === 'blackwell-motors' ? 'work-detail__cover--portrait' : ''}`}
-          initial={{ opacity: 0, scale: 1.04 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.9 }}
+          className="work-detail__client-panel"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={staggerContainer(0.1)}
         >
-          {project.video ? (
-            <video
-              src={`${import.meta.env.BASE_URL}${project.video}`}
-              autoPlay
-              muted
-              loop
-              playsInline
-            />
-          ) : (
-            <img src={`${import.meta.env.BASE_URL}${project.heroImage ?? project.image}`} alt={project.title} />
-          )}
-          {project.heroTags && (
-            <div className="work-detail__hero-tags">
-              {project.heroTags.map((tag) => (
-                <span key={tag}>{tag}</span>
+          <motion.div className="work-detail__client-info" variants={fadeUp}>
+            <img src={`${import.meta.env.BASE_URL}${project.logo}`} alt={project.client} />
+            <p className="work-detail__client-name">{project.title}</p>
+            {project.liveUrl && (
+              <a href={project.liveUrl} target="_blank" rel="noreferrer" className="work-detail__live-link">
+                <span className="work-detail__live-arrow" aria-hidden="true">
+                  →
+                </span>
+                Visit Live Site
+              </a>
+            )}
+          </motion.div>
+
+          <motion.div className="work-detail__client-meta" variants={fadeUp}>
+            <div className="work-detail__client-meta-item">
+              <span className="work-detail__meta-label">Project Type</span>
+              <p className="work-detail__meta-value">{project.category}</p>
+            </div>
+            <div className="work-detail__client-meta-item">
+              <span className="work-detail__meta-label">Released</span>
+              <p className="work-detail__meta-value">{project.releaseDate}</p>
+            </div>
+            <div className="work-detail__client-meta-item">
+              <span className="work-detail__meta-label">Technology</span>
+              {project.stack.map((tech) => (
+                <p className="work-detail__meta-value" key={tech}>
+                  {tech}
+                </p>
               ))}
             </div>
-          )}
-          {project.slug === 'blackwell-motors' && (
-            <img
-              src={`${import.meta.env.BASE_URL}assets/blackwell-logo.svg`}
-              alt="Blackwell"
-              className="work-detail__cover-logo"
-              draggable={false}
-            />
-          )}
+            {project.timeframe && (
+              <div className="work-detail__client-meta-item">
+                <span className="work-detail__meta-label">Timeframe</span>
+                <p className="work-detail__meta-value">{project.timeframe}</p>
+              </div>
+            )}
+          </motion.div>
         </motion.div>
-      </section>
+      ) : (
+        <motion.div
+          className="work-detail__client-band"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.4 }}
+          variants={fadeUp}
+        >
+          <img src={`${import.meta.env.BASE_URL}${project.logo}`} alt={project.client} />
+          <span>{project.title}</span>
+        </motion.div>
+      )}
 
-      <motion.div
-        className="work-detail__client-band"
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, amount: 0.4 }}
-        variants={fadeUp}
-      >
-        <img src={`${import.meta.env.BASE_URL}${project.logo}`} alt={project.client} />
-        <span>{project.title}</span>
-      </motion.div>
+      {hasDetailContent && project.positioningStatement && (
+        <section className="work-detail__statement section">
+          <div className="container">
+            <motion.span
+              className="work-detail__statement-ticks"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.4 }}
+              variants={fadeUp}
+              aria-hidden="true"
+            />
+            <div className="work-detail__statement-row">
+              <motion.h2
+                className="work-detail__statement-text"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.4 }}
+                variants={fadeUp}
+              >
+                {project.positioningStatement}
+              </motion.h2>
+              <motion.p
+                className="work-detail__statement-sub"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.4 }}
+                variants={fadeUp}
+              >
+                {project.subTagline}
+              </motion.p>
+            </div>
+          </div>
+        </section>
+      )}
 
       <section className="work-detail__story section">
         <div className="container">
@@ -145,14 +248,19 @@ export function WorkDetailPage() {
               </motion.div>
 
               <motion.div
-                className="work-detail__block"
+                className={`work-detail__block ${project.challengeImage ? 'work-detail__block--media' : ''}`}
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.4 }}
                 variants={fadeUp}
               >
-                <h2 className="work-detail__giant">Challenge</h2>
+                {project.challengeImage && (
+                  <div className="work-detail__block-media">
+                    <img src={`${import.meta.env.BASE_URL}${project.challengeImage}`} alt="" />
+                  </div>
+                )}
                 <div>
+                  <h2 className="work-detail__giant">Challenge</h2>
                   <h3 className="work-detail__block-sub">{project.challengeTitle}</h3>
                   <p className="work-detail__block-body">{project.challenge}</p>
                 </div>
@@ -171,6 +279,22 @@ export function WorkDetailPage() {
                   <p className="work-detail__block-body">{project.approach}</p>
                 </div>
               </motion.div>
+
+              {project.galleryImages && (
+                <motion.div
+                  className="work-detail__gallery"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.2 }}
+                  variants={staggerContainer(0.1)}
+                >
+                  {project.galleryImages.map((src) => (
+                    <motion.div className="work-detail__gallery-item" key={src} variants={fadeUp}>
+                      <img src={`${import.meta.env.BASE_URL}${src}`} alt="" />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
             </>
           ) : (
             <div className="work-detail__story-grid">
@@ -294,14 +418,53 @@ export function WorkDetailPage() {
         </div>
       </section>
 
-      <section className="work-detail__next section">
-        <Link to={`/work/${next.slug}`} className="container work-detail__next-link">
-          <span className="work-detail__next-label">Next project</span>
-          <h2>{next.title}</h2>
-          <span className="work-detail__next-arrow" aria-hidden="true">
-            →
-          </span>
-        </Link>
+      <section className="case-studies section">
+        <div className="container">
+          <motion.h2
+            className="case-studies__title"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.3 }}
+            variants={fadeUp}
+          >
+            more projects
+          </motion.h2>
+
+          <motion.ul
+            className="case-studies__list"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.1 }}
+            variants={staggerContainer(0.08)}
+          >
+            {otherProjects.map((p) => (
+              <motion.li key={p.slug} variants={fadeUp}>
+                <Link to={`/work/${p.slug}`} className="case-card">
+                  {p.video ? (
+                    <video
+                      src={`${import.meta.env.BASE_URL}${p.video}`}
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                    />
+                  ) : (
+                    <img
+                      src={`${import.meta.env.BASE_URL}${p.heroImage ?? p.image}`}
+                      alt={p.title}
+                      loading="lazy"
+                    />
+                  )}
+                  <span className="case-card__in">
+                    <img className="case-card__badge" src={`${import.meta.env.BASE_URL}${p.logo}`} alt={p.client} />
+                    <h3 className="case-card__title">{p.title}</h3>
+                    <p className="case-card__sub">{p.category}</p>
+                  </span>
+                </Link>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </div>
       </section>
 
       <InspireCTA />

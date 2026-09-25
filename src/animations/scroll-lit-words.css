@@ -1,7 +1,7 @@
 .scroll-lit-words__w {
   display: inline-block;
   color: #cdd0d6;
-  transition: color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: color 0.65s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .scroll-lit-words__w.on {

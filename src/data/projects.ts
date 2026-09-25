@@ -31,9 +31,19 @@ export interface Project {
   heroTags?: string[]
   /** Detail-page hero cover photo; falls back to `image` when absent. */
   heroImage?: string
+  /** External URL for the "Visit Live Site" button in the detail-page client panel. */
+  liveUrl?: string
+  /** Project duration shown in the detail-page client panel (e.g. "14 weeks"). */
+  timeframe?: string
+  /** Bold positioning statement shown full-width beneath the client panel, paired with subTagline. */
+  positioningStatement?: string
   briefTitle?: string
   briefBody?: string
   challengeTitle?: string
+  /** Photo shown beside the Challenge block instead of plain text. */
+  challengeImage?: string
+  /** Two-up (plus one full-width) lifestyle photo set shown after the Solution block. */
+  galleryImages?: string[]
   solutionTitle?: string
   challenge: string
   approach: string
@@ -54,19 +64,24 @@ export const projects: Project[] = [
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Cloudflare CDN'],
     year: '2025',
     image: 'assets/project-aurelis.jpg',
-    heroImage: 'assets/aurelis-hero.avif',
+    heroImage: 'assets/project-aurelis.jpg',
+    liveUrl: '#',
+    timeframe: '14 weeks',
     logo: 'assets/aurelis-logo.svg',
     releaseDate: 'August 21, 2025',
     tags: ['Brand & Identity', 'Responsive Web Design', 'Strategy'],
     tagline: 'An immersive digital presence for a modern beach resort.',
     subTagline: 'From discovery to booking in three effortless steps.',
+    positioningStatement: 'A boutique coastal resort built to hold its own against the biggest names in luxury travel.',
     heroTags: ['Brand-Identity', 'UI-UX-Design', 'Development'],
     briefTitle: 'Build a premium resort identity and digital platform.',
     briefBody:
       'Create® was tasked with developing a brand identity, cinematic booking website, hospitality content, and marketing assets that positioned Aurelis as a destination in its own right.',
     challengeTitle: 'Cut through the sameness of luxury hospitality online.',
+    challengeImage: 'assets/aurelis-painting.avif',
     challenge:
       'Resort websites often feel interchangeable: polished imagery, generic slogans, and predictable booking flows. Aurelis needed a brand and platform that felt distinctive, evoking exclusivity and anticipation without leaning on clichés.',
+    galleryImages: ['assets/aurelis-juice.avif', 'assets/aurelis-gurl.avif', 'assets/aurelis-swim.avif'],
     solutionTitle: 'Turn the website into a destination experience.',
     approach:
       'We designed a geometric, sunset-inspired identity and a digital platform that acted as an introduction to the resort itself. Visitors explored villas in detail, previewed curated itineraries, and experienced cinematic footage of the coastline. Typography and motion were deliberate, designed to echo architectural precision and ocean rhythm.',

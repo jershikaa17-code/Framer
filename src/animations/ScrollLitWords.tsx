@@ -20,9 +20,10 @@ interface ScrollLitWordsProps {
 // Recreates the reference site's word-by-word "lights up as you scroll" effect
 // on its studio statement — a pure function of scroll position (not an
 // IntersectionObserver/once trigger), so it lights AND unlights on the way
-// back up. Formula matches the reference exactly: a "run" distance of
-// 55% viewport height plus the paragraph's own height, mapped from how far
-// the paragraph has travelled past 78% of the viewport, to a word count.
+// back up. A "run" distance of 110% viewport height plus the paragraph's own
+// height (slowed from the reference's 55% so the reveal takes noticeably more
+// scroll), mapped from how far the paragraph has travelled past 78% of the
+// viewport, to a word count.
 export function ScrollLitWords({ text, className = '', sentinelRef }: ScrollLitWordsProps) {
   const ref = useRef<HTMLParagraphElement>(null)
 
@@ -36,7 +37,7 @@ export function ScrollLitWords({ text, className = '', sentinelRef }: ScrollLitW
       raf = 0
       const r = (sentinelRef?.current ?? p).getBoundingClientRect()
       const vh = window.innerHeight
-      const run = Math.max(1, vh * 0.55 + r.height)
+      const run = Math.max(1, vh * 1.1 + r.height)
       const lit = Math.round(((vh * 0.78 - r.top) / run) * words.length)
       for (let i = 0; i < words.length; i++) {
         words[i].classList.toggle('on', i < lit)
