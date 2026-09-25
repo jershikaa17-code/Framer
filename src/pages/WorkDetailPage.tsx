@@ -146,7 +146,6 @@ export function WorkDetailPage() {
           <motion.div className="work-detail__client-info" variants={fadeUp}>
             <img src={`${import.meta.env.BASE_URL}${project.logo}`} alt={project.client} />
             <p className="work-detail__client-name">{project.title}</p>
-            <span className="work-detail__client-ticks" aria-hidden="true" />
             {project.liveUrl && (
               <a href={project.liveUrl} target="_blank" rel="noreferrer" className="work-detail__live-link">
                 <span className="work-detail__live-arrow" aria-hidden="true">

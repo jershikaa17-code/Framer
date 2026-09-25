@@ -266,18 +266,6 @@
   color: var(--color-text-secondary);
 }
 
-.work-detail__client-ticks {
-  display: block;
-  width: 100%;
-  max-width: 260px;
-  height: 20px;
-  background-image: repeating-linear-gradient(
-    to right,
-    var(--color-border-strong) 0 1px,
-    transparent 1px 13px
-  );
-}
-
 .work-detail__live-link {
   display: inline-flex;
   align-items: center;
