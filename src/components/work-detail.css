@@ -11,7 +11,7 @@
   background-image: repeating-linear-gradient(
     to right,
     var(--color-border-strong) 0 1px,
-    transparent 1px 32px
+    transparent 1px 16px
   );
 }
 
