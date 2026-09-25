@@ -71,6 +71,12 @@
   width: 100%;
 }
 
+.work-detail__hero-copy .work-detail__title {
+  font-size: clamp(2.5rem, 7.7vw, 6rem);
+  letter-spacing: -0.06em;
+  color: rgb(121, 125, 130);
+}
+
 .work-detail__hero-head {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
