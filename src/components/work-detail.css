@@ -270,7 +270,7 @@
   display: inline-flex;
   align-items: center;
   gap: 12px;
-  margin-top: 8px;
+  margin-top: 28px;
   font-size: var(--fs-body-lg);
   color: var(--color-text-secondary);
 }
