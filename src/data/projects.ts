@@ -72,7 +72,7 @@ export const projects: Project[] = [
     tags: ['Brand & Identity', 'Responsive Web Design', 'Strategy'],
     tagline: 'An immersive digital presence for a modern beach resort.',
     subTagline: 'From discovery to booking in three effortless steps.',
-    positioningStatement: 'A boutique coastal resort built to hold its own against the biggest names in luxury travel.',
+    positioningStatement: 'A California beach resort positioned to rival international icons like Atlantis or The Palm.',
     heroTags: ['Brand-Identity', 'UI-UX-Design', 'Development'],
     briefTitle: 'Build a premium resort identity and digital platform.',
     briefBody:
