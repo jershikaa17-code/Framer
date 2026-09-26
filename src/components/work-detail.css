@@ -1,13 +1,76 @@
 .work-detail__statement {
   background: var(--color-bg-soft);
+}
+
+/* Aurelis-only "stacked pages" scroll: each top-level section pins at the top
+   of the viewport and the next one (higher z-index) scrolls up to cover it
+   completely, cloning the reference site's layered scroll feel. */
+.work-detail__stack-page {
+  position: sticky;
+  top: 0;
+  min-height: 100vh;
+}
+
+.work-detail__villa-showcase {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.work-detail__villa-showcase > img:first-child {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.work-detail__villa-showcase-invert {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 55%;
+  transform: translate(-50%, -50%);
+  filter: invert(1);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.work-detail__statement-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
   padding-block: clamp(48px, 6vw, 80px);
+}
+
+.work-detail__statement-image {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.work-detail__statement-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .work-detail__statement-ticks {
   display: block;
-  width: 100%;
+  width: calc(100% - 64px);
   height: 140px;
   margin-top: calc(-1 * clamp(48px, 6vw, 80px));
+  background-image: repeating-linear-gradient(
+    to right,
+    var(--color-border-strong) 0 1px,
+    transparent 1px 16px
+  );
+}
+
+.work-detail__long-ticks {
+  display: block;
+  width: calc(50% - 64px);
+  height: 340px;
+  margin-top: calc(-1 * clamp(32px, 5vw, 56px));
+  margin-bottom: clamp(32px, 5vw, 56px);
   background-image: repeating-linear-gradient(
     to right,
     var(--color-border-strong) 0 1px,
@@ -21,6 +84,30 @@
   gap: clamp(24px, 4vw, 56px);
   margin-top: clamp(40px, 6vw, 64px);
   align-items: start;
+}
+
+.work-detail__statement-text,
+.work-detail__statement-sub {
+  position: relative;
+  display: block;
+}
+
+.work-detail__statement-text-overlay {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  pointer-events: none;
+  /* Fully hidden until the scroll handler sets a live mask-image gradient
+     reflecting how much of this line the image has scrolled behind. */
+  -webkit-mask-image: linear-gradient(to top, black 0%, transparent 0%);
+  mask-image: linear-gradient(to top, black 0%, transparent 0%);
 }
 
 .work-detail__statement-text {
@@ -40,6 +127,26 @@
 @media (max-width: 900px) {
   .work-detail__statement-row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* The split hero (Aurelis/Blackwell) only makes sense as a side-by-side
+   composition on wide screens — below that, stack text above a normal,
+   non-100vh photo like every other section on the page. */
+@media (max-width: 809px) {
+  .work-detail__hero-split {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .work-detail__hero-copy-wrap {
+    height: auto;
+    padding: calc(var(--nav-h) + 32px) var(--gutter) 32px;
+  }
+
+  .work-detail__cover--full {
+    height: auto;
+    aspect-ratio: 3 / 4;
   }
 }
 
@@ -336,9 +443,9 @@
   border-top: 1px solid var(--color-border-strong);
 }
 
-.work-detail__block:first-child {
-  padding-top: 0;
+.work-detail__block--no-top-border {
   border-top: none;
+  padding-top: 0;
 }
 
 .work-detail__block-sub {
@@ -373,28 +480,53 @@
 }
 
 .work-detail__gallery {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(16px, 2vw, 24px);
+  display: flex;
+  align-items: stretch;
+  gap: clamp(16px, 2vw, 32px);
+  height: clamp(360px, 45vw, 560px);
   padding-block: clamp(32px, 5vw, 56px);
   border-top: 1px solid var(--color-border-strong);
 }
 
 .work-detail__gallery-item {
+  flex: 1 1 0;
+  min-width: 0;
   overflow: hidden;
   border-radius: var(--radius-md, 12px);
-  aspect-ratio: 3 / 4;
-}
-
-.work-detail__gallery-item:last-child {
-  grid-column: 1 / -1;
-  aspect-ratio: 16 / 8;
 }
 
 .work-detail__gallery-item img {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.work-detail__gallery-stack {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 2vw, 32px);
+}
+
+.work-detail__gallery-stack .work-detail__gallery-item {
+  min-height: 0;
+}
+
+@media (max-width: 700px) {
+  .work-detail__gallery {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .work-detail__gallery-item {
+    aspect-ratio: 4 / 3;
+  }
+
+  .work-detail__gallery-stack {
+    flex-direction: row;
+  }
 }
 
 .work-detail__story {
@@ -562,23 +694,16 @@
 .work-detail__credits-list {
   display: flex;
   flex-direction: column;
-  gap: clamp(28px, 4vw, 40px);
+  align-items: flex-end;
+  gap: clamp(36px, 5vw, 60px);
 }
 
 .credit-row {
   display: flex;
-  align-items: center;
-  gap: 20px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--color-border-strong);
-}
-
-.credit-row img {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  object-fit: cover;
-  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 300px;
 }
 
 .credit-row__name {
@@ -588,12 +713,35 @@
 }
 
 .credit-row__role {
-  margin-top: 2px;
+  margin-top: 8px;
   font-family: var(--font-mono);
   font-size: var(--fs-small);
   text-transform: uppercase;
   letter-spacing: var(--ls-wide);
   color: var(--color-text-muted);
+}
+
+.credit-row__divider {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.credit-row__stripes {
+  flex: none;
+  width: 80px;
+  height: 12px;
+  opacity: 0.3;
+  background-image: repeating-linear-gradient(to right, var(--color-border-strong) 0 1px, transparent 1px 4px);
+}
+
+.credit-row__line {
+  flex: 1 1 0;
+  height: 1px;
+  opacity: 0.4;
+  background: var(--color-border-strong);
 }
 
 .work-detail__next {
@@ -648,8 +796,48 @@
     grid-template-columns: 1fr;
   }
 
+  .work-detail__credits-list {
+    align-items: flex-start;
+  }
+
+  .credit-row {
+    max-width: none;
+  }
+
   .work-detail__next-link {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+/* The Aurelis-only pinned/stacked-pages scroll effect relies on several
+   full-100vh sections staying position:sticky at once. On phones, dynamic
+   browser-chrome resizing makes 100vh unstable and stacking multiple pinned
+   sections reads as broken rather than cinematic, so drop back to a normal
+   scrolling column below tablet width. Desktop/tablet keep the full effect. */
+@media (max-width: 809px) {
+  .work-detail__stack-page {
+    position: static;
+    min-height: 0;
+    z-index: auto !important;
+  }
+
+  .work-detail__statement-sticky {
+    position: static;
+    padding-block: clamp(32px, 8vw, 48px);
+  }
+
+  .work-detail__statement-image {
+    height: 70vh;
+  }
+
+  .work-detail__statement-ticks,
+  .work-detail__long-ticks {
+    width: calc(100% - 32px);
+    height: 64px;
+  }
+
+  .work-detail__villa-showcase-invert {
+    width: 70%;
   }
 }

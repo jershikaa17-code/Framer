@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { projects } from '../data/projects'
@@ -19,16 +20,79 @@ export function WorkDetailPage() {
   const { slug } = useParams()
   const project = projects.find((p) => p.slug === slug)
 
+  const statementImageRef = useRef<HTMLDivElement>(null)
+  const statementTextRef = useRef<HTMLHeadingElement>(null)
+  const statementTextOverlayRef = useRef<HTMLSpanElement>(null)
+  const statementSubRef = useRef<HTMLParagraphElement>(null)
+  const statementSubOverlayRef = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const imageNode = statementImageRef.current
+    if (!imageNode) return
+
+    const pairs: [React.RefObject<HTMLElement | null>, React.RefObject<HTMLElement | null>][] = [
+      [statementTextRef, statementTextOverlayRef],
+      [statementSubRef, statementSubOverlayRef],
+    ]
+
+    let ticking = false
+
+    // As the image scrolls up behind the pinned text, reveal the image-filled
+    // copy of each line only for the portion of it the image has actually
+    // reached (bottom-up), instead of flipping the whole line at once.
+    const update = () => {
+      ticking = false
+      const imageTop = imageNode.getBoundingClientRect().top
+
+      for (const [textRef, overlayRef] of pairs) {
+        const textNode = textRef.current
+        const overlayNode = overlayRef.current
+        if (!textNode || !overlayNode) continue
+
+        const rect = textNode.getBoundingClientRect()
+        const progress = rect.height > 0 ? Math.min(1, Math.max(0, (rect.bottom - imageTop) / rect.height)) : 0
+        const stop = `${progress * 100}%`
+        const mask = `linear-gradient(to top, black 0%, black ${stop}, transparent ${stop}, transparent 100%)`
+        overlayNode.style.maskImage = mask
+        overlayNode.style.webkitMaskImage = mask
+      }
+    }
+
+    const onScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(update)
+    }
+
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+    }
+  }, [slug])
+
   if (!project) return <Navigate to="/work" replace />
 
   const otherProjects = projects.filter((p) => p.slug !== slug)
 
   const hasDetailContent = Boolean(project.subTagline)
 
+  // Aurelis-only: stacks each top-level section as a pinned, full-viewport
+  // "page" that the next section scrolls up and covers, cloning the layered
+  // scroll feel of the reference site.
+  const stackClassName = (base: string) => (project.stackedScroll ? `${base} work-detail__stack-page` : base)
+  const stackStyle = (index: number, extra?: React.CSSProperties): React.CSSProperties | undefined =>
+    project.stackedScroll ? { ...extra, zIndex: index } : extra
+
   return (
     <main className="work-detail">
       {hasDetailContent ? (
-        <section className="work-detail__hero work-detail__hero--split section">
+        <section
+          className={stackClassName('work-detail__hero work-detail__hero--split section')}
+          style={stackStyle(1)}
+        >
           <div className="work-detail__hero-split">
             <div className="work-detail__hero-copy-wrap">
               <motion.div
@@ -137,7 +201,8 @@ export function WorkDetailPage() {
 
       {hasDetailContent ? (
         <motion.div
-          className="work-detail__client-panel"
+          className={stackClassName('work-detail__client-panel')}
+          style={stackStyle(2)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.3 }}
@@ -195,7 +260,7 @@ export function WorkDetailPage() {
       )}
 
       {hasDetailContent && project.positioningStatement && (
-        <section className="work-detail__statement section">
+        <section className={stackClassName('work-detail__statement section')} style={stackStyle(3)}>
           <div className="container">
             <motion.span
               className="work-detail__statement-ticks"
@@ -205,36 +270,67 @@ export function WorkDetailPage() {
               variants={fadeUp}
               aria-hidden="true"
             />
-            <div className="work-detail__statement-row">
-              <motion.h2
-                className="work-detail__statement-text"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.4 }}
-                variants={fadeUp}
-              >
-                {project.positioningStatement}
-              </motion.h2>
-              <motion.p
-                className="work-detail__statement-sub"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.4 }}
-                variants={fadeUp}
-              >
-                {project.subTagline}
-              </motion.p>
+          </div>
+          <div className="work-detail__statement-sticky">
+            <div className="container">
+              <div className="work-detail__statement-row">
+                <motion.h2
+                  ref={statementTextRef}
+                  className="work-detail__statement-text"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.4 }}
+                  variants={fadeUp}
+                >
+                  <span>{project.positioningStatement}</span>
+                  <span
+                    ref={statementTextOverlayRef}
+                    className="work-detail__statement-text-overlay"
+                    style={{
+                      backgroundImage: `url(${import.meta.env.BASE_URL}${project.heroImage ?? project.image})`,
+                    }}
+                    aria-hidden="true"
+                  >
+                    {project.positioningStatement}
+                  </span>
+                </motion.h2>
+                <motion.p
+                  ref={statementSubRef}
+                  className="work-detail__statement-sub"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.4 }}
+                  variants={fadeUp}
+                >
+                  <span>{project.subTagline}</span>
+                  <span
+                    ref={statementSubOverlayRef}
+                    className="work-detail__statement-text-overlay"
+                    style={{
+                      backgroundImage: `url(${import.meta.env.BASE_URL}${project.heroImage ?? project.image})`,
+                    }}
+                    aria-hidden="true"
+                  >
+                    {project.subTagline}
+                  </span>
+                </motion.p>
+              </div>
             </div>
           </div>
+          {(project.heroImage ?? project.image) && (
+            <div className="work-detail__statement-image" ref={statementImageRef}>
+              <img src={`${import.meta.env.BASE_URL}${project.heroImage ?? project.image}`} alt="" />
+            </div>
+          )}
         </section>
       )}
 
-      <section className="work-detail__story section">
-        <div className="container">
-          {hasDetailContent ? (
-            <>
+      {hasDetailContent && project.stackedScroll ? (
+        <>
+          <section className={stackClassName('work-detail__story section')} style={stackStyle(4)}>
+            <div className="container">
               <motion.div
-                className="work-detail__block"
+                className="work-detail__block work-detail__block--no-top-border"
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.4 }}
@@ -247,8 +343,21 @@ export function WorkDetailPage() {
                 </div>
               </motion.div>
 
+              <motion.span
+                className="work-detail__long-ticks"
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, amount: 0.4 }}
+                variants={fadeUp}
+                aria-hidden="true"
+              />
+            </div>
+          </section>
+
+          <section className={stackClassName('work-detail__story section')} style={stackStyle(5)}>
+            <div className="container">
               <motion.div
-                className={`work-detail__block ${project.challengeImage ? 'work-detail__block--media' : ''}`}
+                className={`work-detail__block work-detail__block--no-top-border ${project.challengeImage ? 'work-detail__block--media' : ''}`}
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.4 }}
@@ -265,9 +374,13 @@ export function WorkDetailPage() {
                   <p className="work-detail__block-body">{project.challenge}</p>
                 </div>
               </motion.div>
+            </div>
+          </section>
 
+          <section className={stackClassName('work-detail__story section')} style={stackStyle(6)}>
+            <div className="container">
               <motion.div
-                className="work-detail__block"
+                className="work-detail__block work-detail__block--no-top-border"
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.4 }}
@@ -288,45 +401,161 @@ export function WorkDetailPage() {
                   viewport={{ once: true, amount: 0.2 }}
                   variants={staggerContainer(0.1)}
                 >
-                  {project.galleryImages.map((src) => (
-                    <motion.div className="work-detail__gallery-item" key={src} variants={fadeUp}>
-                      <img src={`${import.meta.env.BASE_URL}${src}`} alt="" />
-                    </motion.div>
-                  ))}
+                  <motion.div className="work-detail__gallery-item" variants={fadeUp}>
+                    <img src={`${import.meta.env.BASE_URL}${project.galleryImages[0]}`} alt="" />
+                  </motion.div>
+                  <div className="work-detail__gallery-stack">
+                    {project.galleryImages.slice(1).map((src) => (
+                      <motion.div className="work-detail__gallery-item" key={src} variants={fadeUp}>
+                        <img src={`${import.meta.env.BASE_URL}${src}`} alt="" />
+                      </motion.div>
+                    ))}
+                  </div>
                 </motion.div>
               )}
-            </>
-          ) : (
-            <div className="work-detail__story-grid">
-              <motion.div
-                className="work-detail__story-block"
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true, amount: 0.4 }}
-                variants={fadeUp}
-              >
-                <span className="work-detail__story-index">// 01</span>
-                <h2>The challenge</h2>
-                <p>{project.challenge}</p>
-              </motion.div>
 
-              <motion.div
-                className="work-detail__story-block"
+              <motion.span
+                className="work-detail__statement-ticks"
+                style={{ marginTop: 0 }}
                 initial="hidden"
                 whileInView="show"
                 viewport={{ once: true, amount: 0.4 }}
                 variants={fadeUp}
-              >
-                <span className="work-detail__story-index">// 02</span>
-                <h2>The approach</h2>
-                <p>{project.approach}</p>
-              </motion.div>
+                aria-hidden="true"
+              />
             </div>
-          )}
-        </div>
-      </section>
 
-      <section className="work-detail__results section">
+            <motion.div
+              className="work-detail__villa-showcase"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.3 }}
+              variants={fadeUp}
+            >
+              <img src={`${import.meta.env.BASE_URL}assets/project-aurelis.jpg`} alt="" />
+              <img
+                className="work-detail__villa-showcase-invert"
+                src={`${import.meta.env.BASE_URL}assets/project-aurelis.jpg`}
+                alt=""
+                aria-hidden="true"
+              />
+            </motion.div>
+          </section>
+        </>
+      ) : (
+        <section className={stackClassName('work-detail__story section')} style={stackStyle(4)}>
+          <div className="container">
+            {hasDetailContent ? (
+              <>
+                <motion.div
+                  className="work-detail__block"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.4 }}
+                  variants={fadeUp}
+                >
+                  <h2 className="work-detail__giant">Brief</h2>
+                  <div>
+                    <h3 className="work-detail__block-sub">{project.briefTitle}</h3>
+                    <p className="work-detail__block-body">{project.briefBody}</p>
+                  </div>
+                </motion.div>
+
+                <motion.span
+                  className="work-detail__long-ticks"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.4 }}
+                  variants={fadeUp}
+                  aria-hidden="true"
+                />
+
+                <motion.div
+                  className={`work-detail__block work-detail__block--no-top-border ${project.challengeImage ? 'work-detail__block--media' : ''}`}
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.4 }}
+                  variants={fadeUp}
+                >
+                  {project.challengeImage && (
+                    <div className="work-detail__block-media">
+                      <img src={`${import.meta.env.BASE_URL}${project.challengeImage}`} alt="" />
+                    </div>
+                  )}
+                  <div>
+                    <h2 className="work-detail__giant">Challenge</h2>
+                    <h3 className="work-detail__block-sub">{project.challengeTitle}</h3>
+                    <p className="work-detail__block-body">{project.challenge}</p>
+                  </div>
+                </motion.div>
+
+                <motion.div
+                  className="work-detail__block"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.4 }}
+                  variants={fadeUp}
+                >
+                  <h2 className="work-detail__giant">Solution</h2>
+                  <div>
+                    <h3 className="work-detail__block-sub">{project.solutionTitle}</h3>
+                    <p className="work-detail__block-body">{project.approach}</p>
+                  </div>
+                </motion.div>
+
+                {project.galleryImages && (
+                  <motion.div
+                    className="work-detail__gallery"
+                    initial="hidden"
+                    whileInView="show"
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={staggerContainer(0.1)}
+                  >
+                    <motion.div className="work-detail__gallery-item" variants={fadeUp}>
+                      <img src={`${import.meta.env.BASE_URL}${project.galleryImages[0]}`} alt="" />
+                    </motion.div>
+                    <div className="work-detail__gallery-stack">
+                      {project.galleryImages.slice(1).map((src) => (
+                        <motion.div className="work-detail__gallery-item" key={src} variants={fadeUp}>
+                          <img src={`${import.meta.env.BASE_URL}${src}`} alt="" />
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
+                )}
+              </>
+            ) : (
+              <div className="work-detail__story-grid">
+                <motion.div
+                  className="work-detail__story-block"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.4 }}
+                  variants={fadeUp}
+                >
+                  <span className="work-detail__story-index">// 01</span>
+                  <h2>The challenge</h2>
+                  <p>{project.challenge}</p>
+                </motion.div>
+
+                <motion.div
+                  className="work-detail__story-block"
+                  initial="hidden"
+                  whileInView="show"
+                  viewport={{ once: true, amount: 0.4 }}
+                  variants={fadeUp}
+                >
+                  <span className="work-detail__story-index">// 02</span>
+                  <h2>The approach</h2>
+                  <p>{project.approach}</p>
+                </motion.div>
+              </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <section className={stackClassName('work-detail__results section')} style={stackStyle(7)}>
         <div className="container work-detail__results-grid">
           <motion.div
             initial="hidden"
@@ -380,7 +609,20 @@ export function WorkDetailPage() {
         </div>
       </section>
 
-      <section className="work-detail__credits section">
+      <section
+        className={stackClassName('work-detail__credits section')}
+        style={stackStyle(
+          8,
+          project.creditsImage
+            ? {
+                backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.35)), url(${import.meta.env.BASE_URL}${project.creditsImage})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+              }
+            : undefined,
+        )}
+      >
         <div className="container work-detail__credits-grid">
           <motion.div
             initial="hidden"
@@ -390,7 +632,11 @@ export function WorkDetailPage() {
           >
             <h2 className="work-detail__giant">Credits</h2>
             <p className="work-detail__credits-copy">
-              Designed and produced by Create®’s studio team in partnership with {project.client}.
+              A close collaboration between Create’s design, content, and motion teams.
+            </p>
+            <p className="work-detail__credits-copy">
+              The project blended storytelling and digital luxury, shaping every detail from early concepts to
+              launch execution.
             </p>
           </motion.div>
 
@@ -406,10 +652,11 @@ export function WorkDetailPage() {
               if (!member) return null
               return (
                 <motion.div className="credit-row" key={credit.name} variants={fadeUp}>
-                  <img src={`${import.meta.env.BASE_URL}${member.image}`} alt={member.name} />
-                  <div>
-                    <p className="credit-row__name">{member.name}</p>
-                    <p className="credit-row__role">{credit.role ?? member.role}</p>
+                  <p className="credit-row__name">{member.name}</p>
+                  <p className="credit-row__role">{credit.role ?? member.role}</p>
+                  <div className="credit-row__divider" aria-hidden="true">
+                    <span className="credit-row__stripes" />
+                    <span className="credit-row__line" />
                   </div>
                 </motion.div>
               )
@@ -418,7 +665,7 @@ export function WorkDetailPage() {
         </div>
       </section>
 
-      <section className="case-studies section">
+      <section className={stackClassName('case-studies section')} style={stackStyle(9)}>
         <div className="container">
           <motion.h2
             className="case-studies__title"

@@ -42,7 +42,7 @@ export interface Project {
   challengeTitle?: string
   /** Photo shown beside the Challenge block instead of plain text. */
   challengeImage?: string
-  /** Two-up (plus one full-width) lifestyle photo set shown after the Solution block. */
+  /** Lifestyle photo set shown after the Solution block: first image large, remaining images stacked beside it. */
   galleryImages?: string[]
   solutionTitle?: string
   challenge: string
@@ -52,6 +52,11 @@ export interface Project {
   stats: ProjectStat[]
   /** Cross-referenced against src/data/team.ts for the case study's credits block. */
   credits: ProjectCredit[]
+  /** Background photo behind the detail-page Credits section. */
+  creditsImage?: string
+  /** Renders the detail page as full-viewport sections that stack and cover
+   * one another while scrolling, instead of a normal document flow. */
+  stackedScroll?: boolean
 }
 
 export const projects: Project[] = [
@@ -64,7 +69,7 @@ export const projects: Project[] = [
     stack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Framer Motion', 'Cloudflare CDN'],
     year: '2025',
     image: 'assets/project-aurelis.jpg',
-    heroImage: 'assets/project-aurelis.jpg',
+    heroImage: 'assets/aurelis-hero.avif',
     liveUrl: '#',
     timeframe: '14 weeks',
     logo: 'assets/aurelis-logo.svg',
@@ -81,7 +86,7 @@ export const projects: Project[] = [
     challengeImage: 'assets/aurelis-painting.avif',
     challenge:
       'Resort websites often feel interchangeable: polished imagery, generic slogans, and predictable booking flows. Aurelis needed a brand and platform that felt distinctive, evoking exclusivity and anticipation without leaning on clichés.',
-    galleryImages: ['assets/aurelis-juice.avif', 'assets/aurelis-gurl.avif', 'assets/aurelis-swim.avif'],
+    galleryImages: ['assets/aurelis-gurl.avif', 'assets/aurelis-juice.avif', 'assets/aurelis-swim.avif'],
     solutionTitle: 'Turn the website into a destination experience.',
     approach:
       'We designed a geometric, sunset-inspired identity and a digital platform that acted as an introduction to the resort itself. Visitors explored villas in detail, previewed curated itineraries, and experienced cinematic footage of the coastline. Typography and motion were deliberate, designed to echo architectural precision and ocean rhythm.',
@@ -99,6 +104,8 @@ export const projects: Project[] = [
       { name: 'Inès Laurent', role: 'Client Services Director' },
       { name: 'Lucas Marino', role: 'Lead Engineer' },
     ],
+    creditsImage: 'assets/aurelis-credit.avif',
+    stackedScroll: true,
   },
   {
     index: '02',
