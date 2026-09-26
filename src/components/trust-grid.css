@@ -390,4 +390,18 @@
   .trust-card {
     min-height: 0;
   }
+
+  /* The dots row (and its animated spot) is sized for a wide desktop card;
+     scaling the whole thing down keeps the spot perfectly aligned with the
+     static dots (a CSS transform scales descendants' own transforms too)
+     instead of letting it overflow the now-narrower card. */
+  .trust-card__dots {
+    transform: scale(0.85);
+  }
+}
+
+@media (max-width: 480px) {
+  .trust-card__dots {
+    transform: scale(0.55);
+  }
 }
