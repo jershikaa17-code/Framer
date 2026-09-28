@@ -6,7 +6,7 @@
 .client-marquee__tagline {
   text-align: center;
   font-family: var(--font-mono);
-  font-size: var(--fs-small);
+  font-size: var(--fs-micro);
   letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   color: var(--color-text-faint-2);

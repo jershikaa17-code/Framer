@@ -4,7 +4,6 @@ export interface ClientLogo {
 }
 
 export const partnerLogos: ClientLogo[] = [
-  { name: 'Aurelis', image: 'assets/clients/aurelis.svg' },
   { name: 'Lindholm', image: 'assets/clients/lindholm.svg' },
   { name: 'Taho', image: 'assets/clients/taho.svg' },
   { name: 'Wendrich', image: 'assets/clients/wendrich.svg' },
