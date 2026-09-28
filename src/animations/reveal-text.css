@@ -8,6 +8,12 @@
   vertical-align: top;
   padding-bottom: 0.08em;
   margin-bottom: -0.08em;
+  /* Tight negative letter-spacing on some headings (e.g. -0.07em) lets a
+     rounded trailing glyph's ink bleed past its own logical advance width —
+     without this, overflow: hidden above clips the right edge of letters
+     like a trailing "o". */
+  padding-right: 0.08em;
+  margin-right: -0.08em;
 }
 
 .reveal-text__word {
