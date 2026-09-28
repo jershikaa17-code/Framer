@@ -79,7 +79,7 @@
 }
 
 .hero__emerge-title {
-  font-size: clamp(4rem, 1.2rem + 10.5vw, 13rem);
+  font-size: clamp(4rem, 1rem + 18vw, 24rem);
   font-weight: var(--fw-bold);
   letter-spacing: -0.06em;
   line-height: 1;
