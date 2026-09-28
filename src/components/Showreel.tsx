@@ -82,7 +82,12 @@ export function Showreel({ delay = 0, exitStyle }: { delay?: number; exitStyle?:
       </motion.div>
 
       <p className="showreel__caption">
-        <span className="showreel__caption-marker" aria-hidden="true" />
+        <img
+          className="showreel__caption-marker"
+          src={`${import.meta.env.BASE_URL}assets/showreel-mark.svg`}
+          alt=""
+          aria-hidden="true"
+        />
         Best Digital Campaign, Wobbly Awards
       </p>
     </motion.section>

@@ -2,7 +2,9 @@
   position: absolute;
   z-index: 1;
   right: clamp(0px, 2vw, 24px);
-  bottom: clamp(-40px, -1vh, -10px);
+  /* Bottom-anchored inside the hero's own overflow: hidden box — must stay
+     positive, otherwise the caption below the video frame gets clipped. */
+  bottom: clamp(12px, 2vh, 32px);
   width: min(425px, 27vw);
 }
 
@@ -102,9 +104,8 @@
 }
 
 .showreel__caption-marker {
-  width: 12px;
-  height: 1px;
-  background: var(--color-border-dark);
+  width: 14px;
+  height: 14px;
   flex-shrink: 0;
 }
 
