@@ -41,8 +41,6 @@
 }
 
 .cta-pill:hover {
-  background: var(--color-white);
-  border-color: var(--color-white);
   color: var(--color-text);
 }
 
@@ -50,10 +48,11 @@
   display: inline-flex;
 }
 
+/* Background/border stay fixed on hover — only the label + icon recolor. */
 .cta-pill--accent {
   background: var(--color-accent);
   border-color: var(--color-accent);
-  color: var(--color-text);
+  color: var(--color-white);
 }
 
 .cta-pill--accent .cta-pill__icon {
@@ -61,8 +60,8 @@
 }
 
 .cta-pill--accent:hover {
-  background: var(--color-white);
-  border-color: var(--color-white);
+  background: var(--color-accent);
+  border-color: var(--color-accent);
   color: var(--color-text);
 }
 
@@ -81,13 +80,13 @@
 }
 
 .cta-pill--white:hover {
-  background: var(--color-accent);
-  border-color: var(--color-accent);
-  color: var(--color-white);
+  background: var(--color-white);
+  border-color: var(--color-white);
+  color: var(--color-accent);
 }
 
 .cta-pill--white:hover .cta-pill__icon {
-  color: var(--color-white);
+  color: var(--color-accent);
 }
 
 @media (max-width: 809px) {
