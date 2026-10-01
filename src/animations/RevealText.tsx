@@ -21,6 +21,9 @@ interface RevealTextProps {
    * of bug documented in Services.tsx/ScrollLitWords — so those callers
    * should drive the reveal with `animate` instead. */
   viewTrigger?: boolean
+  /** Opt-in: stagger individual characters instead of whole words. Off by
+   * default so existing word-level callers look unchanged. */
+  byLetter?: boolean
 }
 
 export function RevealText({
@@ -28,14 +31,16 @@ export function RevealText({
   as = 'span',
   className = '',
   delay = 0,
-  stagger = 0.045,
+  stagger,
   once = true,
   amount = 0.6,
   blur = false,
   duration = 0.85,
   viewTrigger = true,
+  byLetter = false,
 }: RevealTextProps) {
-  const words = text.split(' ')
+  const tokens = byLetter ? Array.from(text) : text.split(' ')
+  const resolvedStagger = stagger ?? (byLetter ? 0.02 : 0.045)
   const Tag = motion[as] as typeof motion.span
   const trigger = viewTrigger
     ? { whileInView: 'show', viewport: { once, amount } }
@@ -48,10 +53,10 @@ export function RevealText({
       {...trigger}
       variants={{
         hidden: {},
-        show: { transition: { staggerChildren: stagger, delayChildren: delay } },
+        show: { transition: { staggerChildren: resolvedStagger, delayChildren: delay } },
       }}
     >
-      {words.map((word, i) => (
+      {tokens.map((token, i) => (
         <Fragment key={i}>
           <span className="reveal-text__mask">
             <motion.span
@@ -65,10 +70,10 @@ export function RevealText({
                 },
               }}
             >
-              {word}
+              {token === ' ' ? ' ' : token}
             </motion.span>
           </span>
-          {i !== words.length - 1 ? ' ' : null}
+          {!byLetter && i !== tokens.length - 1 ? ' ' : null}
         </Fragment>
       ))}
     </Tag>

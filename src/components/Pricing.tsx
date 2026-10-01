@@ -42,7 +42,7 @@ const clockIcon = (
 )
 
 const simpleIcon = (
-  <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor">
+  <svg viewBox="0 0 16 16" width="18" height="18" fill="var(--color-text-muted)">
     <path d="M 7.5 0 C 3.365 0 0 3.365 0 7.5 C 0 11.635 3.365 15 7.5 15 C 11.635 15 15 11.635 15 7.5 C 15 3.365 11.635 0 7.5 0 Z M 5.156 3.75 C 5.933 3.75 6.563 4.38 6.563 5.156 C 6.563 5.933 5.933 6.563 5.156 6.563 C 4.38 6.563 3.75 5.933 3.75 5.156 C 3.75 4.38 4.38 3.75 5.156 3.75 Z M 9.844 11.25 C 9.067 11.25 8.438 10.62 8.438 9.844 C 8.438 9.067 9.067 8.438 9.844 8.438 C 10.62 8.438 11.25 9.067 11.25 9.844 C 11.25 10.62 10.62 11.25 9.844 11.25 Z M 10.975 5.35 L 5.35 10.975 C 5.175 11.152 4.936 11.251 4.688 11.251 C 4.439 11.251 4.2 11.152 4.025 10.975 C 3.659 10.609 3.659 10.016 4.025 9.65 L 9.65 4.025 C 9.885 3.781 10.234 3.683 10.561 3.769 C 10.889 3.855 11.145 4.111 11.231 4.439 C 11.317 4.766 11.219 5.115 10.975 5.35 Z" />
   </svg>
 )
@@ -65,10 +65,22 @@ const arrowIcon = (
   </svg>
 )
 
-const thumbImages = [
-  'assets/pricing-scale.jpg',
-  'assets/pricing-scale-2.jpg',
-  'assets/pricing-scale-3.jpg',
+const thumbItems = [
+  {
+    src: 'assets/pricing-scale-2.jpg',
+    eyebrow: 'Core',
+    audienceLines: ['For startups and first', 'launches'],
+  },
+  {
+    src: 'assets/pricing-scale-3.jpg',
+    eyebrow: 'Studio',
+    audienceLines: ['For growing teams and', 'serious builds'],
+  },
+  {
+    src: 'assets/pricing-scale.jpg',
+    eyebrow: 'Scale',
+    audienceLines: ['For established teams', 'and long-term growth'],
+  },
 ]
 
 function nextAvailability() {
@@ -116,7 +128,7 @@ export function Pricing() {
             <AnimatePresence initial={false}>
               <motion.img
                 key={thumbTick}
-                src={`${import.meta.env.BASE_URL}${thumbImages[thumbTick % thumbImages.length]}`}
+                src={`${import.meta.env.BASE_URL}${thumbItems[thumbTick % thumbItems.length].src}`}
                 alt=""
                 loading="lazy"
                 style={{ zIndex: thumbTick }}
@@ -125,6 +137,39 @@ export function Pricing() {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               />
+            </AnimatePresence>
+            <AnimatePresence initial={false}>
+              <motion.span
+                key={`top-${thumbTick}`}
+                className="pricing__simple-thumb-badge pricing__simple-thumb-badge--top"
+                style={{ zIndex: thumbTick }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                {thumbItems[thumbTick % thumbItems.length].audienceLines.map((line, i) => (
+                  <span className="pricing__simple-thumb-badge-line" key={i}>
+                    {line.toUpperCase()}
+                  </span>
+                ))}
+              </motion.span>
+            </AnimatePresence>
+            <AnimatePresence initial={false}>
+              <motion.span
+                key={`bottom-${thumbTick}`}
+                className="pricing__simple-thumb-badge pricing__simple-thumb-badge--bottom"
+                style={{ zIndex: thumbTick }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+              >
+                <span className="pricing__simple-thumb-badge-icon" aria-hidden="true">
+                  {simpleIcon}
+                </span>
+                {thumbItems[thumbTick % thumbItems.length].eyebrow.toUpperCase()}
+              </motion.span>
             </AnimatePresence>
           </motion.div>
           <p className="pricing__simple-caption">
@@ -184,8 +229,9 @@ export function Pricing() {
           </div>
 
           <span className="pricing__book-watermark" aria-hidden="true">
-            <span className="pricing__book-watermark-badge">©</span>
-            create<sup>®</sup>
+            <span className="pricing__book-watermark-text">
+              create<sup className="pricing__book-watermark-reg">®</sup>
+            </span>
           </span>
         </div>
       </motion.div>

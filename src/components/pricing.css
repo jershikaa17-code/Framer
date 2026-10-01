@@ -1,6 +1,6 @@
 .pricing {
   background: var(--color-bg);
-  padding-top: clamp(24px, 3vw, 40px);
+  padding-top: clamp(8px, 1.2vw, 16px);
   padding-bottom: clamp(64px, 9vw, 120px);
 }
 
@@ -40,7 +40,7 @@
 
 .pricing__long-run {
   display: grid;
-  grid-template-columns: 1.35fr 1fr 1.544fr;
+  grid-template-columns: 1fr 1fr 1.544fr;
   align-items: stretch;
   gap: clamp(16px, 1.8vw, 26px);
   margin-bottom: clamp(40px, 6vw, 56px);
@@ -111,6 +111,61 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.pricing__simple-thumb-badge {
+  position: absolute;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: calc(100% - 20px);
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(4px);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: var(--fw-medium);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.pricing__simple-thumb-badge--top {
+  top: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: max-content;
+  max-width: calc(100% - 20px);
+  border-radius: var(--radius-md);
+}
+
+.pricing__simple-thumb-badge-line {
+  display: block;
+  white-space: nowrap;
+}
+
+.pricing__simple-thumb-badge--bottom {
+  bottom: 10px;
+  border-radius: var(--radius-pill);
+}
+
+.pricing__simple-thumb-badge-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-bg-soft);
+}
+
+.pricing__simple-thumb-badge-icon svg {
+  width: 9px;
+  height: 9px;
 }
 
 .pricing__simple-caption {
@@ -222,6 +277,7 @@
   max-width: clamp(320px, 27vw, 400px);
   justify-self: start;
   overflow: visible;
+  background: #f0f0f0;
 }
 
 .pricing__book-watermark {
@@ -231,9 +287,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  writing-mode: vertical-rl;
-  font-size: clamp(2.5rem, 2rem + 2vw, 3.5rem);
   font-weight: var(--fw-bold);
   letter-spacing: -0.02em;
   color: var(--color-text-faint-2);
@@ -241,17 +294,20 @@
   user-select: none;
 }
 
-.pricing__book-watermark-badge {
+.pricing__book-watermark-text {
+  position: relative;
+  writing-mode: vertical-lr;
+  font-size: clamp(3rem, 2.4rem + 2.6vw, 4.2rem);
+}
+
+.pricing__book-watermark-reg {
+  position: absolute;
+  bottom: 0.08em;
+  left: 100%;
+  margin-left: 4px;
   writing-mode: horizontal-tb;
-  font-family: var(--font-mono);
-  font-size: var(--fs-nano);
-  border: 1px solid var(--color-text-faint-2);
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-size: 0.32em;
+  line-height: 1;
 }
 
 .pricing__long-run-book .pricing__eyebrow-label,
@@ -269,8 +325,8 @@
   position: absolute;
   z-index: 0;
   top: 6%;
-  left: 50%;
-  width: 95%;
+  left: 70%;
+  width: 105%;
   height: auto;
   fill: #fff;
   opacity: 1;

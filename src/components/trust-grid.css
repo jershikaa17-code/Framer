@@ -1,7 +1,7 @@
 .trust-grid {
   background: var(--color-bg);
   padding-top: clamp(64px, 9vw, 120px);
-  padding-bottom: clamp(24px, 3vw, 40px);
+  padding-bottom: clamp(8px, 1.2vw, 16px);
 }
 
 .trust-grid__title {
@@ -72,7 +72,7 @@
 
 .trust-grid__cards {
   display: grid;
-  grid-template-columns: 1fr 1.2fr 1fr;
+  grid-template-columns: 0.4fr 0.5fr 0.44fr;
   gap: clamp(14px, 2vw, 18px);
   align-items: stretch;
 }
@@ -90,6 +90,7 @@
 
 .trust-card--tagline {
   overflow: hidden;
+  background: #fff;
 }
 
 .trust-card__foot {
@@ -243,6 +244,10 @@
   font-weight: var(--fw-semibold);
 }
 
+.trust-card--fresh {
+  background: #fff;
+}
+
 .trust-card--fresh .trust-card__eyebrow-line {
   font-size: var(--fs-body);
   letter-spacing: -0.04em;
@@ -261,9 +266,9 @@
 .trust-card__fresh-row {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   gap: clamp(20px, 3vw, 36px);
-  margin-top: clamp(16px, 3vw, 28px);
+  margin-top: clamp(64px, 10vw, 96px);
 }
 
 .trust-card__grip {
@@ -285,6 +290,7 @@
   display: grid;
   grid-template-columns: repeat(2, 8px);
   gap: 6px;
+  transform: translateX(-8px);
 }
 
 .trust-card__grip--quad span {
@@ -332,68 +338,11 @@
   }
 }
 
-.trust-card__create-stack {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-
 .trust-card__create-video {
-  width: clamp(80px, 9vw, 110px);
+  width: clamp(130px, 15vw, 180px);
   height: auto;
   border-radius: var(--radius-md);
   object-fit: cover;
-}
-
-.trust-card__dotted-mark {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(140px, 16vw, 190px);
-  height: clamp(140px, 16vw, 190px);
-  margin: 0;
-  border-radius: 50%;
-  -webkit-mask-image: radial-gradient(circle, #000 68%, transparent 70%);
-  mask-image: radial-gradient(circle, #000 68%, transparent 70%);
-}
-
-.trust-card__dotted-svg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-}
-
-.trust-card__dotted-dot {
-  fill: var(--color-border-strong);
-  transform-box: fill-box;
-  transform-origin: center;
-  opacity: 0.6;
-  animation: dotted-dot-ripple 3.6s ease-in-out infinite;
-}
-
-@keyframes dotted-dot-ripple {
-  0%,
-  100% {
-    transform: translate(0, 0);
-  }
-  50% {
-    transform: translate(calc(var(--ux, 0) * 5px), calc(var(--uy, 0) * 5px));
-  }
-}
-
-.trust-card__dotted-logo {
-  position: relative;
-  z-index: 1;
-  font-family: var(--font-sans);
-  font-weight: var(--fw-bold);
-  font-size: var(--fs-body-lg);
-  color: var(--color-accent);
-  letter-spacing: var(--ls-tight);
 }
 
 @media (max-width: 900px) {
