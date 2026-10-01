@@ -30,6 +30,12 @@ export function Footer() {
 
   return (
     <footer className="footer">
+      <div className="container footer__dashes" aria-hidden="true">
+        {Array.from({ length: 60 }).map((_, i) => (
+          <span key={i} />
+        ))}
+      </div>
+
       <div className="container footer__grid">
         <div className="footer__col">
           <p className="footer__heading">Navigate</p>

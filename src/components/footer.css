@@ -3,6 +3,20 @@
   color: var(--color-text);
 }
 
+.footer__dashes {
+  display: flex;
+  gap: 6px;
+  padding-top: clamp(28px, 4vw, 44px);
+  overflow: hidden;
+}
+
+.footer__dashes span {
+  width: 1px;
+  height: 14px;
+  background: var(--color-border-strong);
+  flex-shrink: 0;
+}
+
 .footer__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);

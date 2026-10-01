@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { RevealText } from '../animations/RevealText'
 import { fadeUp, fadeLeft, staggerContainer } from '../animations/variants'
@@ -17,17 +16,9 @@ const pills = [
   { value: '99%', label: 'Ship on-Time' },
 ]
 
-const DOTS_PLAY_MS = 9000
-const DOTS_PAUSE_MS = 120000
+const DOTS_PLAY_MS = 6500
 
 export function TrustGrid() {
-  const [dotsCycle, setDotsCycle] = useState(0)
-
-  useEffect(() => {
-    const id = setInterval(() => setDotsCycle((c) => c + 1), DOTS_PLAY_MS + DOTS_PAUSE_MS)
-    return () => clearInterval(id)
-  }, [])
-
   return (
     <section className="trust-grid section">
       <div className="container trust-grid__head">
@@ -80,10 +71,10 @@ export function TrustGrid() {
           </div>
           <div className="trust-card__dots" aria-hidden="true">
             <motion.span
-              key={dotsCycle}
               className="trust-card__dots-spot"
               initial={{ x: 0 }}
-              animate={{ x: [0, 0, 133, 133, 270, 270] }}
+              whileInView={{ x: [0, 0, 133, 133, 270, 270] }}
+              viewport={{ once: false, amount: 0.6 }}
               transition={{
                 duration: DOTS_PLAY_MS / 1000,
                 times: [0, 0.12, 0.38, 0.48, 0.7, 1],
