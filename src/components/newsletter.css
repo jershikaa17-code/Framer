@@ -30,6 +30,13 @@
   grid-column: 4;
 }
 
+.newsletter__nav-col a,
+.newsletter__nav-col .footer__heading {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
 .newsletter__social-row {
   margin-top: clamp(24px, 4vw, 48px);
   display: grid;
@@ -79,6 +86,7 @@
   letter-spacing: var(--ls-tight);
   line-height: var(--lh-snug);
   white-space: nowrap;
+  color: var(--color-text-secondary);
 }
 
 .newsletter__dots {

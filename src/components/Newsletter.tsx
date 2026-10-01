@@ -21,6 +21,7 @@ const links = [
   { label: 'Privacy policy', href: '/privacy' },
   { label: 'Disclaimer', href: '/disclaimer' },
   { label: '404', href: '/404' },
+  { label: 'More templates', href: '/templates' },
 ]
 
 const social = [
