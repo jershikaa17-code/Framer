@@ -1,10 +1,35 @@
 import { useRef, useState } from 'react'
 import type { FormEvent } from 'react'
+import { Link } from 'react-router-dom'
 import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import { RevealText } from '../animations/RevealText'
+import '../components/footer.css'
 import './newsletter.css'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+const navigate = [
+  { label: 'Home', href: '/' },
+  { label: 'Work', href: '/work' },
+  { label: 'Studio', href: '/studio' },
+  { label: 'Whispers', href: '/whispers' },
+  { label: 'Contact', href: '/contact' },
+]
+
+const links = [
+  { label: 'Terms of service', href: '/terms' },
+  { label: 'Privacy policy', href: '/privacy' },
+  { label: 'Disclaimer', href: '/disclaimer' },
+  { label: '404', href: '/404' },
+]
+
+const social = [
+  { label: 'X', full: 'X' },
+  { label: 'Li', full: 'LinkedIn' },
+  { label: 'IG', full: 'Instagram' },
+  { label: 'FB', full: 'Facebook' },
+  { label: 'WA', full: 'WhatsApp' },
+]
 
 export function Newsletter() {
   const [email, setEmail] = useState('')
@@ -38,73 +63,110 @@ export function Newsletter() {
 
   return (
     <motion.section ref={sectionRef} className="newsletter section" style={{ clipPath }}>
-      <div className="container newsletter__inner">
-        <div className="newsletter__left">
-          <div className="newsletter__heading-row">
-            <h2 className="newsletter__title">
-              <RevealText text="Keep you in the loop." />
-            </h2>
-            <span className="newsletter__dots" aria-hidden="true">
-              {Array.from({ length: 48 }).map((_, i) => {
-                const angle = i * 137.508 // golden-angle spiral
-                const radius = 3 + Math.sqrt(i) * 5.6
-                return (
-                  <span
-                    key={i}
-                    style={{ transform: `rotate(${angle}deg) translate(${radius}px)` }}
-                  />
-                )
-              })}
-            </span>
+      <div className="container newsletter__row">
+        <div className="newsletter__inner">
+          <div className="newsletter__left">
+            <div className="newsletter__heading-row">
+              <h2 className="newsletter__title">
+                <RevealText text="Keep you in" />
+                <br />
+                <RevealText text="the loop." delay={0.1} />
+              </h2>
+              <span className="newsletter__dots" aria-hidden="true">
+                {Array.from({ length: 48 }).map((_, i) => {
+                  const angle = i * 137.508 // golden-angle spiral
+                  const radius = 3 + Math.sqrt(i) * 5.6
+                  return (
+                    <span
+                      key={i}
+                      style={{ transform: `rotate(${angle}deg) translate(${radius}px)` }}
+                    />
+                  )
+                })}
+              </span>
+            </div>
+            <p className="newsletter__sub">
+              Get the latest news, insights directly to your inbox. <span>*</span>
+            </p>
           </div>
-          <p className="newsletter__sub">
-            Get the latest news, insights directly to your inbox. <span>*</span>
-          </p>
+
+          <div className="newsletter__form-wrap">
+            <AnimatePresence mode="wait">
+              {submitted ? (
+                <motion.p
+                  key="success"
+                  className="newsletter__success"
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                >
+                  You're in — watch your inbox for studio news.
+                </motion.p>
+              ) : (
+                <motion.form
+                  key="form"
+                  className="newsletter__form"
+                  onSubmit={onSubmit}
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  noValidate
+                >
+                  <input
+                    type="email"
+                    placeholder="Enter your email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value)
+                      if (error) setError('')
+                    }}
+                    aria-label="Email address"
+                    aria-invalid={Boolean(error)}
+                  />
+                  <button type="submit">Join our newsletter →</button>
+                </motion.form>
+              )}
+            </AnimatePresence>
+            {error && <p className="newsletter__error">{error}</p>}
+            <p className="newsletter__legal">
+              By submitting, you agree to our <a href="#">Terms & Service.</a>
+              <br />
+              <span>*</span> No spam, just awesome updates.
+            </p>
+          </div>
         </div>
 
-        <div className="newsletter__form-wrap">
-          <AnimatePresence mode="wait">
-            {submitted ? (
-              <motion.p
-                key="success"
-                className="newsletter__success"
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-              >
-                You're in — watch your inbox for studio news.
-              </motion.p>
-            ) : (
-              <motion.form
-                key="form"
-                className="newsletter__form"
-                onSubmit={onSubmit}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                noValidate
-              >
-                <input
-                  type="email"
-                  placeholder="Enter your email"
-                  value={email}
-                  onChange={(e) => {
-                    setEmail(e.target.value)
-                    if (error) setError('')
-                  }}
-                  aria-label="Email address"
-                  aria-invalid={Boolean(error)}
-                />
-                <button type="submit">Join our newsletter →</button>
-              </motion.form>
-            )}
-          </AnimatePresence>
-          {error && <p className="newsletter__error">{error}</p>}
-          <p className="newsletter__legal">
-            By submitting, you agree to our <a href="#">Terms & Service.</a>
-            <br />
-            <span>*</span> No spam, just awesome updates.
-          </p>
+        <div className="footer__col newsletter__nav-col newsletter__nav-col--navigate">
+          <p className="footer__heading">Navigate</p>
+          <ul>
+            {navigate.map((item) => (
+              <li key={item.label}>
+                <Link to={item.href}>{item.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="footer__col newsletter__nav-col newsletter__nav-col--links">
+          <p className="footer__heading">Links</p>
+          <ul>
+            {links.map((item) => (
+              <li key={item.label}>
+                <Link to={item.href}>{item.label}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="container newsletter__social-row">
+        <p className="footer__heading newsletter__social-label">Follow us on socials</p>
+        <div className="footer__social">
+          {social.map((item) => (
+            <a key={item.label} href="#" aria-label={`Create Studio on ${item.full}`}>
+              {item.label}
+            </a>
+          ))}
         </div>
       </div>
     </motion.section>
