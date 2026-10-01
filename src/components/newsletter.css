@@ -77,7 +77,7 @@
   font-size: var(--fs-h1);
   font-weight: var(--fw-medium);
   letter-spacing: var(--ls-tight);
-  line-height: var(--lh-tight);
+  line-height: var(--lh-snug);
   white-space: nowrap;
 }
 

@@ -69,7 +69,6 @@ export function Newsletter() {
             <div className="newsletter__heading-row">
               <h2 className="newsletter__title">
                 <RevealText text="Keep you in" />
-                <br />
                 <RevealText text="the loop." delay={0.1} />
               </h2>
               <span className="newsletter__dots" aria-hidden="true">
