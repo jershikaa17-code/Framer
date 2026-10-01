@@ -28,19 +28,22 @@ export function LogoMarquee({
             ? undefined
             : { x: direction === 'right' ? ['-50%', '0%'] : ['0%', '-50%'] }
         }
-        transition={{ duration: speed, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: speed, repeat: Infinity, repeatType: 'loop', ease: 'linear' }}
+        style={{ width: 'max-content' }}
       >
-        {track.map((item, i) =>
-          item.image ? (
-            <span className="logo-marquee__item logo-marquee__item--img" key={i}>
+        {track.map((item, i) => {
+          const key = `${item.name}-${i}`
+
+          return item.image ? (
+            <span className="logo-marquee__item logo-marquee__item--img" key={key}>
               <img src={`${import.meta.env.BASE_URL}${item.image}`} alt={item.name} loading="lazy" />
             </span>
           ) : (
-            <span className="logo-marquee__item" key={i}>
+            <span className="logo-marquee__item" key={key}>
               {item.name}
             </span>
-          ),
-        )}
+          )
+        })}
       </motion.div>
       <div className="logo-marquee__fade logo-marquee__fade--right" />
     </div>
