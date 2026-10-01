@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { RevealText } from '../animations/RevealText'
 import '../components/footer.css'
 import './newsletter.css'
@@ -36,6 +36,7 @@ export function Newsletter() {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
   const [submitted, setSubmitted] = useState(false)
+  const reduceMotion = useReducedMotion()
 
   // The section sits with a large negative margin so it structurally
   // overlaps the section before it, then a clip-path wipe tied to its own
@@ -72,18 +73,49 @@ export function Newsletter() {
                 <RevealText text="Keep you in" />
                 <RevealText text="the loop." delay={0.1} />
               </h2>
-              <span className="newsletter__dots" aria-hidden="true">
-                {Array.from({ length: 48 }).map((_, i) => {
-                  const angle = i * 137.508 // golden-angle spiral
-                  const radius = 3 + Math.sqrt(i) * 5.6
+              <svg className="newsletter__dots" viewBox="0 0 400 400" aria-hidden="true">
+                {Array.from({ length: 200 }, (_, i) => {
+                  const angle = (i * 137.508 + 68) * (Math.PI / 180)
+                  const radius = Math.sqrt(i + 1) * 13.4
+                  const cx = 200 + Math.cos(angle) * radius
+                  const cy = 200 + Math.sin(angle) * radius
+                  const delay = `${i * 0.015}s`
+
                   return (
-                    <span
+                    <circle
                       key={i}
-                      style={{ transform: `rotate(${angle}deg) translate(${radius}px)` }}
-                    />
+                      cx={cx}
+                      cy={cy}
+                      r={reduceMotion ? 3 : 5}
+                      fill="var(--color-accent)"
+                      opacity={reduceMotion ? 0.7 : 0}
+                    >
+                      {!reduceMotion && (
+                        <>
+                          <animate
+                            attributeName="r"
+                            values="1.5;7;1.5"
+                            dur="3s"
+                            begin={delay}
+                            repeatCount="indefinite"
+                            calcMode="spline"
+                            keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                          />
+                          <animate
+                            attributeName="opacity"
+                            values="0.4;1;0.4"
+                            dur="3s"
+                            begin={delay}
+                            repeatCount="indefinite"
+                            calcMode="spline"
+                            keySplines="0.4 0 0.6 1;0.4 0 0.6 1"
+                          />
+                        </>
+                      )}
+                    </circle>
                   )
                 })}
-              </span>
+              </svg>
             </div>
             <p className="newsletter__sub">
               Get the latest news, insights directly to your inbox. <span>*</span>

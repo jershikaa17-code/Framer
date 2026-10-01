@@ -90,24 +90,11 @@
 }
 
 .newsletter__dots {
-  position: relative;
-  width: 84px;
-  height: 84px;
+  display: block;
+  width: 112px;
+  height: 112px;
   flex-shrink: 0;
   margin-top: 8px;
-  margin-left: 28px;
-}
-
-.newsletter__dots span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4px;
-  height: 4px;
-  margin: -2px 0 0 -2px;
-  border-radius: 50%;
-  background: var(--color-accent);
-  transform-origin: 0 0;
 }
 
 .newsletter__sub {
