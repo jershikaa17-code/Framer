@@ -143,32 +143,42 @@ export function TrustGrid() {
               <span />
               <span />
             </span>
-            <div className="trust-card__dotted-mark" aria-hidden="true">
-              <svg
-                className="trust-card__dotted-svg"
-                viewBox={`0 0 ${DOTTED_R * 2} ${DOTTED_R * 2}`}
-                preserveAspectRatio="xMidYMid meet"
-              >
-                {dottedDots.map((d, i) => (
-                  <circle
-                    key={i}
-                    cx={d.x}
-                    cy={d.y}
-                    r={1.4}
-                    className="trust-card__dotted-dot"
-                    style={
-                      {
-                        '--ux': d.ux,
-                        '--uy': d.uy,
-                        animationDelay: `${(d.dist * 18).toFixed(0)}ms`,
-                      } as CSSProperties
-                    }
-                  />
-                ))}
-              </svg>
-              <span className="trust-card__dotted-logo">
-                create<sup>®</sup>
-              </span>
+            <div className="trust-card__create-stack">
+              <video
+                src={`${import.meta.env.BASE_URL}assets/trust-create.mp4`}
+                className="trust-card__create-video"
+                autoPlay
+                loop
+                muted
+                playsInline
+              />
+              <div className="trust-card__dotted-mark" aria-hidden="true">
+                <svg
+                  className="trust-card__dotted-svg"
+                  viewBox={`0 0 ${DOTTED_R * 2} ${DOTTED_R * 2}`}
+                  preserveAspectRatio="xMidYMid meet"
+                >
+                  {dottedDots.map((d, i) => (
+                    <circle
+                      key={i}
+                      cx={d.x}
+                      cy={d.y}
+                      r={1.4}
+                      className="trust-card__dotted-dot"
+                      style={
+                        {
+                          '--ux': d.ux,
+                          '--uy': d.uy,
+                          animationDelay: `${(d.dist * 18).toFixed(0)}ms`,
+                        } as CSSProperties
+                      }
+                    />
+                  ))}
+                </svg>
+                <span className="trust-card__dotted-logo">
+                  create<sup>®</sup>
+                </span>
+              </div>
             </div>
           </div>
           <p className="trust-card__foot">

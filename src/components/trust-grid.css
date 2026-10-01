@@ -332,6 +332,20 @@
   }
 }
 
+.trust-card__create-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.trust-card__create-video {
+  width: clamp(80px, 9vw, 110px);
+  height: auto;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+}
+
 .trust-card__dotted-mark {
   position: relative;
   display: flex;

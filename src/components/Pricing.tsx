@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { motion } from 'motion/react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion } from 'motion/react'
 import { pricingPlans } from '../data/pricing'
 import { RevealText } from '../animations/RevealText'
 import {
@@ -42,9 +42,14 @@ const clockIcon = (
 )
 
 const simpleIcon = (
-  <svg viewBox="0 0 24 24" width="18" height="18" fill="none">
-    <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.4" />
-    <path d="M8 16 16 8" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
+  <svg viewBox="0 0 16 16" width="18" height="18" fill="currentColor">
+    <path d="M 7.5 0 C 3.365 0 0 3.365 0 7.5 C 0 11.635 3.365 15 7.5 15 C 11.635 15 15 11.635 15 7.5 C 15 3.365 11.635 0 7.5 0 Z M 5.156 3.75 C 5.933 3.75 6.563 4.38 6.563 5.156 C 6.563 5.933 5.933 6.563 5.156 6.563 C 4.38 6.563 3.75 5.933 3.75 5.156 C 3.75 4.38 4.38 3.75 5.156 3.75 Z M 9.844 11.25 C 9.067 11.25 8.438 10.62 8.438 9.844 C 8.438 9.067 9.067 8.438 9.844 8.438 C 10.62 8.438 11.25 9.067 11.25 9.844 C 11.25 10.62 10.62 11.25 9.844 11.25 Z M 10.975 5.35 L 5.35 10.975 C 5.175 11.152 4.936 11.251 4.688 11.251 C 4.439 11.251 4.2 11.152 4.025 10.975 C 3.659 10.609 3.659 10.016 4.025 9.65 L 9.65 4.025 C 9.885 3.781 10.234 3.683 10.561 3.769 C 10.889 3.855 11.145 4.111 11.231 4.439 C 11.317 4.766 11.219 5.115 10.975 5.35 Z" />
+  </svg>
+)
+
+const chatIcon = (
+  <svg viewBox="0 0 16 16" className="pricing__book-chat" aria-hidden="true" fill="#fff">
+    <path d="M 7 0 C 3.134 0 0 2.687 0 6 C 0 7.21 0.422 8.335 1.141 9.278 L 0.5 12 L 3.635 11.262 C 4.634 11.731 5.78 12 7 12 C 10.866 12 14 9.313 14 6 C 14 2.687 10.866 0 7 0 Z" />
   </svg>
 )
 
@@ -60,6 +65,12 @@ const arrowIcon = (
   </svg>
 )
 
+const thumbImages = [
+  'assets/pricing-scale.jpg',
+  'assets/pricing-scale-2.jpg',
+  'assets/pricing-scale-3.jpg',
+]
+
 function nextAvailability() {
   const d = new Date()
   d.setDate(d.getDate() + ((1 + 7 - d.getDay()) % 7 || 7))
@@ -68,6 +79,14 @@ function nextAvailability() {
 
 export function Pricing() {
   const [openIndex, setOpenIndex] = useState(0)
+  const [thumbTick, setThumbTick] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setThumbTick((t) => t + 1)
+    }, 2800)
+    return () => clearInterval(id)
+  }, [])
 
   return (
     <section className="pricing section">
@@ -87,9 +106,27 @@ export function Pricing() {
             Plans that scale with your project and give you room for unlimited creative
             opportunities.
           </p>
-          <div className="pricing__simple-thumb">
-            <img src={`${import.meta.env.BASE_URL}assets/pricing-scale.jpg`} alt="" loading="lazy" />
-          </div>
+          <motion.div
+            className="pricing__simple-thumb"
+            initial={{ opacity: 0, y: 36, scale: 0.94 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, amount: 0.6 }}
+            transition={FRAMER_SPRING}
+          >
+            <AnimatePresence initial={false}>
+              <motion.img
+                key={thumbTick}
+                src={`${import.meta.env.BASE_URL}${thumbImages[thumbTick % thumbImages.length]}`}
+                alt=""
+                loading="lazy"
+                style={{ zIndex: thumbTick }}
+                initial={{ opacity: 0, scale: 0.82 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              />
+            </AnimatePresence>
+          </motion.div>
           <p className="pricing__simple-caption">
             Pick a plan that grows with you and keeps creative costs predictable.
           </p>
@@ -99,23 +136,18 @@ export function Pricing() {
         </div>
 
         <div className="pricing__long-run-copy">
-          <span className="pricing__long-run-copy-bug" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none">
-              <path
-                d="M6 12c0-2.21 1.79-4 4-4 2.5 0 4.5 2 6 4 1.5 2 3.5 4 6 4 2.21 0 4-1.79 4-4s-1.79-4-4-4c-2.5 0-4.5 2-6 4-1.5 2-3.5 4-6 4-2.21 0-4-1.79-4-4z"
-                stroke="currentColor"
-                strokeWidth="1.4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
           <p className="pricing__eyebrow-label">Built for the long run</p>
           <p className="pricing__big-heading">
             With You
             <br />
             Beyond Launch
           </p>
+          <img
+            src={`${import.meta.env.BASE_URL}assets/pricing-infinity.png`}
+            alt=""
+            className="pricing__long-run-infinity"
+            loading="lazy"
+          />
           <ul className="pricing__long-run-list">
             {['Ongoing support', 'Long-term partnership', 'Future-ready builds'].map((item) => (
               <li key={item}>
@@ -129,11 +161,15 @@ export function Pricing() {
           <p className="pricing__eyebrow-label">Quick intro call, no strings attached.</p>
           <p className="pricing__big-heading">Let&rsquo;s chat or just say hello.</p>
 
-          <img
-            src={`${import.meta.env.BASE_URL}assets/pricing-mascot.png`}
-            alt=""
+          {chatIcon}
+
+          <video
+            src={`${import.meta.env.BASE_URL}assets/pricing-mascot.mp4`}
             className="pricing__book-mascot"
-            loading="lazy"
+            autoPlay
+            loop
+            muted
+            playsInline
           />
 
           <div className="pricing__book-panel">
