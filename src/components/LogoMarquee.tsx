@@ -15,8 +15,8 @@ export function LogoMarquee({
   direction = 'left',
   variant = 'dark',
 }: LogoMarqueeProps) {
-  const track = [...items, ...items]
   const reduceMotion = useReducedMotion()
+  const groupIndexes = [0, 1, 2]
 
   return (
     <div className={`logo-marquee logo-marquee--${variant}`}>
@@ -26,24 +26,40 @@ export function LogoMarquee({
         animate={
           reduceMotion
             ? undefined
-            : { x: direction === 'right' ? ['-50%', '0%'] : ['0%', '-50%'] }
+            : { x: direction === 'right' ? ['-33.333333%', '0%'] : ['0%', '-33.333333%'] }
         }
         transition={{ duration: speed, repeat: Infinity, repeatType: 'loop', ease: 'linear' }}
         style={{ width: 'max-content' }}
       >
-        {track.map((item, i) => {
-          const key = `${item.name}-${i}`
-
-          return item.image ? (
-            <span className="logo-marquee__item logo-marquee__item--img" key={key}>
-              <img src={`${import.meta.env.BASE_URL}${item.image}`} alt={item.name} loading="lazy" />
-            </span>
-          ) : (
-            <span className="logo-marquee__item" key={key}>
-              {item.name}
-            </span>
-          )
-        })}
+        {groupIndexes.map((groupIndex) => (
+          <div
+            className="logo-marquee__group"
+            key={groupIndex}
+            aria-hidden={groupIndex !== 0}
+          >
+            {items.map((item, itemIndex) =>
+              item.image ? (
+                <span
+                  className="logo-marquee__item logo-marquee__item--img"
+                  key={`${groupIndex}-${item.name}-${itemIndex}`}
+                >
+                  <img
+                    src={`${import.meta.env.BASE_URL}${item.image}`}
+                    alt={groupIndex === 0 ? item.name : ''}
+                    loading="lazy"
+                  />
+                </span>
+              ) : (
+                <span
+                  className="logo-marquee__item"
+                  key={`${groupIndex}-${item.name}-${itemIndex}`}
+                >
+                  {item.name}
+                </span>
+              ),
+            )}
+          </div>
+        ))}
       </motion.div>
       <div className="logo-marquee__fade logo-marquee__fade--right" />
     </div>

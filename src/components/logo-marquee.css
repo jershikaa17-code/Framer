@@ -11,12 +11,16 @@
 .logo-marquee__track {
   display: flex;
   align-items: center;
-  gap: clamp(40px, 6vw, 96px);
-  width: max-content;
-  min-width: max-content;
-  white-space: nowrap;
   will-change: transform;
-  padding-right: clamp(40px, 6vw, 96px);
+}
+
+.logo-marquee__group {
+  display: flex;
+  align-items: center;
+  flex: none;
+  gap: 220px;
+  padding-right: 220px;
+  white-space: nowrap;
 }
 
 .logo-marquee__item {
@@ -44,14 +48,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
+  height: 40px;
   flex-shrink: 0;
 }
 
 .logo-marquee__item--img img {
   height: 100%;
   width: auto;
-  max-width: 160px;
+  max-width: 165px;
   object-fit: contain;
   opacity: 0.85;
   transition: opacity 0.3s var(--ease-out);
@@ -69,4 +73,3 @@
   z-index: 2;
   pointer-events: none;
 }
-
