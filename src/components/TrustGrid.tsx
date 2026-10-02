@@ -20,6 +20,18 @@ const pills = [
 ]
 
 const DOTS_PLAY_MS = 6500
+const DOTS_TIMES = [0, 0.12, 0.38, 0.48, 0.7, 1]
+const DOTS_TRANSITION = {
+  duration: DOTS_PLAY_MS / 1000,
+  times: DOTS_TIMES,
+  ease: 'easeInOut' as const,
+}
+
+const dotScale = [
+  [1.35, 1.35, 1, 1, 1, 1],
+  [1, 1, 1.35, 1.35, 1, 1],
+  [1, 1, 1, 1, 1.35, 1.35],
+]
 
 export function TrustGrid() {
   return (
@@ -81,15 +93,18 @@ export function TrustGrid() {
               initial={{ x: 0 }}
               whileInView={{ x: [0, 0, 133, 133, 270, 270] }}
               viewport={{ once: false, amount: 0.6 }}
-              transition={{
-                duration: DOTS_PLAY_MS / 1000,
-                times: [0, 0.12, 0.38, 0.48, 0.7, 1],
-                ease: 'easeInOut',
-              }}
+              transition={DOTS_TRANSITION}
             />
-            <span />
-            <span />
-            <span className="trust-card__dots-last" />
+            {dotScale.map((scale, index) => (
+              <motion.span
+                className={index === dotScale.length - 1 ? 'trust-card__dots-last' : undefined}
+                key={index}
+                initial={{ scale: 1 }}
+                whileInView={{ scale }}
+                viewport={{ once: false, amount: 0.6 }}
+                transition={DOTS_TRANSITION}
+              />
+            ))}
           </div>
           <p className="trust-card__foot">
             <span className="trust-card__hatch" aria-hidden="true" />

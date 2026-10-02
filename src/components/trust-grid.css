@@ -72,9 +72,16 @@
 
 .trust-grid__cards {
   display: grid;
-  grid-template-columns: 0.4fr 0.5fr 0.44fr;
+  grid-template-columns: 0.4fr 0.4fr 0.34fr;
   gap: clamp(14px, 2vw, 18px);
   align-items: stretch;
+}
+
+/* .container's own margin-inline:auto has the same specificity as a bare
+   .trust-grid__cards rule and was winning the cascade, silencing this
+   margin-left entirely — the extra class here outweighs it for real. */
+.trust-grid__cards.container {
+  margin-left: -16px;
 }
 
 .trust-card {
@@ -91,6 +98,12 @@
 .trust-card--tagline {
   overflow: hidden;
   background: #fff;
+  width: min(100%, 401px);
+  height: 520px;
+  min-height: 520px;
+  padding: 24px;
+  border-radius: 12px;
+  margin-left: auto;
 }
 
 .trust-card__foot {
@@ -180,6 +193,10 @@
   background: var(--color-bg);
   box-shadow: 0 20px 40px rgba(20, 20, 20, 0.12);
   pointer-events: none;
+}
+
+.trust-card--stats {
+  background: #f0f0f0;
 }
 
 .trust-card--stats .trust-card__stats-head {
@@ -351,6 +368,12 @@
   }
 
   .trust-card {
+    min-height: 0;
+  }
+
+  .trust-card--tagline {
+    width: 100%;
+    height: auto;
     min-height: 0;
   }
 
