@@ -72,9 +72,23 @@
 
 .trust-grid__cards {
   display: grid;
-  grid-template-columns: 0.4fr 0.5fr 0.44fr;
+  grid-template-columns: 0.4fr 0.46fr 0.44fr;
   gap: clamp(14px, 2vw, 18px);
   align-items: stretch;
+}
+
+/* Visually reorders the row: the stats card now leads (narrower than
+   before), with the tagline card shifted to its right. */
+.trust-card--stats {
+  order: 1;
+}
+
+.trust-card--tagline {
+  order: 2;
+}
+
+.trust-card--fresh {
+  order: 3;
 }
 
 .trust-card {
