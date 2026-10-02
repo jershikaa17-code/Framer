@@ -49,8 +49,13 @@
 /* Same .container-vs-bare-class specificity clash as trust-grid__cards:
    .container's margin-inline:auto was overriding this margin-left outright. */
 .pricing__long-run.container {
-  /* Matches the trust-grid row container's own left edge exactly. */
-  margin-left: -16px;
+  /* The trust-grid row's visible first card (tagline) sits well right of
+     its own row container because it has margin-left:auto pushing it to
+     the right of its (wider, fr-sized) column — so matching THIS row's
+     container edge to that one's container edge still left the two
+     VISIBLE first cards badly offset. This matches the rendered card
+     edges instead (measured, not derived from the other column's fr math). */
+  margin-left: 54px;
 }
 
 .pricing__long-run > * {
