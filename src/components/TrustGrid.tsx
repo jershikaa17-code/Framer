@@ -1,7 +1,10 @@
 import { motion } from 'motion/react'
 import { RevealText } from '../animations/RevealText'
+import { TypeReveal, typeSequenceDelay } from '../animations/TypeReveal'
 import { fadeUp, fadeLeft, staggerContainer } from '../animations/variants'
 import './trust-grid.css'
+
+const taglineLines = ['we listen.', 'we imagine.', 'we create.']
 
 const starIcon = (
   <svg viewBox="0 0 20 20" width="14" height="14" fill="currentColor">
@@ -53,20 +56,23 @@ export function TrustGrid() {
       >
         <motion.div className="trust-card trust-card--tagline" variants={fadeUp}>
           <div className="trust-card__tagline">
-            <RevealText text="we listen." as="span" className="trust-card__tagline-line" delay={0} byLetter />
-            <RevealText
-              text="we imagine."
+            <TypeReveal
+              text={taglineLines[0]}
               as="span"
               className="trust-card__tagline-line"
-              delay={0.3}
-              byLetter
+              startDelay={typeSequenceDelay(taglineLines, 0)}
             />
-            <RevealText
-              text="we create."
+            <TypeReveal
+              text={taglineLines[1]}
+              as="span"
+              className="trust-card__tagline-line"
+              startDelay={typeSequenceDelay(taglineLines, 1)}
+            />
+            <TypeReveal
+              text={taglineLines[2]}
               as="span"
               className="trust-card__tagline-line trust-card__tagline-accent"
-              delay={0.6}
-              byLetter
+              startDelay={typeSequenceDelay(taglineLines, 2)}
             />
           </div>
           <div className="trust-card__dots" aria-hidden="true">
